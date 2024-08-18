@@ -15,7 +15,7 @@
 
 .sourceCode
 {
-  line-height: 125%;
+  line-height: 145%;
 }
 
 .figure .caption
@@ -150,7 +150,7 @@ body {
   background-color: white;
   color: #191919;
   font: 16px/26px Helvetica, Helvetica Neue, Arial;
-  line-height: 1.35em; }
+  line-height: 1.5em; }
 
 article header, article footer {
   color: #a0a0a0; }
@@ -330,6 +330,14 @@ nav a {
 @media only screen and (min-width: 1140px) {
   .wrapper {
     width: 1026px;
+    margin: 0 auto; } }
+@media only screen and (min-width: 1680px) {
+  .wrapper {
+    width: 1280px;
+    margin: 0 auto; } }
+@media only screen and (min-width: 1920px) {
+  .wrapper {
+    width: 1450px;
     margin: 0 auto; } }
 .entryMenu {
   margin-top: -17px;

@@ -14,6 +14,22 @@
         //    },
         {
             "template": "templates/entries/blog.tpl",
+            "link_name": "vrsfml",
+            "tags": [
+                "c++",
+                "c++20",
+                "gamedev",
+                "debug",
+                "sfml"
+            ],
+            "expand": {
+                "Title": "VRSFML: my Emscripten-ready fork of SFML",
+                "Text": "180_blog_2016_md/33_vrsfml.md",
+                "Date": "18 august 2024"
+            }
+        },
+        {
+            "template": "templates/entries/blog.tpl",
             "link_name": "debug_performance_cpp",
             "tags": [
                 "c++",
