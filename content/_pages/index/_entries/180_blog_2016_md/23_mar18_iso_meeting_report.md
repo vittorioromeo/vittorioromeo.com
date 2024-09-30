@@ -619,7 +619,7 @@ auto x = some_metaprogramming_thing(t<int>);
 
 In the end, we voted and the name `type_identity` won. The paper was forwarded to LWG.
 
-Afterwards, we discussed [(P0267R7) "A Proposal to Add 2D Graphics Rendering and Display to C++"](http://wg21.link/P0267) *(by Michael B. McLaughlin, Herb Sutter, Jason Zink, Guy Davidson)*. I explained why I oppose this proposal back in my [ACCU 2017 trip report](https://vittorioromeo.info/index/blog/accu2017_trip_report.html):
+Afterwards, we discussed [(P0267R7) "A Proposal to Add 2D Graphics Rendering and Display to C++"](http://wg21.link/P0267) *(by Michael B. McLaughlin, Herb Sutter, Jason Zink, Guy Davidson)*. I explained why I oppose this proposal back in my [ACCU 2017 trip report](https://vittorioromeo.com/index/blog/accu2017_trip_report.html):
 
 > I think that the scope of "2D graphics API" is way too broad. Some people need high-performance 2D graphics, others need vector graphics, others need something quick for prototyping, others need image manipulation capabilities... and so on. There are good and robust libraries for all of the things I mentioned above (and more). Is standardizing a small API that would be only useful for prototyping or non-performance-intensive applications the right way to go? While it would allow users to quickly display some images/text on the screen, it wouldn't be a huge improvement from simply including something like `SFML` or `cairo` itself. If importing a graphics library in your project is such an hassle that encourages standardization of a library just to avoid the pain, then the real problem is package/dependency management.
 
@@ -655,7 +655,7 @@ void bar()
 }
 ```
 
-This paper is the final result of work I started with my ["passing functions to functions"](https://vittorioromeo.info/index/blog/passing_functions_to_functions.html) article written in January 2017.
+This paper is the final result of work I started with my ["passing functions to functions"](https://vittorioromeo.com/index/blog/passing_functions_to_functions.html) article written in January 2017.
 
 As proven by my research of existing practice, there is a huge need for a way to define *higher-order functions* without having to use `std::function` (owning semantics, hard to optimize) or templates (hard to constrain, must be defined in headers). `function_ref` solves this problem by providing something lightweight and easy to use.
 

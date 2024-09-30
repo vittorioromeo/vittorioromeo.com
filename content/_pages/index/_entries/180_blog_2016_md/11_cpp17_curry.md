@@ -1,6 +1,6 @@
 
 
-As I mentioned in [my previous article](https://vittorioromeo.info/index/blog/passing_functions_to_functions.html) many features introduced in the latest C++ standards allow *functional patterns* to thrive in your codebase. Two ideas from that programming paradigm that I really like are [**currying**](https://en.wikipedia.org/wiki/Currying) and [**partial application**](https://en.wikipedia.org/wiki/Partial_application).
+As I mentioned in [my previous article](https://vittorioromeo.com/index/blog/passing_functions_to_functions.html) many features introduced in the latest C++ standards allow *functional patterns* to thrive in your codebase. Two ideas from that programming paradigm that I really like are [**currying**](https://en.wikipedia.org/wiki/Currying) and [**partial application**](https://en.wikipedia.org/wiki/Partial_application).
 
 In this article we're going to:
 
@@ -70,7 +70,7 @@ A slightly more realistic example could involve [`std::find`](http://en.cpprefer
 ```cpp
 std::vector<std::string> names{/* ... */}
 
-auto find_in_names = 
+auto find_in_names =
     curried_find(std::begin(names))(std::end(names));
 
 auto jack = find_in_names("Jack");
@@ -115,7 +115,7 @@ auto partial_add3(Ts... xs)
     }
     else
     {
-        // Recursive case: bind `xs...` and return another 
+        // Recursive case: bind `xs...` and return another
         return [xs...](auto... ys)
         {
             return partial_add3(xs..., ys...);
@@ -161,12 +161,12 @@ Before we analyze the *declaration* and *definition* of `curry`, let's take a lo
 
     greet(); // Prints "hi!".
     curry(greet); // Prints "hi!".
-    
+
     // Compile-time error:
     /* curry(greet)(); */
     ```
 
-    As you can see, in the case of a *nullary function object* `f`, invoking `curry(f)` calls the original object immediately. 
+    As you can see, in the case of a *nullary function object* `f`, invoking `curry(f)` calls the original object immediately.
 
 * **Unary functions**:
 
@@ -180,13 +180,13 @@ Before we analyze the *declaration* and *definition* of `curry`, let's take a lo
     // currying/partial application.
     // `plus_one` is "perfectly-captured" in the wrapper.
     auto curried_plus_one = curry(plus_one);
-    
+
     curried_plus_one(1); // Returns `2`.
     ```
 
-    > What does *perfectly-captured* mean? 
+    > What does *perfectly-captured* mean?
 
-    It means that if the captured object is an *lvalue*, it will be captured *by reference*. If the captured object is an *rvalue, it will be captured *by move*. I've written a comprehensive article on this topic: [**"capturing perfectly-forwarded objects in lambdas"**](http://vittorioromeo.info/index/blog/capturing_perfectly_forwarded_objects_in_lambdas.html).
+    It means that if the captured object is an *lvalue*, it will be captured *by reference*. If the captured object is an *rvalue, it will be captured *by move*. I've written a comprehensive article on this topic: [**"capturing perfectly-forwarded objects in lambdas"**](http://vittorioromeo.com/index/blog/capturing_perfectly_forwarded_objects_in_lambdas.html).
 
 * **Binary functions**:
 
@@ -210,8 +210,8 @@ Before we analyze the *declaration* and *definition* of `curry`, let's take a lo
 
     ```cpp
     auto add3 = [](auto a, auto b, auto c)
-    { 
-        return a + b + c; 
+    {
+        return a + b + c;
     };
 
     // All of the invocations below return `6`.
@@ -225,12 +225,12 @@ Before we analyze the *declaration* and *definition* of `curry`, let's take a lo
     The example above shows that *currying* and *partial application* can be freely combined. Let's see another example of that with a [`constexpr` lambda](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4487.pdf) of arity $5$.
 
     ```cpp
-    auto add5 = [](auto a, auto b, auto c, 
+    auto add5 = [](auto a, auto b, auto c,
                    auto d, auto e) constexpr
-    { 
-        return a + b + c + d + e; 
+    {
+        return a + b + c + d + e;
     };
-    
+
     constexpr auto csum5 = curry(sum5);
 
     constexpr auto a = csum5(0, 1, 2, 3, 4, 5);
@@ -256,18 +256,18 @@ template <typename TF>
 constexpr decltype(auto) curry(TF&& f);
 ```
 
-> Why `decltype(auto)` instead of `auto`? 
+> Why `decltype(auto)` instead of `auto`?
 
 Because the *final step* of `curry` needs to return exactly what the original function object does. Example:
 
 ```cpp
-auto f = [](auto, auto) -> auto& 
+auto f = [](auto, auto) -> auto&
 {
-    return some_global_variable; 
+    return some_global_variable;
 };
 
 // OK - can return an additional "curry wrapper" by value.
-auto step0 = curry(f); 
+auto step0 = curry(f);
 
 // Same as above.
 auto step1 = step0('a');
@@ -276,7 +276,7 @@ auto step1 = step0('a');
 auto& that_same_global = step1('b');
 ```
 
-Additionally, the `f` parameter is taken by [*forwarding-reference*](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4164.pdf). I will assume you're familiar with [*move semantics*](http://stackoverflow.com/questions/3106110/what-are-move-semantics), [`std::forward`](http://en.cppreference.com/w/cpp/utility/forward), and [**"forward captures"**](http://vittorioromeo.info/index/blog/capturing_perfectly_forwarded_objects_in_lambdas.html) for the rest of the article.
+Additionally, the `f` parameter is taken by [*forwarding-reference*](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4164.pdf). I will assume you're familiar with [*move semantics*](http://stackoverflow.com/questions/3106110/what-are-move-semantics), [`std::forward`](http://en.cppreference.com/w/cpp/utility/forward), and [**"forward captures"**](http://vittorioromeo.com/index/blog/capturing_perfectly_forwarded_objects_in_lambdas.html) for the rest of the article.
 
 <br>
 
@@ -286,28 +286,28 @@ I'll show the complete definition of `curry` first, and then analyze all the par
 
 ```cpp
 template <typename TF>
-constexpr decltype(auto) curry(TF&& f) 
+constexpr decltype(auto) curry(TF&& f)
 {
-    if constexpr (std::is_callable<TF&&()>{}) 
-    {   
+    if constexpr (std::is_callable<TF&&()>{})
+    {
         return FWD(f)();
     }
     else
     {
-        return [xf = FWD_CAPTURE(f)](auto&&... partials) mutable constexpr 
+        return [xf = FWD_CAPTURE(f)](auto&&... partials) mutable constexpr
         {
             return curry
             (
                 [
-                    partial_pack = FWD_CAPTURE_PACK_AS_TUPLE(partials), 
+                    partial_pack = FWD_CAPTURE_PACK_AS_TUPLE(partials),
                     yf = std::move(xf)
                 ]
-                (auto&&... xs) constexpr                
-                    -> decltype(forward_like<TF>(xf.get())(FWD(partials)..., 
+                (auto&&... xs) constexpr
+                    -> decltype(forward_like<TF>(xf.get())(FWD(partials)...,
                                                            FWD(xs)...))
                 {
-                    return apply_fwd_capture([&yf](auto&&... ys) constexpr 
-                        -> decltype(forward_like<TF>(yf.get())(FWD(ys)...)) 
+                    return apply_fwd_capture([&yf](auto&&... ys) constexpr
+                        -> decltype(forward_like<TF>(yf.get())(FWD(ys)...))
                     {
                         return forward_like<TF>(yf.get())(FWD(ys)...);
                     }, partial_pack, FWD_CAPTURE_PACK_AS_TUPLE(xs));
@@ -322,9 +322,9 @@ The first thing to notice is the **recursive** structure of `curry`.
 
 ```cpp
 template <typename TF>
-constexpr decltype(auto) curry(TF&& f) 
+constexpr decltype(auto) curry(TF&& f)
 {
-    if constexpr (std::is_callable<TF&&()>{}) 
+    if constexpr (std::is_callable<TF&&()>{})
     {
         return FWD(f)();
     }
@@ -350,7 +350,7 @@ The *base case* branch is taken when `std::is_callable<TF&&()>{}` evaluates to `
 We will now focus on the *recursive case* of `curry`. The first step is allowing *partial application* of arguments - since we don't know how many arguments will be bound in advance, a *generic variadic lambda* will be returned:
 
 ```cpp
-return [xf = FWD_CAPTURE(f)](auto&&... partials) mutable constexpr 
+return [xf = FWD_CAPTURE(f)](auto&&... partials) mutable constexpr
 {
     return curry(/* ... */);
 }
@@ -380,11 +380,11 @@ Let's now focus on the `return curry(/*...*/)` statement. We want to return a *c
 return curry
 (
     [
-        partial_pack = FWD_CAPTURE_PACK_AS_TUPLE(partials), 
+        partial_pack = FWD_CAPTURE_PACK_AS_TUPLE(partials),
         yf = std::move(xf)
     ]
-    (auto&&... xs) constexpr                
-        -> decltype(forward_like<TF>(xf.get())(FWD(partials)..., 
+    (auto&&... xs) constexpr
+        -> decltype(forward_like<TF>(xf.get())(FWD(partials)...,
                                                FWD(xs)...))
     {
         // ...
@@ -404,15 +404,15 @@ The lambda passed to `curry` will accept any number of *forwarding references* i
 //          single function call to `f`.
 ```
 
-[`forward_like` is an utility function in my `vrm_core` library](https://github.com/SuperV1234/vrm_core/blob/437a0afb35385250cd75c22babaeeecbfa4dcacc/include/vrm/core/type_traits/forward_like.hpp) that *forwards* the passed argument with the same *value category* of the potentially-unrelated specified type. It basically copies the "*lvalue/rvalue*-ness" of the user-provided template parameter and *applies* it to its argument. 
+[`forward_like` is an utility function in my `vrm_core` library](https://github.com/SuperV1234/vrm_core/blob/437a0afb35385250cd75c22babaeeecbfa4dcacc/include/vrm/core/type_traits/forward_like.hpp) that *forwards* the passed argument with the same *value category* of the potentially-unrelated specified type. It basically copies the "*lvalue/rvalue*-ness" of the user-provided template parameter and *applies* it to its argument.
 
 The expression inside the above return type essentially means: *"invoke the original function object by unpacking `partials...` and `xs...` one after another"*.
 
 Lastly, let's analyze the body of the lambda.
 
 ```cpp
-return apply_fwd_capture([&yf](auto&&... ys) constexpr 
-    -> decltype(forward_like<TF>(yf.get())(FWD(ys)...)) 
+return apply_fwd_capture([&yf](auto&&... ys) constexpr
+    -> decltype(forward_like<TF>(yf.get())(FWD(ys)...))
 {
     return forward_like<TF>(yf.get())(FWD(ys)...);
 }, partial_pack, FWD_CAPTURE_PACK_AS_TUPLE(xs));
@@ -431,7 +431,7 @@ In short, `apply_fwd_capture` will invoke the *`constexpr` variadic lambda* by e
 
 ### Generated assembly benchmarks
 
-As I did in my previous [**"passing functions to functions"**](https://vittorioromeo.info/index/blog/passing_functions_to_functions.html) article, I will compare the number of generated assembly lines for different code snippets where `curry` is used. The point of these "benchmarks" is giving the readers an idea on how easy it is for the compiler to optimize `curry` out - they are in no way exhaustive or representative of a real-world situation. *(The benchmarks were generated [with this Python script](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/cpp17_curry/bench/dobenchs.py), which also prints out the assembly.)*
+As I did in my previous [**"passing functions to functions"**](https://vittorioromeo.com/index/blog/passing_functions_to_functions.html) article, I will compare the number of generated assembly lines for different code snippets where `curry` is used. The point of these "benchmarks" is giving the readers an idea on how easy it is for the compiler to optimize `curry` out - they are in no way exhaustive or representative of a real-world situation. *(The benchmarks were generated [with this Python script](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/cpp17_curry/bench/dobenchs.py), which also prints out the assembly.)*
 
 The compiler used for these measurements is **g++ 7.0.0 20170113**, compiled from the SVN repository.
 
@@ -491,7 +491,7 @@ int main()
 
 * When using `curry`, `s0`...`s7` are initialized by using various invocations of `curry(sum)`.
 
-* In the end, the expected sum result is statically asserted and returned from `main`. 
+* In the end, the expected sum result is statically asserted and returned from `main`.
 
 **Baseline**
 
@@ -507,7 +507,7 @@ int main()
 
 As shown by the tables above, using `curry` introduces no additional overhead when used in the initialization of `constexpr` variables.
 
-[You can find the complete snippet on GitHub.](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/cpp17_curry/bench/b0_constexpr.cpp)
+[You can find the complete snippet on GitHub.](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/cpp17_curry/bench/b0_constexpr.cpp)
 
 <br>
 
@@ -533,7 +533,7 @@ Let's now measure the eventual overhead of `curry` when initializing `volatile` 
 
 Even with `volatile`, there isn't any additional overhead introduced by `curry`!
 
-[You can find the complete snippet on GitHub.](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/cpp17_curry/bench/b1_volatile.cpp)
+[You can find the complete snippet on GitHub.](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/cpp17_curry/bench/b1_volatile.cpp)
 
 <br>
 
@@ -575,16 +575,16 @@ volatile auto s7 = i7(7);
 
 From optimization level `-O1` onwards everything is great: **zero overhead**! When using `-O0`, though, there is a quite noticeable overhead of $+2804\%$ extra generated assembly compared to the baseline.
 
-[You can find the complete snippet on GitHub.](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/cpp17_curry/bench/b2_intermediate.cpp)
+[You can find the complete snippet on GitHub.](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/cpp17_curry/bench/b2_intermediate.cpp)
 
-*(Some additional benchmarks with `volatile` lambda parameters and values are [available on the GitHub repository](https://github.com/SuperV1234/vittorioromeo.info/tree/master/extra/cpp17_curry/bench).)*
+*(Some additional benchmarks with `volatile` lambda parameters and values are [available on the GitHub repository](https://github.com/SuperV1234/vittorioromeo.com/tree/master/extra/cpp17_curry/bench).)*
 
 
 ### Compiler bugs
 
 > `curry` looks great! Zero run-time overhead, *partial application* and *currying* all in one... what's the catch?
 
-Well, the hardest part is... getting `curry` to compile. As seen from [these tweets](https://twitter.com/supahvee1234/status/811246691731042304) between me and Julian Becker, it seems that both `g++` and `clang++` fail with *internal compiler errors* for different reasons. 
+Well, the hardest part is... getting `curry` to compile. As seen from [these tweets](https://twitter.com/supahvee1234/status/811246691731042304) between me and Julian Becker, it seems that both `g++` and `clang++` fail with *internal compiler errors* for different reasons.
 
 * This [snippet on *gcc.godbolt.org*](https://godbolt.org/g/9rP7ZO) produces a g++ *internal compiler error*. Commenting out the *trailing return type* on line 158 fixes the ICE. I reported a minimal version of this issue as [bug #78006](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=78006).
 

@@ -67,7 +67,7 @@ namespace constant::file
 
 namespace constant::url::path
 {
-    const std::string website{"https://vittorioromeo.info/"};
+    const std::string website{"https://vittorioromeo.com/"};
 } // namespace constant::url::path
 
 namespace utils

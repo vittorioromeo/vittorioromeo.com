@@ -2,7 +2,7 @@
 
 Since the advent of [C++11](https://en.wikipedia.org/wiki/C%2B%2B11) writing *more [**functional**](https://en.wikipedia.org/wiki/Functional_programming)* code has become easier. Functional programming patterns and ideas are powerful additions to the C++ developer's huge toolbox. *(I recently attended a great introductory talk on them by [*Phil Nash*](https://twitter.com/phil_nash) at the first London C++ Meetup - you can find an older recording [here on YouTube](https://www.youtube.com/watch?v=YgcUuYCCV14).)*
 
-In this blog post I'll briefly cover some techniques that can be used to *pass functions to other functions* and show their impact on the generated assembly at the end. 
+In this blog post I'll briefly cover some techniques that can be used to *pass functions to other functions* and show their impact on the generated assembly at the end.
 
 *(If you are familiar with **lambdas** and **higher-order functions** you can [skip the following paragraphs](#what_your_options_are).)*
 
@@ -22,7 +22,7 @@ auto benchmark = [](auto f)
     start_timer();
     f();
     cout << end_timer();
-};  
+};
 
 // Pass a function to another function.
 // This function captures the surrounding environment (it's a closure).
@@ -30,7 +30,7 @@ data some_data;
 benchmark([&some_data]{ some_computation(); });
 ```
 
-When passing functions around to other functions things are however not as straightforward as they might sound. Should you use a *template parameter*? Should you use `std::function`? A *function pointer*? 
+When passing functions around to other functions things are however not as straightforward as they might sound. Should you use a *template parameter*? Should you use `std::function`? A *function pointer*?
 
 This article aims to compare the aforementioned function-passing techniques and to provide some guidelines. Every technique will benchmarked.
 
@@ -88,15 +88,15 @@ g([i = 0](int) mutable { });
 
 The drawbacks of this technique are:
 
-* In very large codebases, the use of *templates* for callbacks may be problematic, as they require to be included in every TU they're used in. This can often lead to long re-compilation times and binary size bloat *(which could be worse than some run-time overhead!)*   
+* In very large codebases, the use of *templates* for callbacks may be problematic, as they require to be included in every TU they're used in. This can often lead to long re-compilation times and binary size bloat *(which could be worse than some run-time overhead!)*
 
-* It's non-trivial to constrain the callable object to a particular signature and to make the type of the expected callable obvious to the user of the function. This could become much easier in the future if [concepts lite](http://en.cppreference.com/w/cpp/language/constraints) are introduced in the standard. 
+* It's non-trivial to constrain the callable object to a particular signature and to make the type of the expected callable obvious to the user of the function. This could become much easier in the future if [concepts lite](http://en.cppreference.com/w/cpp/language/constraints) are introduced in the standard.
 
 
 
 ### `std::function`
 
-I see [`std::function`](http://en.cppreference.com/w/cpp/utility/functional/function) being suggested for the purpose of passing callbacks/functions **way too often**. `std::function` is a **heavyweight general-purpose polymorphic function wrapper** that is meant to **store and "own"** a callable object. It also has an [*empty state*](http://en.cppreference.com/w/cpp/utility/functional/function/operator_bool) that causes [an exception to be thrown upon invocation](http://en.cppreference.com/w/cpp/utility/functional/bad_function_call). 
+I see [`std::function`](http://en.cppreference.com/w/cpp/utility/functional/function) being suggested for the purpose of passing callbacks/functions **way too often**. `std::function` is a **heavyweight general-purpose polymorphic function wrapper** that is meant to **store and "own"** a callable object. It also has an [*empty state*](http://en.cppreference.com/w/cpp/utility/functional/function/operator_bool) that causes [an exception to be thrown upon invocation](http://en.cppreference.com/w/cpp/utility/functional/bad_function_call).
 
 ```cpp
 void f(int) { }
@@ -111,13 +111,13 @@ g([i = 0](int) mutable { });
 
 Again, this is a very **general-purpose** class that **models ownership of a callable object**. It introduces a **significant run-time overhead** and can potentially dynamically allocate. Use it sparingly!
 
-I *strongly* recommend not using `std::function` unless you need its general-purpose polymorphic semantics.  
+I *strongly* recommend not using `std::function` unless you need its general-purpose polymorphic semantics.
 
 
 
 ### `function_view` {#function_view}
 
-This is where things start to get interesting. It is possible to easily implement a **lightweight non-owning generic callable object view** with an overhead comparable to raw function pointers quite easily *(and zero overhead when inlined)*. I am going to benchmark and show a C++17 implementation. *(Note that the I've seen already the idea of a "function view" multiple times online - I don't claim to have invented this. An example is [this StackOverflow answer](http://stackoverflow.com/a/39087660/598696) by Yakk. Another is ["The Impossibly Fast C++ Delegates"](https://www.codeproject.com/Articles/11015/The-Impossibly-Fast-C-Delegates) by Sergey Ryazanov.)* 
+This is where things start to get interesting. It is possible to easily implement a **lightweight non-owning generic callable object view** with an overhead comparable to raw function pointers quite easily *(and zero overhead when inlined)*. I am going to benchmark and show a C++17 implementation. *(Note that the I've seen already the idea of a "function view" multiple times online - I don't claim to have invented this. An example is [this StackOverflow answer](http://stackoverflow.com/a/39087660/598696) by Yakk. Another is ["The Impossibly Fast C++ Delegates"](https://www.codeproject.com/Articles/11015/The-Impossibly-Fast-C-Delegates) by Sergey Ryazanov.)*
 
 ```cpp
 void f(int) { }
@@ -138,7 +138,7 @@ This is very often what you want when you pass a function to another one.
 
 ### Benchmark - generated assembly
 
-I created a [small *horrible* Python script](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/passing_functions_to_functions/dobenchs.py) that compiles a small code snippet in multiple ways and counts the lines of generated x86-64 assembly *(after [stripping all the cruft](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/passing_functions_to_functions/stripasm))*. This is **not** an accurate benchmark that resembles the real world but **should give you an idea of how easy/hard it is for a compiler to optimize the techniques described above**.
+I created a [small *horrible* Python script](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/passing_functions_to_functions/dobenchs.py) that compiles a small code snippet in multiple ways and counts the lines of generated x86-64 assembly *(after [stripping all the cruft](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/passing_functions_to_functions/stripasm))*. This is **not** an accurate benchmark that resembles the real world but **should give you an idea of how easy/hard it is for a compiler to optimize the techniques described above**.
 
 #### Stateless callable objects
 
@@ -178,7 +178,7 @@ int main()
 ```cpp
 void f(void (*x)(volatile int&)) { x(state); }
 
-template <typename TF> 
+template <typename TF>
 void f(TF&& x) { x(state); }
 
 void f(std::function<void(volatile int&)> x) { x(state); }
@@ -234,7 +234,7 @@ Pay attention to the following things:
 
 * *Don't* use **`std::function`** unless you need its features and semantics!
 
-Adding the `inline` keyword in front of the functions changes things dramatically: **only `std::function` has additional overhead** - **+466%** more assembly lines are produced compared to the *baseline*. The rest of the techniques become *"zero-cost"*. 
+Adding the `inline` keyword in front of the functions changes things dramatically: **only `std::function` has additional overhead** - **+466%** more assembly lines are produced compared to the *baseline*. The rest of the techniques become *"zero-cost"*.
 
 You can play around with the code snippet [on **gcc.godbolt.org**](https://godbolt.org/g/I2vQCR), in order to closely analyze the generated assembly.
 
@@ -355,11 +355,11 @@ int main()
 
 ![*"Scaling" generated assembly overhead*](resources/img/blog/pf2f_plot0.png)
 
-Unfortunately, the overhead from `std::function` seems to scale linearly with the number of function invocations - my recommendation of avoiding it unless you need all of its "power" therefore persists. 
+Unfortunately, the overhead from `std::function` seems to scale linearly with the number of function invocations - my recommendation of avoiding it unless you need all of its "power" therefore persists.
 
 Hopefully these benchmarks on the generated assembly should clarify how easy/hard it is for a compiler to optimize the analyzed techniques. If you're interested in **invocation run-time overhead** benchmarks, Dietmar Kühl created a [very interesting interactive graph](http://www.dietmar-kuehl.de/cputube/functions.html) *(which doesn't unfortunately include `function_view`)*.
 
-[*You can find all the code and scripts for the benchmarks on GitHub.*](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/passing_functions_to_functions)
+[*You can find all the code and scripts for the benchmarks on GitHub.*](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/passing_functions_to_functions)
 
 Let's end the article by looking at the implementation of `function_view`.
 
@@ -427,9 +427,9 @@ template <typename TSignature>
 class function_view;
 
 template <typename TReturn, typename... TArgs>
-class function_view<TReturn(TArgs...)> final 
-{ 
-    /* ... */ 
+class function_view<TReturn(TArgs...)> final
+{
+    /* ... */
 };
 ```
 
@@ -443,7 +443,7 @@ In order to store any callable object with the signature `TReturn(TArgs...)` we 
 
 * A `void*` that points to the memory location containing the referenced callable object.
 
-* A `TReturn(*)(void*, TArgs...)` function pointer that, given the aforementioned `void*` pointer, calls the referenced callable object. 
+* A `TReturn(*)(void*, TArgs...)` function pointer that, given the aforementioned `void*` pointer, calls the referenced callable object.
 
 ```cpp
 template <typename TReturn, typename... TArgs>
@@ -456,11 +456,11 @@ private:
     TReturn (*_erased_fn)(void*, TArgs...);
 
     // ...
-``` 
+```
 
-Let's now define a constructor template which takes a generic callable object by [*forwarding-reference*](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4164.pdf) *(as we also want to be able to "view" temporary callables, such as lambda expressions)*. 
+Let's now define a constructor template which takes a generic callable object by [*forwarding-reference*](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4164.pdf) *(as we also want to be able to "view" temporary callables, such as lambda expressions)*.
 
-* [`std::enable_if`](http://en.cppreference.com/w/cpp/types/enable_if) will be used to constrain the constructor. 
+* [`std::enable_if`](http://en.cppreference.com/w/cpp/types/enable_if) will be used to constrain the constructor.
 
     * [`std::is_callable`](http://en.cppreference.com/w/cpp/types/is_callable) will make sure that the callable object passed to the constructor matches the desired signature. *(`T&` is being used instead of `T` because the pointee will always be called as an lvalue.)*
 
@@ -492,11 +492,11 @@ Pay attention:
 
 * [`std::forward`](http://en.cppreference.com/w/cpp/utility/forward) is being used in an unusual context here, as `TArgs...` is not a deduced argument pack, **but it is required** to maintain the correct value categories *(here's a motivating [example on wandbox](http://melpon.org/wandbox/permlink/XupjS4G0YrucZJhu))*.
 
-* A [*trailing return type*](http://en.cppreference.com/w/cpp/language/function) is used for the lambda that initialized `_erased_fn`, as lambdas implicitly deduce their return type by value. It is not guaranteed that `TReturn` is a value though! 
+* A [*trailing return type*](http://en.cppreference.com/w/cpp/language/function) is used for the lambda that initialized `_erased_fn`, as lambdas implicitly deduce their return type by value. It is not guaranteed that `TReturn` is a value though!
 
     * An alternative is using a `-> decltype(auto)` return type, which keeps [*cv-qualifiers*](http://en.cppreference.com/w/cpp/language/cv) and references.
 
-* `_ptr` is initialized to the address of `x`, using [`std::addressof`](http://en.cppreference.com/w/cpp/memory/addressof) to prevent unexpected errors in case of overloaded `operator&`. 
+* `_ptr` is initialized to the address of `x`, using [`std::addressof`](http://en.cppreference.com/w/cpp/memory/addressof) to prevent unexpected errors in case of overloaded `operator&`.
 
 * An explicit `(void*)` cast is being used to drop `const` qualifiers and accept function pointers. `reinterpret_cast` and `std::add_pointer_t` are being used to "rebuild" the original type-erased pointer. Using `static_cast` would not support function pointers. Using `T*` would be ill-formed when `T` is an lvalue reference. *([Thanks Yakk and T.C.!](https://www.reddit.com/r/cpp/comments/5mgyf2/passing_functions_to_functions/dc5ewek/))*
 
@@ -519,6 +519,6 @@ The last missing piece is the `operator()`, which is quite trivial:
 };
 ```
 
-It's sufficient to invoke `_erased_fn` with the `_ptr` pointing to the *(assumed alive)* callable object and with the expanded `std::forward<TArgs>(xs)...` argument pack. 
+It's sufficient to invoke `_erased_fn` with the `_ptr` pointing to the *(assumed alive)* callable object and with the expanded `std::forward<TArgs>(xs)...` argument pack.
 
-That's it! [*You can find the complete implementation on GitHub.*](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/passing_functions_to_functions/function_view.hpp)
+That's it! [*You can find the complete implementation on GitHub.*](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/passing_functions_to_functions/function_view.hpp)

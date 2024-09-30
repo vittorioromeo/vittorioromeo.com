@@ -97,9 +97,9 @@
 
 
 	                    <script src="https://apis.google.com/js/platform.js" async defer></script>
-                        <div class="g-plusone" data-href="http://vittorioromeo.info"></div>
+                        <div class="g-plusone" data-href="http://vittorioromeo.com"></div>
 
-                        <a rel="alternate" style="float: left; padding-right: 5px; padding-left: 5px" type="application/rss+xml" href="https://vittorioromeo.info/index.rss">
+                        <a rel="alternate" style="float: left; padding-right: 5px; padding-left: 5px" type="application/rss+xml" href="https://vittorioromeo.com/index.rss">
                             <img border="0" alt="RSS Feed" src="{{ResourcesPath}}/img/rss.png" width="24" height="24">
                         </a>
 
@@ -134,7 +134,7 @@
 		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-		ga('create', 'UA-43376035-1', 'vittorioromeo.info');
+		ga('create', 'UA-43376035-1', 'vittorioromeo.com');
 		ga('send', 'pageview');
 
 		</script>

@@ -1,6 +1,6 @@
 A few months ago, I finished implementing the replay and secure leaderboard system for my game [Open Hexagon](https://store.steampowered.com/app/1358090/Open_Hexagon/), and it has worked very well so far. I've used a few interesting techniques and tricks to (1) *achieve deterministic gameplay*, (2) *prevent cheating by slowing down time*, and (3) *prevent cheating by modifying game files* which I am going to talk about in this post.
 
-If you want to know more information about the replay system and the server/client implementation, check out the two previous devlogs [here](https://vittorioromeo.info/index/blog/oh_leaderboard_devlog_0.html) and [here](https://vittorioromeo.info/index/blog/oh_leaderboard_devlog_1.html).
+If you want to know more information about the replay system and the server/client implementation, check out the two previous devlogs [here](https://vittorioromeo.com/index/blog/oh_leaderboard_devlog_0.html) and [here](https://vittorioromeo.com/index/blog/oh_leaderboard_devlog_1.html).
 
 At the end of the article, I'll also share some major milestones I've reached this year.
 

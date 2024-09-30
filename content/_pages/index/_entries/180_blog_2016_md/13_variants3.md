@@ -13,7 +13,7 @@
 
 This post continues *(ends?)* the story of my attempts to create a nice "pattern matching" syntax for variant visitation.
 
-Back in October 2016, in [**part 1**](https://vittorioromeo.info/index/blog/variants_lambdas_part_1.html) of the series, I discussed a simple way of implementing a `visit_in_place` function that would allow variants to be visited providing a set of *lambda expressions* that would be overloaded on the spot.
+Back in October 2016, in [**part 1**](https://vittorioromeo.com/index/blog/variants_lambdas_part_1.html) of the series, I discussed a simple way of implementing a `visit_in_place` function that would allow variants to be visited providing a set of *lambda expressions* that would be overloaded on the spot.
 
 ```cpp
 std::variant<success, failure> payload{/* ... */};
@@ -27,7 +27,7 @@ visit_in_place(payload, [](const success& x){ /* ... */ },
 
 </div>
 
-Ten days later I published [**part 2**](http://vittorioromeo.info/index/blog/variants_lambdas_part_2.html), that demonstrated how to apply the same idea to *recursive lambdas*, by using the [Y combinator](https://en.wikipedia.org/wiki/Fixed-point_combinator#Fixed_point_combinators_in_lambda_calculus) higher order function and by using an extra `auto` parameter in the provided lambdas. Below is an example that evaluates a simple arithmetical expression.
+Ten days later I published [**part 2**](http://vittorioromeo.com/index/blog/variants_lambdas_part_2.html), that demonstrated how to apply the same idea to *recursive lambdas*, by using the [Y combinator](https://en.wikipedia.org/wiki/Fixed-point_combinator#Fixed_point_combinators_in_lambda_calculus) higher order function and by using an extra `auto` parameter in the provided lambdas. Below is an example that evaluates a simple arithmetical expression.
 
 ```cpp
 using op = std::variant<add, sub>;
@@ -432,8 +432,8 @@ Fingers crossed for C++20!
 
 ### series
 
-* [*"visiting variants using lambdas - part 1"*](https://vittorioromeo.info/index/blog/variants_lambdas_part_1.html)
+* [*"visiting variants using lambdas - part 1"*](https://vittorioromeo.com/index/blog/variants_lambdas_part_1.html)
 
-* [*"visiting variants using lambdas - part 2"*](https://vittorioromeo.info/index/blog/variants_lambdas_part_2.html)
+* [*"visiting variants using lambdas - part 2"*](https://vittorioromeo.com/index/blog/variants_lambdas_part_2.html)
 
-* [*"visiting variants using lambdas - part 3"*](https://vittorioromeo.info/index/blog/variants_lambdas_part_3.html)
+* [*"visiting variants using lambdas - part 3"*](https://vittorioromeo.com/index/blog/variants_lambdas_part_3.html)

@@ -3,7 +3,7 @@
 <channel>
     <title>vittorio romeo's website</title>
     <description>Vittorio Romeo's personal blog/website</description>
-    <link>http://vittorioromeo.info</link>
+    <link>http://vittorioromeo.com</link>
     <language>en-us</language>
 
     <atom:link href="{{FeedLink}}" rel="self" type="application/rss+xml" />

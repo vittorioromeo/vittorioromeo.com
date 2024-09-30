@@ -7,10 +7,15 @@ I greatly appreciate the contributions of everyone involved in the project. Howe
 I'm excited to introduce [**VRSFML**](https://github.com/vittorioromeo/VRSFML), a *work-in-progress* and *experimental* fork of SFML that brings several key improvements:
 
 1. **Modern OpenGL and first-class support for Emscripten**[^emscripten_url]
+
 2. **Enhanced API safety at compile-time**
+
 3. **Flexible design approach over strict OOP principles**
+
 4. **New audio API supporting multiple simultaneous devices**
+
 5. **Built-in `SFML::ImGui` module**
+
 6. **Remarkably fast compilation time & small run-time debug mode overhead**
 
 This article will delve into these features, explore the underlying design philosophy, and draw comparisons between the upcoming SFML 3.x release and my fork.
@@ -496,7 +501,7 @@ This change is likely to be controversial. I highly value rapid iteration times 
 Motivated by the game development community's frustration with modern C++, I've also conducted in-depth research on the impact of C++ abstractions on debug performance. This is evidenced by my September 2022 article[^debugperf], which was also well-received and prompted changes in all three major compilers to address some of the issues raised.
 
 [^improv_times]: <https://www.youtube.com/watch?v=PfHD3BsVsAM>
-[^debugperf]: [`debug_performance_cpp` article](https://vittorioromeo.info/index/blog/debug_performance_cpp.html)
+[^debugperf]: [`debug_performance_cpp` article](https://vittorioromeo.com/index/blog/debug_performance_cpp.html)
 
 Unfortunately, primarily due to historical and backward-compatibility constraints, all major C++ standard library implementations fall short of the compilation speed and debug performance standards I consider acceptable. Explaining why standard library headers are so heavyweight and why standard library abstractions are buried under numerous layers of templates would require an extensive article of its own.
 
@@ -505,7 +510,6 @@ It's important to emphasize that this situation is not due to incompetence or ca
 Given these constraints, I've made the decision to reduce dependencies on the C++ standard library in VRSFML by introducing `SFML::Base`. This new module provides essential utilities including: type traits, smart pointers, math functions, assertions, PImpl wrappers, basic algorithms, and much more.
 
 These utilities are meticulously designed to:
-
 
 1. Minimize header dependencies
 

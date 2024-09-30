@@ -1,3 +1,3 @@
 #!/bin/bash
 
-scp -r ./result/* root@vittorioromeo.info:/var/www/vittorioromeo.info
+scp -r ./result/* root@vittorioromeo.com:/var/www/vittorioromeo.com

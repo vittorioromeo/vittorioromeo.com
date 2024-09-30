@@ -11,7 +11,7 @@
 }
 </style>
 
-In my previous article *([**"abstraction design and implementation: `repeat`"**](https://vittorioromeo.info/index/blog/abstraction_design_implementation_repeat.html))* I've shown how to implement a simple `repeat(n, f)` abstraction that invokes a `FunctionObject` `f` $n$ times in a row.
+In my previous article *([**"abstraction design and implementation: `repeat`"**](https://vittorioromeo.com/index/blog/abstraction_design_implementation_repeat.html))* I've shown how to implement a simple `repeat(n, f)` abstraction that invokes a `FunctionObject` `f` $n$ times in a row.
 
 A large part of the article focused on adding a `noexcept` specifier to `repeat` that correctly propagated `noexcept`-correctness depending on the actions performed on the passed arguments. Adding a `noexcept` specifier resulted in a less elegant, longer, and less accessible implementation.
 

@@ -11,7 +11,7 @@
 }
 </style>
 
-In [**part 1**](https://vittorioromeo.info/index/blog/zeroalloc_continuations_p0.html) we implemented a barebones `future`-like class that supported `.then` continuations without needing allocations or type-erasure. The idea behind it was to encode the entire computation chain into a single object with a huge type:
+In [**part 1**](https://vittorioromeo.com/index/blog/zeroalloc_continuations_p0.html) we implemented a barebones `future`-like class that supported `.then` continuations without needing allocations or type-erasure. The idea behind it was to encode the entire computation chain into a single object with a huge type:
 
 ```cpp
 // pseudocode
@@ -157,7 +157,7 @@ decltype(auto) execute(Scheduler&& s) &
 }
 ```
 
-You can find a complete snippet [here **on wandbox.org**](https://wandbox.org/permlink/tIgt5wXqE2EV3qEu) or [here **on GitHub**](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/zeroalloc_continuations/p1_0_propagate_parent.cpp).
+You can find a complete snippet [here **on wandbox.org**](https://wandbox.org/permlink/tIgt5wXqE2EV3qEu) or [here **on GitHub**](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/p1_0_propagate_parent.cpp).
 
 
 
@@ -321,7 +321,7 @@ auto f1 = initiate([]{ return 1; })
 f1.wait_and_get(world_s_best_thread_pool{});
 ```
 
-You can fine the complete snippet [here **on wandbox.org**](https://wandbox.org/permlink/fS6XzrloVExGyJ6c) or [here **on GitHub**](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/zeroalloc_continuations/p1_1_wait_and_get.cpp).
+You can fine the complete snippet [here **on wandbox.org**](https://wandbox.org/permlink/fS6XzrloVExGyJ6c) or [here **on GitHub**](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/p1_1_wait_and_get.cpp).
 
 Oh, and [here's also a **godbolt.org** session](https://godbolt.org/g/9CPQTM) that proves that **the only overhead is caused by threading/synchronization**. If we revert to a synchronous single-threaded approach, **everything is completely inlined**.
 
@@ -331,8 +331,8 @@ This post has gotten longer than I wanted, so `when_all(...)` will have to be de
 
 ### series
 
-* [*"zero-allocation continuations - part 1"*](https://vittorioromeo.info/index/blog/zeroalloc_continuations_p0.html)
+* [*"zero-allocation continuations - part 1"*](https://vittorioromeo.com/index/blog/zeroalloc_continuations_p0.html)
 
-* [*"zero-allocation continuations - part 2"*](https://vittorioromeo.info/index/blog/zeroalloc_continuations_p1.html)
+* [*"zero-allocation continuations - part 2"*](https://vittorioromeo.com/index/blog/zeroalloc_continuations_p1.html)
 
-* [*"zero-allocation continuations - part 3"*](https://vittorioromeo.info/index/blog/zeroalloc_continuations_p2.html)
+* [*"zero-allocation continuations - part 3"*](https://vittorioromeo.com/index/blog/zeroalloc_continuations_p2.html)

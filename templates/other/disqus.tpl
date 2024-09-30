@@ -1,6 +1,6 @@
 <div id="disqus_thread"></div>
 <script>
-var disqus_url = 'http://vittorioromeo.info';
+var disqus_url = 'http://vittorioromeo.com';
 
 var disqus_config = function () {
     this.page.url = "{{PageUrl}}";

@@ -1,7 +1,7 @@
 // Copyright (c) 2015-2016 Vittorio Romeo
 // License: Academic Free License ("AFL") v. 3.0
 // AFL License page: http://opensource.org/licenses/AFL-3.0
-// http://vittorioromeo.info | vittorio.romeo@outlook.com
+// http://vittorioromeo.com | vittorio.romeo@outlook.com
 
 // #define VR_USE_BOOST_VARIANT
 
@@ -13,14 +13,14 @@ template <typename T>
 struct recursion_helper
 {
     T _v;
-        
+
     template<typename... Ts>
     recursion_helper(Ts&&... xs) : _v(FWD(xs)...) { }
 
     operator T&() & { return _v; }
     operator const T&() const& { return _v; }
     operator T() && { return std::move(_v); }
-    
+
     auto& as_inner() & { return _v; }
     const auto& as_inner() const& { return _v; }
     auto as_inner() && { return std::move(_v); }

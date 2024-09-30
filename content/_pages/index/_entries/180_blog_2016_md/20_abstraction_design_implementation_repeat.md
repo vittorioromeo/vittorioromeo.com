@@ -42,7 +42,7 @@ This is unnecessary boilerplate, which masks the intent of the code and allows t
 
 ### welcome, abstractions!
 
-In my previous [**"passing functions to functions"**](https://vittorioromeo.info/index/blog/passing_functions_to_functions.html) and [**"zero-overhead C++17 currying & partial application"**](https://vittorioromeo.info/index/blog/cpp17_curry.html) articles I've praised C++11 *(and newer standards)* for allowing us to write *"more functional"* code. In particular, I discussed ["higher-order functions"](https://en.wikipedia.org/wiki/Functional_programming#First-class_and_higher-order_functions). These concepts will be used throughout the article - I'm going to assume your familiarity with them from now on.
+In my previous [**"passing functions to functions"**](https://vittorioromeo.com/index/blog/passing_functions_to_functions.html) and [**"zero-overhead C++17 currying & partial application"**](https://vittorioromeo.com/index/blog/cpp17_curry.html) articles I've praised C++11 *(and newer standards)* for allowing us to write *"more functional"* code. In particular, I discussed ["higher-order functions"](https://en.wikipedia.org/wiki/Functional_programming#First-class_and_higher-order_functions). These concepts will be used throughout the article - I'm going to assume your familiarity with them from now on.
 
 If I want to repeat an action $n$ times, I exactly want to write that in my code:
 
@@ -248,4 +248,4 @@ I wanted to tell you about multiple unrelated things with this article. Here are
 
 I hope you enjoyed this unusual, mixed article - I'm planning to write a short sequel covering `repeat<I>`, a similar abstraction that instead of looping at run-time, loops at compile-time *(i.e. generates unrolled code and provides access to the index in a `constexpr`-friendly manner)*.
 
-The next article in the series, [**"compile-time `repeat` & `noexcept`-correctness"**](https://vittorioromeo.info/index/blog/compile_time_repeat_noexcept_correctness.html), covers a compile-time version of `repeat` and the importance of *`noexcept`-correctness*.
+The next article in the series, [**"compile-time `repeat` & `noexcept`-correctness"**](https://vittorioromeo.com/index/blog/compile_time_repeat_noexcept_correctness.html), covers a compile-time version of `repeat` and the importance of *`noexcept`-correctness*.

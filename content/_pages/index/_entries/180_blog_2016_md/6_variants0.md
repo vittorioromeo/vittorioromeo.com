@@ -1,7 +1,7 @@
 
 
 
-In my previous article, [*"visiting variants using lambdas - part 1"*](https://vittorioromeo.info/index/blog/variants_lambdas_part_1.html), I wrote about a simple technique *(using [`boost::hana`](http://www.boost.org/doc/libs/1_62_0/libs/hana/doc/html/index.html))* that allows variant visitation using lambdas.
+In my previous article, [*"visiting variants using lambdas - part 1"*](https://vittorioromeo.com/index/blog/variants_lambdas_part_1.html), I wrote about a simple technique *(using [`boost::hana`](http://www.boost.org/doc/libs/1_62_0/libs/hana/doc/html/index.html))* that allows variant visitation using lambdas.
 
 The technique consisted in passing several lambdas to [`boost::hana::overload`](http://www.boost.org/doc/libs/1_61_0/libs/hana/doc/html/group__group-functional.html#ga83e71bae315e299f9f5f9de77b012139) in order to create a *"local"* visitor, without having to define a `class`/`struct`.
 
@@ -32,7 +32,7 @@ v0 = 33.51;
 vr::visit(vnp, v0);
 ```
 
-*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/visiting_variants/2_lambda_visitation.cpp).)*
+*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_variants/2_lambda_visitation.cpp).)*
 
 
 
@@ -60,7 +60,7 @@ struct my_variant
 };
 ```
 
-Let's move on by extending the `vnum` variant type *(seen in [part 1](https://vittorioromeo.info/index/blog/variants_lambdas_part_1.html))* to support vectors of other `vnum` instances.
+Let's move on by extending the `vnum` variant type *(seen in [part 1](https://vittorioromeo.com/index/blog/variants_lambdas_part_1.html))* to support vectors of other `vnum` instances.
 
 The first problem is that the variant will have to refer to itself in its own type alias definition - one possible solution is **forward-declaring** a `vnum_wrapper` class *(which can be safely "stored" in `std::vector` since the approval of [N4510](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4510.html))*:
 
@@ -164,13 +164,13 @@ v0 = varr{vnum{5}, varr{vnum{7}, vnum{8.0}, vnum{9.}}, vnum{4.f}};
 vr::visit(vnp, v0);
 ```
 
-*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/visiting_recursive_variants/0_traditional.cpp).)*
+*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_recursive_variants/0_traditional.cpp).)*
 
 
 
 ### *"Lambda-based"* recursive visitation - take one
 
-Applying the `boost::hana::overload` solution seen in [part one](https://vittorioromeo.info/index/blog/variants_lambdas_part_1.html) to recursive variants seems like a reasonable plan.
+Applying the `boost::hana::overload` solution seen in [part one](https://vittorioromeo.com/index/blog/variants_lambdas_part_1.html) to recursive variants seems like a reasonable plan.
 
 ```cpp
 auto my_visitor = boost::hana::overload
@@ -193,7 +193,7 @@ Unfortunately, we are greeted with a *compiler error*:
 
 > error: variable 'my_visitor' declared with 'auto' type cannot appear in its own initializer
 
-*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/visiting_recursive_variants/2_lambda_notworking.cpp).)*
+*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_recursive_variants/2_lambda_notworking.cpp).)*
 
 In short, the problem is that `my_visitor`'s type will be deduced from its own initialization... but `my_visitor` is also part of the initialization! If we had a way to explicitly specify the lambda's type in place of `auto`, the above code snippet could compile. [More details about this issue can be found here.](http://stackoverflow.com/questions/7861506/recursive-call-in-lambda-c11)
 
@@ -331,7 +331,7 @@ vr::visit(vnp, v0);
 
 Again, keep in mind that this technique does not work well if you require *stateful* visitors - use a `class`/`struct` in that situation.
 
-*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/visiting_recursive_variants/1_lambda.cpp).)*
+*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_recursive_variants/1_lambda.cpp).)*
 
 
 You're probably now asking...
@@ -517,8 +517,8 @@ The code and the assembly output [is available here](https://github.com/SuperV12
 
 ### series
 
-* [*"visiting variants using lambdas - part 1"*](https://vittorioromeo.info/index/blog/variants_lambdas_part_1.html)
+* [*"visiting variants using lambdas - part 1"*](https://vittorioromeo.com/index/blog/variants_lambdas_part_1.html)
 
-* [*"visiting variants using lambdas - part 2"*](https://vittorioromeo.info/index/blog/variants_lambdas_part_2.html)
+* [*"visiting variants using lambdas - part 2"*](https://vittorioromeo.com/index/blog/variants_lambdas_part_2.html)
 
-* [*"visiting variants using lambdas - part 3"*](https://vittorioromeo.info/index/blog/variants_lambdas_part_3.html)
+* [*"visiting variants using lambdas - part 3"*](https://vittorioromeo.com/index/blog/variants_lambdas_part_3.html)

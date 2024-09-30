@@ -10,7 +10,7 @@
 }
 </style>
 
-In one of my previous articles, ["compile-time `repeat` & `noexcept`-correctness"](https://vittorioromeo.info/index/blog/compile_time_repeat_noexcept_correctness.html), I have covered the design and implementation of a simple `repeat<n>(f)` function that, when invoked, expands to `n` calls to `f` during compilation. E.g.
+In one of my previous articles, ["compile-time `repeat` & `noexcept`-correctness"](https://vittorioromeo.com/index/blog/compile_time_repeat_noexcept_correctness.html), I have covered the design and implementation of a simple `repeat<n>(f)` function that, when invoked, expands to `n` calls to `f` during compilation. E.g.
 
 ```cpp
 repeat<4>([]{ std::cout << "hello\n"; });

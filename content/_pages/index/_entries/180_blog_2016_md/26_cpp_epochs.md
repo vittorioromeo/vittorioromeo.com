@@ -186,4 +186,4 @@ Here are some interesting discussions on the subject:
 
 Here's my previous article where I discuss my Jacksonville meeting experience, including the informal epochs proposal:
 
-* ["*trip report: first ISO C++ meeting experience*"](https://vittorioromeo.info/index/blog/mar18_iso_meeting_report.html)
+* ["*trip report: first ISO C++ meeting experience*"](https://vittorioromeo.com/index/blog/mar18_iso_meeting_report.html)

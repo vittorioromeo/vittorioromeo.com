@@ -103,7 +103,7 @@ auto make_noise(const T& x)
 }
 ```
 
-That's it for C++11! [*You can find a complete example on GitHub.*](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/in_place_expr_validity/0_cpp11.cpp)
+That's it for C++11! [*You can find a complete example on GitHub.*](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/in_place_expr_validity/0_cpp11.cpp)
 
 *(Note: for more `void_t` goodness, check out [the detection idiom](http://en.cppreference.com/w/cpp/experimental/is_detected).)*
 
@@ -204,7 +204,7 @@ auto make_noise(const T& x)
 }
 ```
 
-[*You can find a complete example on GitHub.*](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/in_place_expr_validity/1_cpp14.cpp)
+[*You can find a complete example on GitHub.*](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/in_place_expr_validity/1_cpp14.cpp)
 
 Is this a better implementation compared to the C++11 version? That's debatable. There are, however, some objective advantages:
 
@@ -327,7 +327,7 @@ static_assert(
 );
 ```
 
-*Yikes.* This works and compiles, but it's verbose and full of noise/boilerplate. That's why a macro *\*shudders\** is needed here. Let's finally check out how `IS_VALID` is implemented. *(For simplicity, only the single-type version will be analyzed. A fully-variadic `IS_VALID` is simple to implement - [see the example on GitHub](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/in_place_expr_validity/2_cpp17.cpp), which uses my [`vrm_pp` preprocessor metaprogramming](https://github.com/SuperV1234/vrm_pp) library.)*
+*Yikes.* This works and compiles, but it's verbose and full of noise/boilerplate. That's why a macro *\*shudders\** is needed here. Let's finally check out how `IS_VALID` is implemented. *(For simplicity, only the single-type version will be analyzed. A fully-variadic `IS_VALID` is simple to implement - [see the example on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/in_place_expr_validity/2_cpp17.cpp), which uses my [`vrm_pp` preprocessor metaprogramming](https://github.com/SuperV1234/vrm_pp) library.)*
 
 ```cpp
 template <typename T, typename TF>
@@ -382,7 +382,7 @@ Finally, `some_validity_checker(type_c<int*>)` is a *constant expression* that e
 
 The [`std::tuple`](http://en.cppreference.com/w/cpp/utility/tuple) and the `operator|` overload are there just to make the `IS_VALID(types...)(expression)` syntax possible. Alternatively, the user would have had to specify the number of types as part of the macro name itself. Separating the expression from the types allows [variadic macro argument counting techniques](https://github.com/SuperV1234/vrm_pp/blob/master/include/vrm/pp/arg_count.hpp) to be easily applied.
 
-That's it! [*You can find a complete example on GitHub.*](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/in_place_expr_validity/2_cpp17.cpp)
+That's it! [*You can find a complete example on GitHub.*](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/in_place_expr_validity/2_cpp17.cpp)
 
 I think this technique is very useful when combined with `if constexpr(...)` - it's a barebones *"in-place concept"* definition and check. Example:
 
@@ -419,7 +419,7 @@ auto some_generic_function(T0 a, T1 b)
 
 #### Major simplification
 
-When I woke up today I was extremely happy to see that [**Fabio**](https://disqus.com/by/fabio_a/) managed to simplify `IS_VALID`'s implementation significantly. He posted his work in the comments and [sent a PR](https://github.com/SuperV1234/vittorioromeo.info/pull/5) that I accepted. **Thanks - very appreciated!**
+When I woke up today I was extremely happy to see that [**Fabio**](https://disqus.com/by/fabio_a/) managed to simplify `IS_VALID`'s implementation significantly. He posted his work in the comments and [sent a PR](https://github.com/SuperV1234/vittorioromeo.com/pull/5) that I accepted. **Thanks - very appreciated!**
 
 I decided to cover his improvements here. Readers interested in implementing `IS_VALID` should definitely use his simplified version.
 
@@ -427,7 +427,7 @@ I decided to cover his improvements here. Readers interested in implementing `IS
 
     ```cpp
     template <typename ...Ts>
-    struct validity_checker 
+    struct validity_checker
     {
         template <typename TF>
         static constexpr auto is_valid(TF)
@@ -443,7 +443,7 @@ I decided to cover his improvements here. Readers interested in implementing `IS
     #define IS_VALID_EXPANDER_END(...) (__VA_ARGS__){})
 
     #define IS_VALID_1(...) \
-        validity_checker<__VA_ARGS__>::is_valid([](auto _0) constexpr \ 
+        validity_checker<__VA_ARGS__>::is_valid([](auto _0) constexpr \
         -> decltype IS_VALID_EXPANDER_END
     ```
 
@@ -453,11 +453,11 @@ I decided to cover his improvements here. Readers interested in implementing `IS
 
     ```cpp
     #define IS_VALID_EXPANDER_BEGIN(count) \
-        is_valid([](VRM_PP_REPEAT_INC(count, IS_VALID_EXPANDER_MIDDLE,_)) \ 
+        is_valid([](VRM_PP_REPEAT_INC(count, IS_VALID_EXPANDER_MIDDLE,_)) \
         constexpr -> decltype IS_VALID_EXPANDER_END
 
     #define IS_VALID_EXPANDER_MIDDLE(idx, _) \
-        VRM_PP_COMMA_IF(idx) auto _##idx 
+        VRM_PP_COMMA_IF(idx) auto _##idx
 
     #define IS_VALID_EXPANDER_END(...) (__VA_ARGS__){})
 
@@ -465,9 +465,7 @@ I decided to cover his improvements here. Readers interested in implementing `IS
         validity_checker<__VA_ARGS__>:: \
         IS_VALID_EXPANDER_BEGIN(VRM_PP_ARGCOUNT(__VA_ARGS__))
     ```
-    
-    * `VRM_PP_REPEAT_INC(count, IS_VALID_EXPANDER_MIDDLE,_)` is used to generate the `auto _0, auto_1, /*...*/` arguments.
-    
-    * `IS_VALID_EXPANDER_BEGIN(VRM_PP_ARGCOUNT(__VA_ARGS__))` is used to count the number of types passed to `IS_VALID`, and to begin generating the expansion.
-    
 
+    * `VRM_PP_REPEAT_INC(count, IS_VALID_EXPANDER_MIDDLE,_)` is used to generate the `auto _0, auto_1, /*...*/` arguments.
+
+    * `IS_VALID_EXPANDER_BEGIN(VRM_PP_ARGCOUNT(__VA_ARGS__))` is used to count the number of types passed to `IS_VALID`, and to begin generating the expansion.

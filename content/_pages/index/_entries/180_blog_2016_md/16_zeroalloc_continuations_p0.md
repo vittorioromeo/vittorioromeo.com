@@ -63,7 +63,7 @@ auto then(std::experimental::future<T>& parent, std::launch policy, F&& f)
 }
 ```
 
-Hmm... `std::async`, type erasure... this means that there might be potential allocations! Let's attempt to roughly measure their overhead. I created [five `.cpp` files](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/zeroalloc_continuations/) where I used `boost::async` and `boost::future` to create a chain of `.then` continuations, starting with zero continuations and ending with four. Example:
+Hmm... `std::async`, type erasure... this means that there might be potential allocations! Let's attempt to roughly measure their overhead. I created [five `.cpp` files](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/) where I used `boost::async` and `boost::future` to create a chain of `.then` continuations, starting with zero continuations and ending with four. Example:
 
 ```cpp
 // zero continuations
@@ -101,7 +101,7 @@ I then compiled every file with...
 g++ -std=c++1z -Ofast -DNDEBUG -S
 ```
 
-...and counted the lines of [stripped](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/zeroalloc_continuations/stripasm) generated assembly. These are the results:
+...and counted the lines of [stripped](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/stripasm) generated assembly. These are the results:
 
 | Continuations |   0   |   1   |   2   |   3   |   4   |
 |--------------:|:-----:|:-----:|:-----:|:-----:|:-----:|
@@ -184,7 +184,7 @@ struct asynchronous_scheduler
 
 </div>
 
-[**891**](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/zeroalloc_continuations/stack_2_continuations.cpp.s)!
+[**891**](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/stack_2_continuations.cpp.s)!
 
 > ...wait, is that a good result?
 
@@ -203,7 +203,7 @@ auto f = initiate([]{ return 1; })
 
 </div>
 
-...still produces [891 lines of assembly](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/zeroalloc_continuations/stack_22_continuations.cpp.s). This happens because `decltype(f)` is a huge type containing all the types of the continuations - the compiler is able to inline everything.
+...still produces [891 lines of assembly](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/stack_22_continuations.cpp.s). This happens because `decltype(f)` is a huge type containing all the types of the continuations - the compiler is able to inline everything.
 
 
 
@@ -280,7 +280,7 @@ So short, yet so interesting:
 
     * Captures `std::move(*this)` as `parent`. While this looks weird, it is completely fine to move `*this` as long as it's not going to be used anymore afterwards. What we're doing here is crucial: we're moving the current computation chain inside the newly created one without any allocation or type erasure: this means that `decltype(*this)` will be part of the type of the new continuation.
 
-    * Captures `f_then` by using `std::forward`. This is OK, but might not do what you expect when `f_then` is an *lvalue reference*: you might be interested in my previous [**"capturing perfectly-forwarded objects in lambdas"**](https://vittorioromeo.info/index/blog/capturing_perfectly_forwarded_objects_in_lambdas.html) article.
+    * Captures `f_then` by using `std::forward`. This is OK, but might not do what you expect when `f_then` is an *lvalue reference*: you might be interested in my previous [**"capturing perfectly-forwarded objects in lambdas"**](https://vittorioromeo.com/index/blog/capturing_perfectly_forwarded_objects_in_lambdas.html) article.
 
     * Is marked as `mutable`. This is necessary as we may move the newly-created `node` again in subsequent computations, and moving doesn't play nicely with `const`.
 
@@ -292,7 +292,7 @@ So short, yet so interesting:
 
 `decltype(f)` is huge, because there is no type erasure. Let me show you an *intentionally-produced* compiler error from the snippet with 22 `.then` continuations:
 
-[![Beautiful.](resources/img/blog/zeroalloc_continuations_0_error.png)](https://vittorioromeo.info/resources/img/blog/zeroalloc_continuations_0_error.png)
+[![Beautiful.](resources/img/blog/zeroalloc_continuations_0_error.png)](https://vittorioromeo.com/resources/img/blog/zeroalloc_continuations_0_error.png)
 
 This is the end of the first part of "zero-allocation continuations". In the next one we'll take a look at a possible implementation of `when_all`, and experiment with thread pools.
 
@@ -304,8 +304,8 @@ Thanks for reading!
 
 ### series
 
-* [*"zero-allocation continuations - part 1"*](https://vittorioromeo.info/index/blog/zeroalloc_continuations_p0.html)
+* [*"zero-allocation continuations - part 1"*](https://vittorioromeo.com/index/blog/zeroalloc_continuations_p0.html)
 
-* [*"zero-allocation continuations - part 2"*](https://vittorioromeo.info/index/blog/zeroalloc_continuations_p1.html)
+* [*"zero-allocation continuations - part 2"*](https://vittorioromeo.com/index/blog/zeroalloc_continuations_p1.html)
 
-* [*"zero-allocation continuations - part 3"*](https://vittorioromeo.info/index/blog/zeroalloc_continuations_p2.html)
+* [*"zero-allocation continuations - part 3"*](https://vittorioromeo.com/index/blog/zeroalloc_continuations_p2.html)

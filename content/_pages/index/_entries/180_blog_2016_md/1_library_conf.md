@@ -84,14 +84,14 @@ The library can be used in several modes:
 
     * The user must create a `.so` file *(e.g. by using `g++ -shared`)*.
 
-**[The code for the example library is available on GitHub.](https://github.com/SuperV1234/vittorioromeo.info/tree/master/extra/example_library)**
+**[The code for the example library is available on GitHub.](https://github.com/SuperV1234/vittorioromeo.com/tree/master/extra/example_library)**
 
 ### API options
 
 The `api.hpp` file will contain required preprocessor definitions:
 
 ```cpp
-/* 
+/*
     ./api.hpp
 */
 
@@ -124,7 +124,7 @@ Every module of the library will include `api.hpp`.
 Public module header files will take care of including all the implementation files for a specific library module. They will also include source files if `LIBRARY_HEADER_ONLY` is defined.
 
 ```cpp
-/* 
+/*
     ./module0.hpp
 */
 
@@ -150,7 +150,7 @@ Public module header files will take care of including all the implementation fi
 Implementation module header files will contain declarations. Functions that will be defined in `.cpp` source files will have to be decorated with the `LIBRARY_API` macro.
 
 ```cpp
-/* 
+/*
     ./module0/module0.hpp
 */
 
@@ -175,7 +175,7 @@ Function implementations in `.cpp` source files and `.inl` definition files do n
 
 
 ```cpp
-/* 
+/*
     ./module0/module0.inl
 */
 
@@ -192,7 +192,7 @@ void t_func0()
 ```
 
 ```cpp
-/* 
+/*
     ./module0/module0.cpp
 */
 
@@ -226,7 +226,7 @@ In this section we'll cover some examples on how users can include the library i
 
 Every file will be compiled separately into its own object file and includes the entire library. This is where the `LIBRARY_API` macro becomes essential: if the library is being used in *header-only mode* it is **mandatory** to decorate `func0` and `func1` with `inline` to prevent *"multiple definition"* compilation errors.
 
-The following examples were tested both with `g++ 6.1.1` and `clang++ 3.8.1`. You can find the test script [here on GitHub](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/example_library/test.sh). 
+The following examples were tested both with `g++ 6.1.1` and `clang++ 3.8.1`. You can find the test script [here on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/example_library/test.sh).
 
 #### Header-only mode
 

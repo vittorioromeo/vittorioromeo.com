@@ -32,7 +32,7 @@ I am working on a virtual reality mod for Quake. Actually, calling it a "mod" is
 
 </center>
 
-The [**Quake VR** project]((https://vittorioromeo.info/quakevr)) has been a great source of fun and a fantastic learning experience for me. I am getting in a very intimate relationship with Quake's codebase (including all its quirks and weirdnesses), getting accustomed to [OpenVR](https://github.com/ValveSoftware/openvr), and dabbling in OpenGL graphics programming that I had never done before (e.g. geometry shaders).
+The [**Quake VR** project]((https://vittorioromeo.com/quakevr)) has been a great source of fun and a fantastic learning experience for me. I am getting in a very intimate relationship with Quake's codebase (including all its quirks and weirdnesses), getting accustomed to [OpenVR](https://github.com/ValveSoftware/openvr), and dabbling in OpenGL graphics programming that I had never done before (e.g. geometry shaders).
 
 I am also using this project as an opportunity to experiment with C++17 features, and to generally enjoy myself with Modern C++. One of my favorite additions to the 2017 standard of the language is [*"fold expressions"*](https://en.cppreference.com/w/cpp/language/fold). A fold expression basically reduces a [*parameter pack*](https://en.cppreference.com/w/cpp/language/parameter_pack) into a single result, but can also be used to arbitrarily generate code for every element in the pack.
 

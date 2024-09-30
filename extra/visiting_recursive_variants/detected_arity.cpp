@@ -1,7 +1,7 @@
 // Copyright(c)2015 - 2016 Vittorio Romeo
 // License: Academic Free License ("AFL") v. 3.0
 // AFL License page: http://opensource.org/licenses/AFL-3.0
-// http://vittorioromeo.info | vittorio.romeo@outlook.com
+// http://vittorioromeo.com | vittorio.romeo@outlook.com
 
 // #define VR_USE_BOOST_VARIANT
 
@@ -71,7 +71,7 @@ struct any_type
 {
     template <typename... Ts>
     constexpr auto operator()(Ts&&...){}
-    
+
     template <typename T>
     constexpr operator T() noexcept
     {
@@ -81,7 +81,7 @@ struct any_type
 
 template<class T>
 using callable2 = decltype(std::declval<T>()(any_type{}, any_type{}));
- 
+
 
 struct arity_detector_t
 {

@@ -10,7 +10,7 @@
 }
 </style>
 
-It's been exactly 447 days since my last article, ["compile-time iteration with C++20 lambdas"](https://vittorioromeo.info/index/blog/cpp20_lambdas_compiletime_for.html). I should be ashamed.
+It's been exactly 447 days since my last article, ["compile-time iteration with C++20 lambdas"](https://vittorioromeo.com/index/blog/cpp20_lambdas_compiletime_for.html). I should be ashamed.
 
 In my defense, I've been very busy since then... and I'm going to tell you all about it in this blog post.
 

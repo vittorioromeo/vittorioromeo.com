@@ -23,7 +23,7 @@ In this article, we're gonna take a look at:
 
 Before looking at visitation techniques, I just wanted to mention that everything written in this article applies both to [`boost::variant`](http://www.boost.org/doc/libs/1_62_0/doc/html/variant.html) and [`std::variant`](http://en.cppreference.com/w/cpp/utility/variant).
 
-In fact, I've written a [very simple wrapper](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/visiting_variants/variant_aliases.hpp) for the upcoming examples that conditionally aliases `vr::variant<Ts...>` to `std::variant<Ts...>` if available, otherwise to `boost::variant<Ts...>`.
+In fact, I've written a [very simple wrapper](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_variants/variant_aliases.hpp) for the upcoming examples that conditionally aliases `vr::variant<Ts...>` to `std::variant<Ts...>` if available, otherwise to `boost::variant<Ts...>`.
 
 The `vr::visit(xs...)` function is similarly an alias for `std::visit(xs...)` if available, otherwise for `boost::apply_visitor(xs...)`.
 
@@ -81,7 +81,7 @@ vr::visit(vnum_printer{}, v0);
 
 This works, but requires us to define a new `vnum_printer` visitor type - this boilerplate can be avoided.
 
-*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/visiting_variants/0_traditional_visitation.cpp).)*
+*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_variants/0_traditional_visitation.cpp).)*
 
 
 
@@ -180,7 +180,7 @@ my_variant = 5.f;
 vr::visit(my_visitor, my_variant);
 ```
 
-*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.info/blob/master/extra/visiting_variants/2_lambda_visitation.cpp).)*
+*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_variants/2_lambda_visitation.cpp).)*
 
 
 
@@ -261,8 +261,8 @@ Thanks for reading!
 
 ### series
 
-* [*"visiting variants using lambdas - part 1"*](https://vittorioromeo.info/index/blog/variants_lambdas_part_1.html)
+* [*"visiting variants using lambdas - part 1"*](https://vittorioromeo.com/index/blog/variants_lambdas_part_1.html)
 
-* [*"visiting variants using lambdas - part 2"*](https://vittorioromeo.info/index/blog/variants_lambdas_part_2.html)
+* [*"visiting variants using lambdas - part 2"*](https://vittorioromeo.com/index/blog/variants_lambdas_part_2.html)
 
-* [*"visiting variants using lambdas - part 3"*](https://vittorioromeo.info/index/blog/variants_lambdas_part_3.html)
+* [*"visiting variants using lambdas - part 3"*](https://vittorioromeo.com/index/blog/variants_lambdas_part_3.html)

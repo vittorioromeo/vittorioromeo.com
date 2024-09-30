@@ -1,4 +1,4 @@
-<link rel="alternate" type="application/rss+xml" href="https://vittorioromeo.info/index.rss" />
+<link rel="alternate" type="application/rss+xml" href="https://vittorioromeo.com/index.rss" />
 
 <article>
 
