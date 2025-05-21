@@ -1,0 +1,290 @@
+/* --- custom.css --- */
+
+/* Base Enhancements & Dark Mode Defaults */
+:root {
+    /* Adjust accent color if desired */
+    --pico-primary: #6f7684; /* Match secondary button color from target */
+}
+
+
+a {
+    color: #a9def9; /* Example link color */
+}
+
+a:hover {
+    color: #e3f3ff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #e1e7ef; /* Lighter headings */
+}
+
+/* Header */
+.page-header hgroup {
+    text-align: center;
+}
+.page-header h1 {
+    font-size: 2.5rem; /* Larger main title */
+}
+.page-header p {
+    font-size: 1.1rem;
+    color: #a7aeb8; /* Subdued subtitle */
+}
+
+/* Main Navigation (Adapted from romeo.training) */
+.main-nav {
+    background-color: #181c25; /* Slightly lighter than body */
+    padding-top: 0.5rem;
+    margin-bottom: 2rem;
+    border-top: 1px solid #292f3b;
+    border-bottom: 1px solid #292f3b;
+}
+.main-nav nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Spacing between buttons */
+}
+.main-nav nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: contents; /* Allow li items to participate in flex layout */
+}
+.main-nav nav li {
+    display: inline-block; /* Keep items inline */
+}
+.main-nav nav a {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    background-color: transparent;
+    color: var(--pico-secondary-color, #b1b8c5); /* Use Pico variable if available */
+    border: 1px solid var(--pico-secondary-border-color, #434a5a);
+    border-radius: var(--pico-border-radius, 0.25rem);
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-size: 0.9rem;
+}
+.main-nav nav a:hover {
+    background-color: var(--pico-secondary-hover-background-color, #292f3b);
+    color: var(--pico-secondary-hover-color, #d4dae3);
+    border-color: var(--pico-secondary-hover-border-color, #555d70);
+}
+.main-nav nav a .fas { /* Font Awesome icon styling */
+    margin-right: 8px;
+    font-size: 110%;
+}
+
+h4 {
+    opacity:85%;
+}
+
+p a {
+    text-decoration-style: dotted;
+    text-decoration-color: #a9def9ba;
+}
+
+code {
+    padding-top: .175rem;
+    padding-bottom: .175rem;
+    color: #c2c7d0;
+}
+
+a code {
+    padding-top: .175rem;
+    padding-bottom: .175rem;
+    color: #a9def9;
+}
+
+/* Main Content Area */
+main.container {
+    padding-top: 0; /* Remove extra top padding if nav adds space */
+}
+
+/* Blog Entry Styling */
+
+
+article.blog-entry header h2 {
+    margin-bottom: 0.5rem;
+}
+article.blog-entry header h2 a {
+    text-decoration: none;
+    color: inherit;
+}
+article.blog-entry header h2 a:hover {
+    color: #a9def9; /* Link hover color */
+}
+
+.entry-meta {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-size: 0.85em;
+    color: #8a919e; /* Subdued meta text */
+}
+.entry-meta .date {
+    margin-right: 1em; /* Space between date and tags */
+}
+.entry-meta .date i { padding-right: 0.35em; }
+.entry-meta .tags a {
+    margin-left: 6px;
+    padding: 2px 6px;
+    background-color: #292f3b;
+    color: #a7aeb8;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+.entry-meta .tags a:hover {
+    background-color: #434a5a;
+    color: #c2c7d0;
+}
+
+.entry-content {
+    line-height: 1.65; /* Improve readability */
+}
+
+/* Accordion Styling (for potential future use, mimics romeo.training) */
+details {
+    border: 1px solid #292f3b;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    background-color: #181c25;
+    transition: background-color 0.2s ease;
+    position: relative; /* Needed for hover effect */
+    overflow: hidden; /* Prevent content spill before expansion */
+}
+details summary {
+    padding: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: #c2c7d0; /* Ensure summary text is visible */
+    transition: background-color 0.2s ease;
+    list-style: none; /* Remove default marker */
+    position: relative; /* For custom marker */
+}
+details summary::marker, /* Hide standard marker in Firefox */
+details summary::-webkit-details-marker /* Hide standard marker in Chrome/Safari */ {
+    display: none;
+}
+details summary::before { /* Custom marker */
+    content: '+';
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    margin-right: 0.5rem;
+    display: inline-block;
+    width: 1em;
+    text-align: center;
+}
+details[open] summary::before {
+    content: '−';
+}
+
+details[open] summary {
+    background-color: #292f3b; /* Highlight when open */
+}
+details:hover {
+     background-color: #202530; /* Slight hover effect */
+}
+details .accordion-content {
+    padding: 0 1rem 1rem 1rem; /* Padding for content inside */
+    border-top: 1px solid #292f3b;
+}
+
+/* Pagination */
+.pagination {
+    text-align: center;
+    margin-top: 2rem;
+}
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.pagination li {
+    display: inline-block;
+    margin: 0 5px;
+}
+.pagination a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid #434a5a;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.pagination a:hover {
+    background-color: #292f3b;
+    color: #d4dae3;
+}
+/* Style for the current page if applicable (needs logic in generator) */
+/* .pagination li.current a { background-color: #434a5a; color: #fff; } */
+
+
+/* Footer */
+.page-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #292f3b;
+    text-align: center;
+    font-size: 0.9em;
+    color: #8a919e;
+}
+.footer-links {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.footer-links a {
+    margin: 0 10px;
+    color: #a7aeb8;
+    text-decoration: none;
+    font-size: 1.5rem; /* Icon size */
+    transition: color 0.2s ease;
+}
+.footer-links a:hover {
+    color: #e3f3ff;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    .main-nav nav {
+        justify-content: space-around; /* Better spacing on small screens */
+    }
+    .main-nav nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    .entry-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .entry-meta .tags {
+        margin-top: 0.5rem;
+    }
+    .entry-meta .tags a:first-child {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-nav nav a {
+        flex-basis: 45%; /* Example: two buttons per row */
+        text-align: center;
+    }
+}
+
+/* Utils from old CSS (optional, keep if needed) */
+.truncate {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
