@@ -6,8 +6,8 @@
 
             "expand":
             {
-                "Title": "home page",
-                "Text": "Welcome to my blog.<hr>"
+                "Title": "",
+                "Text": ""
             }
         }
     ]

@@ -1,26 +1,42 @@
+
 [
     {
-        "label": "home",
+        "label": "<i class=\"fa-solid fa-newspaper\"></i> blog",
         "href": "/index.html"
     },
 
     {
-        "label": "talks",
-        "href": "/talks.html"
+        "label": "<i class=\"fas fa-laptop-code\"></i> training & consulting",
+        "href": "https://romeo.training"
     },
 
     {
-        "label": "projects",
-        "href": "/projects.html"
+        "label": "<i class=\"fas fa-file\"></i> resume",
+        "href": "https://romeo.training/#experience"
     },
 
     {
-        "label": "tutorials",
-        "href": "/tutorials.html"
-    },
-
-    {
-        "label": "stuff",
-        "href": "/stuff.html"
+        "label": "<i class=\"fas fa-book\"></i> publications",
+        "href": "https://romeo.training/#publications"
     }
+
+    // {
+    //     "label": "talks",
+    //     "href": "/talks.html"
+    // },
+
+    // {
+    //     "label": "projects",
+    //     "href": "/projects.html"
+    // },
+
+    // {
+    //     "label": "tutorials",
+    //     "href": "/tutorials.html"
+    // },
+
+    // {
+    //     "label": "stuff",
+    //     "href": "/stuff.html"
+    // }
 ]

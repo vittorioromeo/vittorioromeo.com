@@ -14,6 +14,52 @@
         //    },
         {
             "template": "templates/entries/blog.tpl",
+            "link_name": "vrsfml3",
+            "tags": [
+                "c++",
+                "c++20",
+                "gamedev",
+                "sfml"
+            ],
+            "expand": {
+                "Title": "free performance: autobatching in my SFML fork",
+                "Text": "180_blog_2016_md/36_vrsfml3.md",
+                "Date": "09 april 2025"
+            }
+        },
+        {
+            "template": "templates/entries/blog.tpl",
+            "link_name": "particles",
+            "tags": [
+                "c++",
+                "c++20",
+                "gamedev",
+                "sfml"
+            ],
+            "expand": {
+                "Title": "AoS vs SoA in practice: particle simulation",
+                "Text": "180_blog_2016_md/35_particles.md",
+                "Date": "17 march 2025"
+            }
+        },
+        {
+            "template": "templates/entries/blog.tpl",
+            "link_name": "vrsfml2",
+            "tags": [
+                "c++",
+                "c++20",
+                "gamedev",
+                "debug",
+                "sfml"
+            ],
+            "expand": {
+                "Title": "batching & API changes in my SFML fork",
+                "Text": "180_blog_2016_md/34_vrsfml2.md",
+                "Date": "1 october 2024"
+            }
+        },
+        {
+            "template": "templates/entries/blog.tpl",
             "link_name": "vrsfml",
             "tags": [
                 "c++",

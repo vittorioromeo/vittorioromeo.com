@@ -1068,10 +1068,7 @@ void process_entries_ellipsis_and_permalink(archetype::entry& ae)
 
     auto atag_link = "<a href='/" + atag_href + "'>";
 
-    auto atag_link_styled =
-        "<a style='color: black; text-decoration: "
-        "none;' href='/" +
-        atag_href + "'>";
+    auto atag_link_styled = "<h2><a href='/" + atag_href + "'>";
 
     // Ellipse long text
     std::string old_text = ae._expand["Text"].asStr();
@@ -1081,14 +1078,14 @@ void process_entries_ellipsis_and_permalink(archetype::entry& ae)
     {
         auto new_text = old_text.substr(0, second_paragraph + 4);
         new_text +=
-            "<p style='text-align: right; font-style: italic; font-size: small;'> "s +
+            "<p style='text-align: right; font-style: italic; font-size: 85%;'> "s +
             atag_link + " ... read more </a></p></body></html>";
 
         ae._expand["Text"] = new_text;
     }
 
     ae._expand["PermalinkBegin"] = atag_link_styled;
-    ae._expand["PermalinkEnd"] = "</a>";
+    ae._expand["PermalinkEnd"] = "</a></h2>";
 }
 
 void process_pages(context& ctx)
