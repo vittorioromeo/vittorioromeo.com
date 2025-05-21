@@ -57,7 +57,7 @@ textarea {
 
 code {
   padding: 2px;
-  font-size: 13px;
+  font-size: 0.875em; /* Relative font size for better scaling */
   font-family: "Fira Code",monospace,serif;
 }
 
@@ -149,7 +149,7 @@ h2 {
 body {
   background-color: white;
   color: #191919;
-  font: 16px/26px Helvetica, Helvetica Neue, Arial;
+  font-family: Helvetica, Helvetica Neue, Arial; /* Removed fixed pixel size, keep family */
   line-height: 1.5em; }
 
 article header, article footer {
@@ -498,26 +498,23 @@ blockquote > pre > code { overflow-x: scroll; }
 @media only screen and (max-width: 400px) {
   .mainMenu
   {
-    zoom: 65%
   }
 
-  .header-container{ zoom: 65% }
+  .header-container{ }
 }
 
 @media only screen and (min-width: 400px) {
   .mainMenu
   {
-    zoom: 75%
   }
 
-  .header-container{ zoom: 75% }
+  .header-container{ }
 }
 
 @media only screen and (min-width: 768px) {
   .mainMenu
   {
-    zoom: 100%
   }
 
-  .header-container{ zoom: 100% }
+  .header-container{ }
 }

@@ -43,7 +43,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px; /* Spacing between buttons */
+    gap: 0.5rem; /* Spacing between buttons */
 }
 .main-nav nav ul {
     list-style: none;
@@ -259,7 +259,7 @@ details .accordion-content {
         justify-content: space-around; /* Better spacing on small screens */
     }
     .main-nav nav a {
-        padding: 0.4rem 0.8rem;
+        padding: 0.5rem 1rem; /* Increased padding for better tap targets */
         font-size: 0.8rem;
     }
     .entry-meta {
@@ -276,7 +276,7 @@ details .accordion-content {
 
 @media (max-width: 576px) {
     .main-nav nav a {
-        flex-basis: 45%; /* Example: two buttons per row */
+        flex-basis: auto; /* Example: two buttons per row */
         text-align: center;
     }
 }
