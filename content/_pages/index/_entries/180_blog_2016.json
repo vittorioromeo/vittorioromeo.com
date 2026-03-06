@@ -14,6 +14,36 @@
         //    },
         {
             "template": "templates/entries/blog.tpl",
+            "link_name": "sfex_profiler",
+            "tags": [
+                "c++",
+                "c++20",
+                "gamedev",
+                "profiling"
+            ],
+            "expand": {
+                "Title": "building a lightweight ImGui profiler in ~500 lines of C++",
+                "Text": "180_blog_2016_md/38_sfex_profiler.md",
+                "Date": "18 october 2025"
+            }
+        },
+        {
+            "template": "templates/entries/blog.tpl",
+            "link_name": "controlflow",
+            "tags": [
+                "c++",
+                "c++20",
+                "coroutines",
+                "lambdas"
+            ],
+            "expand": {
+                "Title": "how to break or continue from a lambda loop?",
+                "Text": "180_blog_2016_md/37_controlflow.md",
+                "Date": "22 may 2025"
+            }
+        },
+        {
+            "template": "templates/entries/blog.tpl",
             "link_name": "vrsfml3",
             "tags": [
                 "c++",

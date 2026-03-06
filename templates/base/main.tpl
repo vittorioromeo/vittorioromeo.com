@@ -4,7 +4,7 @@
     {{Entry}}
 {{/Entries}}
 
-<nav class="pagination" aria-label="Pagination">
+<nav class="pagination" aria-label="Pagination" style="overflow-x: hidden">
     <ul>
         {{#Subpages}}
             <li><a href="{{Subpage}}">{{SubpageLabel}}</a></li>

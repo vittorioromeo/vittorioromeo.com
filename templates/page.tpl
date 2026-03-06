@@ -4,38 +4,28 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light dark" /> <!-- Support theme switching -->
 
-    <!-- Use a specific title or a variable -->
-    <title>{{PageTitle | default: "vittorio romeo's website"}}</title>
+    <title>vittorio romeo's website</title>
     <meta name="description" content="{{PageDescription | default: 'Vittorio Romeo personal blog/website'}}">
 
-    <!-- Favicons (replace with your actual files) -->
-    <link rel="icon" href="{{ResourcesPath}}/img/favicon.png" /> <!-- Adjust path -->
-    <link rel="apple-touch-icon" href="{{ResourcesPath}}/img/favicon.png"> <!-- Adjust path -->
+    <link rel="icon" href="{{ResourcesPath}}/img/favicon.png" />
+    <link rel="apple-touch-icon" href="{{ResourcesPath}}/img/favicon.png">
 
-    <!-- Pico CSS -->
-    <link rel="stylesheet" href="{{ResourcesPath}}/css/pico.min.css"> <!-- Adjust path -->
+    <link rel="stylesheet" href="{{ResourcesPath}}/css/pico.min.css">
 
-    <!-- Font Awesome (use CDN or download) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Your Custom CSS (LOAD LAST) -->
-    <link rel="stylesheet" href="{{ResourcesPath}}/css/custom.css"> <!-- Adjust path -->
+    <link rel="stylesheet" href="{{ResourcesPath}}/css/custom.css">
 
-    <!-- Original RSS Link -->
     <link rel="alternate" type="application/rss+xml" title="Vittorio Romeo's Website RSS Feed" href="https://vittorioromeo.com/index.rss" />
+<link href="https://pvinis.github.io/iosevka-webfont/3.4.1/iosevka.css" rel="stylesheet" />
 
-
-    <!-- MathJax (keep if needed) -->
     <script type="text/javascript" async
         src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
     </script>
 
-    <!-- Highlight.js for code (optional, choose a theme) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"> <!-- Choose dark theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <!-- Add languages you need -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
     <script>hljs.highlightAll();</script>
 

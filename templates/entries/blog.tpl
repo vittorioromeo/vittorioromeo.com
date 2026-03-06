@@ -4,6 +4,11 @@
 <meta name="twitter:description" content="Article/tutorial on http://vittorioromeo.com" />
 <meta name="twitter:image" content="http://vittorioromeo.com/resources/img/logoMain.png" />
 
+<meta property="og:title" content="{{Title}}" />
+<meta property="og:description" content="Article/tutorial on http://vittorioromeo.com" />
+<meta property="og:image" content="http://vittorioromeo.com/resources/img/logoMain.png" />
+<meta property="og:type" content="website">
+
 
 <article class="blog-entry">
     <header>

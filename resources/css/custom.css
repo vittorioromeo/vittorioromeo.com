@@ -7,6 +7,7 @@
 }
 
 
+
 a {
     color: #a9def9; /* Example link color */
 }
@@ -42,7 +43,7 @@ h1, h2, h3, h4, h5, h6 {
 .main-nav nav {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 0.5rem; /* Spacing between buttons */
 }
 .main-nav nav ul {
@@ -89,6 +90,7 @@ code {
     padding-top: .175rem;
     padding-bottom: .175rem;
     color: #c2c7d0;
+    /* font-family: 'Iosevka Web',monospace !important; */
 }
 
 a code {
@@ -196,6 +198,13 @@ details .accordion-content {
     border-top: 1px solid #292f3b;
 }
 
+h2 code {
+    color: white;
+    padding: 0;
+    font-size: 100%;
+    font-style: italic;
+}
+
 /* Pagination */
 .pagination {
     text-align: center;
@@ -212,7 +221,7 @@ details .accordion-content {
 }
 .pagination a {
     display: inline-block;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.9rem;
     border: 1px solid #434a5a;
     border-radius: 4px;
     text-decoration: none;
