@@ -1,17 +1,20 @@
 {
     "link_name": "blog",
     "elements": [
-        //    {
-        //        "template": "templates/entries/blog.tpl",
-        //        "link_name": "cache_aligned_tuple",
-        //        "tags": ["c++", "c++17", "library", "abstraction"],
-        //        "expand":
-        //        {
-        //            "Title": "implementing a cache-aligned tuple",
-        //            "Text": "180_blog_2016_md/24_cache_aligned_tuple.md",
-        //            "Date": "XXX march 2018"
-        //        }
-        //    },
+        {
+            "template": "templates/entries/blog.tpl",
+            "link_name": "refl_compiletime",
+            "tags": [
+                "c++",
+                "c++26",
+                "reflection"
+            ],
+            "expand": {
+                "Title": "the hidden compile-time cost of C++26 reflection",
+                "Text": "180_blog_2016_md/39_refl_compiletime.md",
+                "Date": "06 march 2026"
+            }
+        },
         {
             "template": "templates/entries/blog.tpl",
             "link_name": "sfex_profiler",
