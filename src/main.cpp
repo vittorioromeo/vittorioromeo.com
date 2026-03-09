@@ -11,7 +11,7 @@
 #include <vector>
 #include <vrm/core/strong_typedef.hpp>
 
-inline constexpr bool verbose{false};
+inline constexpr bool verbose{true};
 
 using namespace std::string_literals;
 
@@ -436,18 +436,17 @@ void for_all_page_json_files(TF&& f)
         getScan<Mode::Recurse, Type::File, Pick::ByName>(
             constant::folder::path::pages, constant::file::page_json)};
 
-    for(const ssvufs::Path& p : page_json_paths)
+    for(const ssvufs::Path& path : page_json_paths)
     {
-        const ssvufs::Path& path = p;
         lo_verbose("for_all_page_json_files") << "path '" << path << "'\n";
 
         // Name of the folder containing "_page.json".
-        const std::string& name = p.getParent().getFolderName();
+        const std::string& name = path.getParent().getFolderName();
         lo_verbose("for_all_page_json_files") << "name '" << name << "'\n";
 
         // Remove "_pages" and right-trim until first "/".
         const std::string& full_name =
-            ssvu::getTrimR(ssvu::getReplaced(p.getParent().getStr(),
+            ssvu::getTrimR(ssvu::getReplaced(path.getParent().getStr(),
                                constant::folder::path::pages, ""),
                 [](char c) { return c == '/'; });
 
@@ -1139,8 +1138,7 @@ void process_pages(context& ctx)
                     std::max(sz_t(1), entry_ids.size() / entries_per_subpage);
 
                 utils::segmented_for(subpage_count, entries_per_subpage,
-                    entry_ids.size(),
-                    [&](auto, auto i_begin, auto i_end)
+                    entry_ids.size(), [&](auto, auto i_begin, auto i_end)
                     { make_subpage(i_begin, i_end); });
             }
             else

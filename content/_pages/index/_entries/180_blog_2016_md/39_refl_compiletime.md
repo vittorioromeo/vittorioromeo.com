@@ -1,10 +1,14 @@
 I am *very* excited about C++26 reflection.
 
-I am also *obsessed* by having my code compile as quickly as possible. Fast compilation times are extremely valuable to keep iteration times low, productivity and motivation high, and to quickly see the impact of your changes.
+I am also *obsessed* by having my code compile as quickly as possible. Fast compilation times are extremely valuable to keep iteration times low, productivity and motivation high, and to quickly see the impact of your changes. [^comptime_papers]
+
+[^comptime_papers]: Some papers/articles on the subject: [1](https://www.computer.org/csdl/magazine/so/2023/04/10176199/1OAJyfknInm), [2](https://arxiv.org/pdf/1712.06796), [3](https://developer.microsoft.com/en-us/games/articles/2025/03/gdc-2025-build-insights-call-of-duty-modern-warfare/), [4](https://www.faros.ai/blog/insights-from-new-research-on-developer-productivity).
 
 With time and experience, I've realized that C++ can be an extremely fast-to-compile language. Language features like templates are not the issue -- the Standard Library is.
 
-My [fork of SFML](https://vittorioromeo.com/index/blog/vrsfml.html) uses almost no Standard Library at all, and I can recompile the entire thing from scratch in ~4.6s. That's around ~900 TUs, including external dependencies, tests, and examples. Incremental builds are, for all intents and purposes, instantaneous. **I love it.**
+My [fork of SFML](https://vittorioromeo.com/index/blog/vrsfml.html) uses almost no Standard Library at all, and I can recompile the entire thing from scratch in ~4.3s. That's around ~900 TUs, including external dependencies, tests, and examples.[^bottleneck] Incremental builds are, for all intents and purposes, instantaneous. **I love it.**
+
+[^bottleneck]: The current bottlenecks are (by far) `cpptrace` and `nlohmann::json`, used only in a few TUs. Without those, I could easily get a sub 1s build. I could get even lower with unity builds and perhaps some well-chosen PCHs.
 
 I would love to live in a world where C++26 reflection is purely a lightweight language feature, however [that ship has sailed](https://github.com/cplusplus/papers/issues/2096) *(thank you, [Jonathan Müller](https://www.jonathanmueller.dev/), for trying)*.
 
@@ -70,20 +74,20 @@ I've also tested using precompiled headers (PCHs) for `<meta>` and other large d
 
 ### benchmark results
 
-| Scenario                                   | Code                             | Precompiled Header (PCH)        | Compile Time (Mean) |
-|:-------------------------------------------|:---------------------------------|:--------------------------------|:--------------------|
-| **1. Baseline (No Reflection Flag)**       | `int main()` only                | None                            | **43.9 ms**         |
-| **2. Baseline + `-freflection`**           | `int main()` only                | None                            | **43.1 ms**         |
-| **3. `<meta>` Header Inclusion**           | `int main()` + `#include <meta>` | None                            | **310.4 ms**        |
-| **4. Basic Struct Reflection (1 type)**    | `reflect_struct` with `User`     | None                            | **331.2 ms**        |
-| **5. Basic Struct Reflection (10 types)**  | `reflect_struct` with `User<N>`  | None                            | **388.6 ms**        |
-| **6. Basic Struct Reflection (20 types)**  | `reflect_struct` with `User<N>`  | None                            | **410.9 ms**        |
-| **7. AoS -> SoA (Original)**               | Barry Revzin's Unedited Code     | None                            | **1,622.0 ms**      |
-| **8. AoS -> SoA (No Print)**               | Removed `<print>`                | None                            | **540.1 ms**        |
-| **9. AoS -> SoA (No Print/Ranges)**        | Removed `<print>`, `<ranges>`    | None                            | **391.4 ms**        |
-| **10. AoS -> SoA (Original + PCH)**        | Barry Revzin's Unedited Code     | `<meta>`, `<ranges>`, `<print>` | **1,265.0 ms**      |
-| **11. AoS -> SoA (No Print + PCH)**        | Removed `<print>`                | `<meta>`, `<ranges>`            | **229.7 ms**        |
-| **12. AoS -> SoA (No Print/Ranges + PCH)** | Removed `<print>`, `<ranges>`    | `<meta>`                        | **181.9 ms**        |
+| #  | Scenario                               | Code                             | Precompiled Header (PCH)        | Compile Time (Mean) |
+|:--:|:---------------------------------------|:---------------------------------|:--------------------------------|:--------------------|
+| 1  | **Baseline (No Reflection Flag)**      | `int main()` only                | None                            | **43.9 ms**         |
+| 2  | **Baseline + `-freflection`**          | `int main()` only                | None                            | **43.1 ms**         |
+| 3  | **`<meta>` Header Inclusion**          | `int main()` + `#include <meta>` | None                            | **310.4 ms**        |
+| 4  | **Basic Struct Reflection (1 type)**   | `reflect_struct` with `User`     | None                            | **331.2 ms**        |
+| 5  | **Basic Struct Reflection (10 types)** | `reflect_struct` with `User<N>`  | None                            | **388.6 ms**        |
+| 6  | **Basic Struct Reflection (20 types)** | `reflect_struct` with `User<N>`  | None                            | **410.9 ms**        |
+| 7  | **AoS to SoA (Original)**              | Barry Revzin's Unedited Code     | None                            | **1,622.0 ms**      |
+| 8  | **AoS to SoA (No Print)**              | Removed `<print>`                | None                            | **540.1 ms**        |
+| 9  | **AoS to SoA (No Print/Ranges)**       | Removed `<print>`, `<ranges>`    | None                            | **391.4 ms**        |
+| 10 | **AoS to SoA (Original + PCH)**        | Barry Revzin's Unedited Code     | `<meta>`, `<ranges>`, `<print>` | **1,265.0 ms**      |
+| 11 | **AoS to SoA (No Print + PCH)**        | Removed `<print>`                | `<meta>`, `<ranges>`            | **229.7 ms**        |
+| 12 | **AoS to SoA (No Print/Ranges + PCH)** | Removed `<print>`, `<ranges>`    | `<meta>`                        | **181.9 ms**        |
 
 A few clarifications:
 
@@ -111,24 +115,59 @@ A few clarifications:
 
 ### insights
 
-1. **The reflection feature itself is quite fast.**
+1. **The reflection feature flag itself is free.**
   - Simply turning on `-freflection` adds **0 ms** of overhead.
+
+2. **Basic reflection costs can scale up quickly.**
   - Base cost of reflecting 1 struct: **331.2 ms** *(but ~310 ms of this is just including `<meta>`)*.
   - Cost to reflect 9 extra types: **+57.4 ms** *(~6.3 ms per type)*.
   - Cost to reflect 10 *more* types (20 total): **+22.3 ms** *(~2.2 ms per type)*.
+  - While this seems cheap on the surface, remember that my example is extremely basic, and that a large project can have hundreds (if not thousands) of types that will be reflected.
 
-2. **Standard Library Headers are the true bottleneck.**
+3. **Standard Library Headers are a big bottleneck.**
   - The massive compile times in modern C++ don't come from your metaprogramming logic, but from parsing standard library headers.
   - Pulling in `<meta>` adds **~149 ms** of pure parsing time.
   - Pulling in `<ranges>` adds **~440 ms**.
   - Pulling in `<print>` adds an astronomical **~1,082 ms**.
 
-3. **Precompiled Headers (PCH) are mandatory for scaling.**
+4. **Precompiled Headers (PCH) are mandatory for scaling.**
   - Caching `<meta>` and avoiding heavy dependencies cuts compile time down to **181.9 ms** (scenario 12).
   - Caching `<meta>` + `<ranges>` drops the time from **540ms to 229ms** (scenario 8 vs 11).
   - Interestingly, while caching `<print>` helps a bit, it still leaves the compile time uncomfortably high.
   - Perhaps modules could eventually help here, but I have still not been able to use them in practice successfully.
     - Notably, `<meta>` is not part of `import std` yet, and even with `import std` Barry's example took a whopping **1.346s** to compile.
+
+
+
+### what about modules?
+
+I ran some more measurements using `import std;` with a properly-built `std` module that includes reflection.
+
+Firstly, I created the module via:
+
+```bash
+g++ -std=c++26 -fmodules -freflection -fsearch-include-path -fmodule-only -c bits/std.cc
+```
+
+And then benchmarked with:
+
+```bash
+hyperfine "g++ -std=c++26 -fmodules -freflection ./main.cpp"
+```
+
+No `#include` was used -- only `import std`.
+
+These are the results (mean compilation time):
+
+- Basic struct reflection (1 type): **~352.8 ms**
+- Barry's AoS to SoA example: **~1.077 s**
+
+Compare that with PCH:
+
+- Basic struct reflection (1 type): **~208.7 ms**
+- Barry's AoS to SoA example: **~1.261 s**
+
+So... PCH actually wins compared to modules for just `<meta>`, and modules are not that much better than PCH for the larger example. Quite disappointing.
 
 
 
