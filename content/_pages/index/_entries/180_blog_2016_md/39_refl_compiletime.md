@@ -116,26 +116,26 @@ A few clarifications:
 ### insights
 
 1. **The reflection feature flag itself is free.**
-  - Simply turning on `-freflection` adds **0 ms** of overhead.
+    - Simply turning on `-freflection` adds **0 ms** of overhead.
 
 2. **Basic reflection costs can scale up quickly.**
-  - Base cost of reflecting 1 struct: **331.2 ms** *(but ~310 ms of this is just including `<meta>`)*.
-  - Cost to reflect 9 extra types: **+57.4 ms** *(~6.3 ms per type)*.
-  - Cost to reflect 10 *more* types (20 total): **+22.3 ms** *(~2.2 ms per type)*.
-  - While this seems cheap on the surface, remember that my example is extremely basic, and that a large project can have hundreds (if not thousands) of types that will be reflected.
+    - Base cost of reflecting 1 struct: **331.2 ms** *(but ~310 ms of this is just including `<meta>`)*.
+    - Cost to reflect 9 extra types: **+57.4 ms** *(~6.3 ms per type)*.
+    - Cost to reflect 10 *more* types (20 total): **+22.3 ms** *(~2.2 ms per type)*.
+    - While this seems cheap on the surface, remember that my example is extremely basic, and that a large project can have hundreds (if not thousands) of types that will be reflected.
 
 3. **Standard Library Headers are a big bottleneck.**
-  - The massive compile times in modern C++ don't come from your metaprogramming logic, but from parsing standard library headers.
-  - Pulling in `<meta>` adds **~149 ms** of pure parsing time.
-  - Pulling in `<ranges>` adds **~440 ms**.
-  - Pulling in `<print>` adds an astronomical **~1,082 ms**.
+    - The massive compile times in modern C++ don't come from your metaprogramming logic, but from parsing standard library headers.
+    - Pulling in `<meta>` adds **~149 ms** of pure parsing time.
+    - Pulling in `<ranges>` adds **~440 ms**.
+    - Pulling in `<print>` adds an astronomical **~1,082 ms**.
 
 4. **Precompiled Headers (PCH) are mandatory for scaling.**
-  - Caching `<meta>` and avoiding heavy dependencies cuts compile time down to **181.9 ms** (scenario 12).
-  - Caching `<meta>` + `<ranges>` drops the time from **540ms to 229ms** (scenario 8 vs 11).
-  - Interestingly, while caching `<print>` helps a bit, it still leaves the compile time uncomfortably high.
-  - Perhaps modules could eventually help here, but I have still not been able to use them in practice successfully.
-    - Notably, `<meta>` is not part of `import std` yet, and even with `import std` Barry's example took a whopping **1.346s** to compile.
+    - Caching `<meta>` and avoiding heavy dependencies cuts compile time down to **181.9 ms** (scenario 12).
+    - Caching `<meta>` + `<ranges>` drops the time from **540ms to 229ms** (scenario 8 vs 11).
+    - Interestingly, while caching `<print>` helps a bit, it still leaves the compile time uncomfortably high.
+    - Perhaps modules could eventually help here, but I have still not been able to use them in practice successfully.
+        - Notably, `<meta>` is not part of `import std` yet, and even with `import std` Barry's example took a whopping **1.346s** to compile.
 
 
 
