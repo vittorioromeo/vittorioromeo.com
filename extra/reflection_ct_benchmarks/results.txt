@@ -1,0 +1,104 @@
+# hyperfine "g++ -std=c++26 -freflection ./baseline.cpp"
+Benchmark 1: g++ -std=c++26 -freflection ./baseline.cpp
+  Time (mean ± σ):      32.0 ms ±   1.7 ms    [User: 23.3 ms, System: 8.0 ms]
+  Range (min … max):    28.5 ms …  36.7 ms    87 runs
+
+# hyperfine "g++ -std=c++26 -freflection ./include_meta.cpp"
+Benchmark 1: g++ -std=c++26 -freflection ./include_meta.cpp
+  Time (mean ± σ):     187.2 ms ±   4.4 ms    [User: 169.1 ms, System: 16.7 ms]
+  Range (min … max):   181.2 ms … 195.3 ms    15 runs
+
+# hyperfine "g++ -std=c++26 -freflection ./include_print.cpp"
+Benchmark 1: g++ -std=c++26 -freflection ./include_print.cpp
+  Time (mean ± σ):     437.4 ms ±   3.9 ms    [User: 412.9 ms, System: 22.5 ms]
+  Range (min … max):   431.8 ms … 444.1 ms    10 runs
+
+# hyperfine "g++ -std=c++26 -freflection ./reflect_struct_1.cpp"
+Benchmark 1: g++ -std=c++26 -freflection ./reflect_struct_1.cpp
+  Time (mean ± σ):     200.3 ms ±   3.1 ms    [User: 181.1 ms, System: 18.3 ms]
+  Range (min … max):   195.8 ms … 205.5 ms    15 runs
+
+# hyperfine "g++ -std=c++26 -freflection ./reflect_struct_10.cpp"
+Benchmark 1: g++ -std=c++26 -freflection ./reflect_struct_10.cpp
+  Time (mean ± σ):     210.0 ms ±   5.0 ms    [User: 190.6 ms, System: 18.4 ms]
+  Range (min … max):   203.8 ms … 219.9 ms    14 runs
+
+# hyperfine "g++ -std=c++26 -freflection ./reflect_struct_20.cpp"
+Benchmark 1: g++ -std=c++26 -freflection ./reflect_struct_20.cpp
+  Time (mean ± σ):     227.4 ms ±   7.3 ms    [User: 205.1 ms, System: 20.4 ms]
+  Range (min … max):   214.3 ms … 238.4 ms    12 runs
+
+# hyperfine "g++ -std=c++26 -freflection ./aos_soa_unedited.cpp"
+Benchmark 1: g++ -std=c++26 -freflection ./aos_soa_unedited.cpp
+  Time (mean ± σ):     818.9 ms ±   8.6 ms    [User: 780.1 ms, System: 35.4 ms]
+  Range (min … max):   807.6 ms … 830.9 ms    10 runs
+
+# hyperfine "g++ -std=c++26 -freflection ./aos_soa_no_print.cpp"
+Benchmark 1: g++ -std=c++26 -freflection ./aos_soa_no_print.cpp
+  Time (mean ± σ):     310.2 ms ±   2.7 ms    [User: 287.0 ms, System: 21.8 ms]
+  Range (min … max):   305.6 ms … 313.3 ms    10 runs
+
+# hyperfine "g++ -std=c++26 -freflection ./aos_soa_no_print_no_ranges.cpp"
+Benchmark 1: g++ -std=c++26 -freflection ./aos_soa_no_print_no_ranges.cpp
+  Time (mean ± σ):     224.4 ms ±   4.8 ms    [User: 204.1 ms, System: 19.3 ms]
+  Range (min … max):   218.4 ms … 237.8 ms    13 runs
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules -DUSE_MODULES=1 ./reflect_struct_1.cpp"
+Benchmark 1: g++ -std=c++26 -freflection -fmodules -DUSE_MODULES=1 ./reflect_struct_1.cpp
+  Time (mean ± σ):     279.5 ms ±   5.4 ms    [User: 254.7 ms, System: 23.7 ms]
+  Range (min … max):   273.7 ms … 293.0 ms    10 runs
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules -DUSE_MODULES=1 ./reflect_struct_10.cpp"
+Benchmark 1: g++ -std=c++26 -freflection -fmodules -DUSE_MODULES=1 ./reflect_struct_10.cpp
+  Time (mean ± σ):     289.4 ms ±   5.0 ms    [User: 264.6 ms, System: 23.7 ms]
+  Range (min … max):   282.2 ms … 297.0 ms    10 runs
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules -DUSE_MODULES=1 ./reflect_struct_20.cpp"
+Benchmark 1: g++ -std=c++26 -freflection -fmodules -DUSE_MODULES=1 ./reflect_struct_20.cpp
+  Time (mean ± σ):     301.6 ms ±   4.1 ms    [User: 278.1 ms, System: 22.0 ms]
+  Range (min … max):   297.3 ms … 309.2 ms    10 runs
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules -DUSE_MODULES=1 ./aos_soa_unedited.cpp"
+Benchmark 1: g++ -std=c++26 -freflection -fmodules -DUSE_MODULES=1 ./aos_soa_unedited.cpp
+  Time (mean ± σ):     605.7 ms ±   5.9 ms    [User: 567.6 ms, System: 35.3 ms]
+  Range (min … max):   597.2 ms … 616.1 ms    10 runs
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules -DUSE_MODULES=1 ./aos_soa_no_print.cpp"
+Benchmark 1: g++ -std=c++26 -freflection -fmodules -DUSE_MODULES=1 ./aos_soa_no_print.cpp
+  Time (mean ± σ):     317.2 ms ±   2.7 ms    [User: 292.5 ms, System: 23.5 ms]
+  Range (min … max):   313.7 ms … 320.9 ms    10 runs
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules -DUSE_MODULES=1 ./aos_soa_no_print_no_ranges.cpp"
+Benchmark 1: g++ -std=c++26 -freflection -fmodules -DUSE_MODULES=1 ./aos_soa_no_print_no_ranges.cpp
+  Time (mean ± σ):     301.9 ms ±   4.0 ms    [User: 277.6 ms, System: 22.9 ms]
+  Range (min … max):   297.3 ms … 308.5 ms    10 runs
+
+# hyperfine "g++ -std=c++26 -freflection -DUSE_PCH=1 ./reflect_struct_1.cpp"
+Benchmark 1: g++ -std=c++26 -freflection -DUSE_PCH=1 ./reflect_struct_1.cpp
+  Time (mean ± σ):      91.7 ms ±   5.8 ms    [User: 76.4 ms, System: 14.7 ms]
+  Range (min … max):    84.6 ms … 109.8 ms    27 runs
+
+# hyperfine "g++ -std=c++26 -freflection -DUSE_PCH=1 ./reflect_struct_10.cpp"
+Benchmark 1: g++ -std=c++26 -freflection -DUSE_PCH=1 ./reflect_struct_10.cpp
+  Time (mean ± σ):      96.9 ms ±   3.4 ms    [User: 79.8 ms, System: 16.4 ms]
+  Range (min … max):    91.1 ms … 105.9 ms    31 runs
+
+# hyperfine "g++ -std=c++26 -freflection -DUSE_PCH=1 ./reflect_struct_20.cpp"
+Benchmark 1: g++ -std=c++26 -freflection -DUSE_PCH=1 ./reflect_struct_20.cpp
+  Time (mean ± σ):     109.3 ms ±   5.0 ms    [User: 92.3 ms, System: 16.3 ms]
+  Range (min … max):   100.4 ms … 120.3 ms    28 runs
+
+# hyperfine "g++ -std=c++26 -freflection -DUSE_PCH=1 ./aos_soa_unedited.cpp"
+Benchmark 1: g++ -std=c++26 -freflection -DUSE_PCH=1 ./aos_soa_unedited.cpp
+  Time (mean ± σ):     628.0 ms ±   9.7 ms    [User: 585.6 ms, System: 39.6 ms]
+  Range (min … max):   611.9 ms … 649.5 ms    10 runs
+
+# hyperfine "g++ -std=c++26 -freflection -DUSE_PCH=1 ./aos_soa_no_print.cpp"
+Benchmark 1: g++ -std=c++26 -freflection -DUSE_PCH=1 ./aos_soa_no_print.cpp
+  Time (mean ± σ):     137.4 ms ±   6.9 ms    [User: 118.9 ms, System: 17.7 ms]
+  Range (min … max):   130.4 ms … 155.7 ms    22 runs
+
+# hyperfine "g++ -std=c++26 -freflection -DUSE_PCH=1 ./aos_soa_no_print_no_ranges.cpp"
+Benchmark 1: g++ -std=c++26 -freflection -DUSE_PCH=1 ./aos_soa_no_print_no_ranges.cpp
+  Time (mean ± σ):     113.7 ms ±   4.0 ms    [User: 94.8 ms, System: 18.2 ms]
+  Range (min … max):   108.0 ms … 121.9 ms    25 runs
