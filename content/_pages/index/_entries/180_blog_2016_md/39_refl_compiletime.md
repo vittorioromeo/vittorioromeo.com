@@ -16,22 +16,6 @@ In this article, I'll try to provide some *early* expectations about the compile
 
 
 
-### an update and an apology
-
-Shortly after publishing the initial version of this article, [a reader pointed out](https://old.reddit.com/r/cpp/comments/1rmjahg/the_hidden_compiletime_cost_of_c26_reflection/o925k3e/) a critical issue in my benchmarks: the third-party Docker container I originally used for GCC 16 was compiled with internal compiler assertions enabled[^issue], as that is the default build configuration.
-
-[^issue]: I opened an issue to inform the authors of the Docker image about that: <https://github.com/SourceMation/images/issues/242>
-
-This unfairly penalized GCC, making the compiler look slower than it actually is, and skewed the benchmark data.
-
-I sincerely apologize to the GCC team and my readers for my mistake -- I should have verified the container's GCC build flags before publishing, as I had assumed that GCC had been built in release mode. I have since re-run all benchmarks on a proper release build (using `fedora:44` [as suggested by Jonathan Wakely](https://old.reddit.com/r/cpp/comments/1rmjahg/the_hidden_compiletime_cost_of_c26_reflection/o9o5cdp/) with `--enable-checking=release`), and the article below has been fully updated to reflect the accurate (faster) numbers.
-
-To ensure previous readers are informed about the new data, I will manually go through every comment on every platform and alert users about any incorrect number/conclusions.
-
-I have also uploaded all benchmark files [on GitHub](https://github.com/vittorioromeo/vittorioromeo.com/tree/master/extra/reflection_ct_benchmarks), so that you can easily reproduce my findings on your own setups.
-
-
-
 ### let's measure!
 
 For the benchmarks below, I used a Fedora 44 Docker container with GCC 16, the first version that supports reflection. To get reasonably stable measurements, I used the [`hyperfine`](https://github.com/sharkdp/hyperfine) command-line benchmarking tool.
@@ -216,6 +200,18 @@ Hopefully, as reflection implementations are relatively new, things will only ge
 
 
 ### appendix: previous benchmark results
+
+Shortly after publishing the initial version of this article, [a reader pointed out](https://old.reddit.com/r/cpp/comments/1rmjahg/the_hidden_compiletime_cost_of_c26_reflection/o925k3e/) a critical issue in my benchmarks: the third-party Docker container I originally used for GCC 16 was compiled with internal compiler assertions enabled[^issue], as that is the default build configuration.
+
+[^issue]: I opened an issue to inform the authors of the Docker image about that: <https://github.com/SourceMation/images/issues/242>
+
+This unfairly penalized GCC, making the compiler look slower than it actually is, and skewed the benchmark data.
+
+I sincerely apologize to the GCC team and my readers for my mistake -- I should have verified the container's GCC build flags before publishing, as I had assumed that GCC had been built in release mode. I have since re-run all benchmarks on a proper release build (using `fedora:44` [as suggested by Jonathan Wakely](https://old.reddit.com/r/cpp/comments/1rmjahg/the_hidden_compiletime_cost_of_c26_reflection/o9o5cdp/) with `--enable-checking=release`), and the article below has been fully updated to reflect the accurate (faster) numbers.
+
+To ensure previous readers are informed about the new data, I will manually go through every comment on every platform and alert users about any incorrect number/conclusions.
+
+I have also uploaded all benchmark files [on GitHub](https://github.com/vittorioromeo/vittorioromeo.com/tree/master/extra/reflection_ct_benchmarks), so that you can easily reproduce my findings on your own setups.
 
 For transparency, and as a cautionary tale for using third-party Docker images, here is a direct comparison between my original (flawed) measurements and the new ones.
 
