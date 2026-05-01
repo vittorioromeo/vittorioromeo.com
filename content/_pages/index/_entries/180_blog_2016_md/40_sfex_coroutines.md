@@ -8,7 +8,7 @@ If you've ever tried to use them for boss scripts, dialogue, or AI behaviors -- 
 
 [^heap]: Yes, in theory the heap allocations *can* be elided via HALO ([P0981](https://wg21.link/P0981)). In practice, you can't *rely* on it.
 
-In this article, I will present **`sfex::Coroutine`**: a ~200-line stackless macro-based coroutine library built around a variant of the classic `switch` + `__LINE__` trick. Similarly to my previous [**`sfex::Profiler`**](https://vittorioromeo.com/index/blog/sfex_profiler.html), these coroutines are meant to be simple and lightweight.
+In this article, I will present **`sfex::Coroutine`**: a ~200-line stackless macro-based coroutine library built around a variant of the classic `switch` + `__LINE__` trick. Like my previously discussed [**`sfex::Profiler`**](https://vittorioromeo.com/index/blog/sfex_profiler.html), these coroutines are meant to be simple and lightweight.
 
 
 
@@ -45,26 +45,24 @@ details[open] summary::before {
 
 <details>
   <summary>  🕹️ Shoot-em-up boss fight</summary>
-  <iframe src="https://vittorioromeo.github.io/VRSFML_HTML5_Examples/coroutine.html"
+  <iframe src="https://vittorioromeo.github.io/VRSFML_HTML5_Examples/coroutine_embed.html"
           width="100%" height="700" loading="lazy"
           style="border:0; margin:0.5em 0;"></iframe>
 </details>
 
 <details>
   <summary>  🕹️ Coreographed top-down stealth game</summary>
-  <iframe src="https://vittorioromeo.github.io/VRSFML_HTML5_Examples/coroutine_tutorial.html"
+  <iframe src="https://vittorioromeo.github.io/VRSFML_HTML5_Examples/coroutine_tutorial_embed.html"
           width="100%" height="700" loading="lazy"
           style="border:0; margin:0.5em 0;"></iframe>
 </details>
 
 <details>
   <summary>  🕹️ Dialogue cutscene</summary>
-  <iframe src="https://vittorioromeo.github.io/VRSFML_HTML5_Examples/coroutine_dialogue.html"
+  <iframe src="https://vittorioromeo.github.io/VRSFML_HTML5_Examples/coroutine_dialogue_embed.html"
           width="100%" height="700" loading="lazy"
           style="border:0; margin:0.5em 0;"></iframe>
 </details>
-
-Let's see how it works.
 
 
 
@@ -72,7 +70,7 @@ Let's see how it works.
 
 Before we get to work, let's see what's wrong with `co_await` for game programming.
 
-1. **Unpredictable heap allocations**: The frame of a C++20 coroutine frame is allocated dynamically. The standard provides "Heap Allocation eLision Optimization" (HALO) as an *allowed* optimization, but it is *not guaranteed* by the language.
+1. **Unpredictable heap allocations**: The frame of a C++20 coroutine is allocated dynamically. The standard provides "Heap Allocation eLision Optimization" (HALO) as an *allowed* optimization, but it is *not guaranteed* by the language.
 
     Compilers do it inconsistently[^inconsistently], and any change to the coroutine body or to where its handle escapes can silently re-introduce the allocation.
 
@@ -80,7 +78,7 @@ Before we get to work, let's see what's wrong with `co_await` for game programmi
 
     As far as I know, there's no attribute that you can apply to a coroutine to ensure that HALO is applied.
 
-[^inconsistenly]: The optimization can also silently break from a compiler update to another, see [LLVM issue #64586](https://github.com/llvm/llvm-project/issues/64586) for an example.
+[^inconsistently]: The optimization can also silently break from a compiler update to another, see [LLVM issue #64586](https://github.com/llvm/llvm-project/issues/64586) for an example.
 
 [^custom_alloc]: You *can* provide a custom allocator by overriding `promise_type::operator new`, but this adds more plumbing/complexity. It also doesn't solve the rest of the problems.
 
@@ -94,7 +92,9 @@ Before we get to work, let's see what's wrong with `co_await` for game programmi
 
     C++20 coroutines are well-shaped for *transient* work: an async HTTP request that flips a "loaded" flag when it completes, a generator that yields a finite sequence and is then discarded, a one-off scheduled task. The coroutine runs, eventually has some side effect on your real game state, and goes away. Its internal state during the suspension is scaffolding -- you don't reach into it, you just wait for the side effect.
 
-    Game logic *does* care. The boss's behaviour is *part of the boss's data*: *"we're paused on phase 3, with 0.3 seconds of wait remaining"* must travel alongside the boss's HP and position through saves, quick-loads, and network sync. C++20 coroutines push hard against this: the only state model you get is *"internal compiler scaffolding, you don't get to look at it"*.
+    Game logic is *not* transient. The boss's behaviour is *part of the boss's data*: *"we're paused on phase 3, with 0.3 seconds of wait remaining"* must travel alongside the boss's HP and position through saves, quick-loads, and network sync.
+
+    C++20 coroutines push hard against this: the only state model you get is *"internal compiler scaffolding, you don't get to look at it"*.
 
 [^reflection]: Maybe a future reflection API on top of [P2996](https://wg21.link/P2996) will eventually let us peek inside the coroutine frame, but there's no such proposal, and it would take years from now to become usable.
 
@@ -110,13 +110,13 @@ Let's build something that does.
 
 ### a tiny cutscene
 
-Imagine a simple scripted exchange between two characters. We want to:
+Imagine a simple scripted exchange between two characters:
 
-1. Show *"Hero: I finally got you."*
+1. *"Hero: I finally got you."*
 2. Wait one second.
-3. Show *"Villain: You're too late!"*
+3. *"Villain: You're too late!"*
 4. Wait half a second.
-5. Show *"Hero: We'll see about that!"*
+5. *"Hero: We'll see about that!"*
 6. Wait one second.
 7. Hide the dialogue UI.
 
@@ -262,7 +262,7 @@ Again, you can read it top to bottom and visually see the temporal flow of event
 
 Very importantly, those three values *have to be struct members*, not function-locals inside `operator()`. There's a good reason -- the [rules and footguns section](#rules-and-footguns) below covers it -- but the rule of thumb is short: **anything that needs to survive a yield goes on the struct**.
 
-Let's now try to compare the above solution with an FSM-based one. A clever FSM author might create for a `Tween` helper to clean up the per-frame interpolation:
+Let's now try to compare the above solution with an FSM-based one. A clever FSM author might create a `Tween` helper to clean up the per-frame interpolation:
 
 ```cpp
 struct Tween
@@ -319,7 +319,7 @@ case N + 2:                                            // tick the tween + post-
 
 Three coordinated case branches plus a `paceIdx` member, just to express `for (paceIdx = 0; paceIdx < 3; ++paceIdx)`. The `Tween` helper covered *one* level of "thing happening over time"; the outer loop is the *second* level, and the FSM has to grow another mini-state-machine on top.
 
-In constrast, the coroutine just has one `int paceIdx;` and lets ordinary C++ control flow do its job.[^tween_aside]
+In contrast, the coroutine just has one `int paceIdx;` and lets ordinary C++ control flow do its job.[^tween_aside]
 
 [^tween_aside]: The `Tween` helper is kind of a tiny one-shot coroutine -- start, tick-per-frame, done. The FSM author isn't *avoiding* the coroutine pattern; they're reinventing a more limited version of it for one specific case (linear motion). For arbitrary script-side control flow, they'd end up reinventing the rest too.
 
@@ -369,7 +369,7 @@ Yield DialogueScene::operator()(World& world)
             return Done{};     //
     }                          //
                                //
-    __builtin_unreachable();   //
+    std::unreachable();        //
 }
 ```
 
@@ -381,7 +381,7 @@ What to notice:
 
 3. **The "where am I" state is just an `int`**: That's literally all that's needed for the coroutine to know where to resume. The rest of the "coroutine frame" -- locals, persistent counters, anything that has to survive a yield -- is just regular member data on your struct. The compiler can't change this representation; it's an integer plus whatever you wrote.
 
-4. **`__builtin_unreachable()` tells the compiler "control flow never reaches here"**: Without it, GCC and Clang would warn about a missing return.
+4. **`std::unreachable()` tells the compiler "control flow never reaches here"**: Without it, GCC and Clang would warn about a missing return.
 
 In the *real* macro expansion, every yield is wrapped in a `do { ... } while(0)`:
 
@@ -432,7 +432,7 @@ These are the actual macro definitions:
 #define SFEX_CO_END \
     }               \
                     \
-    SFML_BASE_UNREACHABLE();
+    std::unreachable();
 ```
 
 
@@ -463,7 +463,7 @@ We relativize the counter to the start of each function thanks to `_sfex_base` s
 
 The only price we pay versus `__LINE__` is that state values are no longer human-readable. For my use case, save-file stability matters far more than peeking at an integer in the debugger.
 
-Obviously, `__COUNTER__` survives *cosmetic* edits to the function body, but it does *not* survive *meaningful* edits. The moment you ship a patch that adds or removes a yield, every state value below the change shifts -- saves written under the previous build will resume into the wrong yield site. There's no easy way to avoid this in the design (the same hazard applies to FSMs, too).[^manually_specify]
+However, while `__COUNTER__` survives *cosmetic* edits to the function body, it does *not* survive *meaningful* edits. The moment you ship a patch that adds or removes a yield, every state value below the change shifts -- saves written under the previous build will resume into the wrong yield site. There's no easy way to avoid this in the design (the same hazard applies to FSMs, too).[^manually_specify]
 
 [^manually_specify]: One possible solution is have users manually specify the `state` value for resumption points. This is clearly ugly/cumbersome, and requires having the foresight of "leaving some space" between those values in case a new `SFEX_CO_YIELD` is going to be added in the middle.
 
@@ -483,7 +483,7 @@ A scripted dialogue is a nice introductory example, but the real value shows up 
 struct RingFire : sfex::Coroutine
 {
     int rings = 4;
-    int i     = 0;   // persistent across yields -- must be a member, not local
+    int i     = 0;
 
     Yield operator()(World& world, Enemy& self)
     {
@@ -560,8 +560,8 @@ Internally, `SFEX_CO_AWAIT` expands to the same `state = N; case N:;` pattern fr
 ```cpp
 do
 {
-    state = 1;          // set resumption point to `1`
-    case 1:             // begin resumption point `1`
+    state = 1;  // set resumption point to `1`
+    case 1:     // begin resumption point `1`
     {
         auto _sfex_res = ring(world, self);
 
@@ -692,7 +692,7 @@ This macro trickery is small but has *many* sharp edges. In rough order of how o
 
     For non-trivial debugging, a logged `state` value plus a per-coroutine name (`"EnemyAI:state=3"`) is more informative than a stepping session. The state integer is small, stable, and hand-readable once you know which yield is which.
 
-None of the above is fatal. The first rule is the the most annoying and frequent one.
+None of the above is fatal. The first rule is the most annoying and frequent one.
 
 
 
@@ -720,7 +720,7 @@ If you want to read ahead, the full implementation of the [shoot-em-up example](
 
 ### shameless self-promotion
 
-- I offer training, mentoring, and consulting services. §
+- I offer training, mentoring, and consulting services.
 
     If you are interested, check out [**romeo.training**](https://romeo.training/), alternatively you can reach out at `mail (at) vittorioromeo (dot) com` or [on Twitter](https://twitter.com/supahvee1234).
 
