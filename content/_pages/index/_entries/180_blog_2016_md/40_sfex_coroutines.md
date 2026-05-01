@@ -145,7 +145,7 @@ struct DialogueScene : sfex::Coroutine
 };
 ```
 
-It nicely reads top-to-bottom. Each `SFEX_CO_YIELD(Wait{...})` means *"pause this coroutine for this many seconds, then come back here"*. You can save the game between any two yields and reload it: the coroutine resumes at the right line, with all its members intact. There is no compiler magic -- the runtime cost is one `int` state field plus a `switch`.
+It nicely reads top-to-bottom. Each `SFEX_CO_YIELD(Wait{...})` means *"pause this coroutine for this many seconds, then come back here"*. You can save the game between any two yields and reload it: the coroutine resumes at the right line, with all its members intact. There is no compiler magic -- the runtime cost is one integer `state` field that tracks the current resumption point, plus a `switch`.
 
 Driving it from the main loop is equally simple:
 
@@ -365,11 +365,11 @@ Yield DialogueScene::operator()(World& world)
 
             world.hideText();
 
-            state = 0;         // SFEX_CO_END
-            return Done{};     //
-    }                          //
-                               //
-    std::unreachable();        //
+            state = 0;     // SFEX_CO_END
+            return Done{}; //
+    }                      //
+                           //
+    std::unreachable();    //
 }
 ```
 
@@ -379,7 +379,7 @@ What to notice:
 
 2. **Each yield is two halves**: The "going-to-sleep" half (`state = N; return Wait{...};`) runs when the coroutine is currently executing. The "waking-up" half (`case N:`) runs when the driver re-enters after the wait expires. The two halves are placed adjacent to each other in source order, so the body reads top-to-bottom even though execution leaves and re-enters multiple times.
 
-3. **The "where am I" state is just an `int`**: That's literally all that's needed for the coroutine to know where to resume. The rest of the "coroutine frame" -- locals, persistent counters, anything that has to survive a yield -- is just regular member data on your struct. The compiler can't change this representation; it's an integer plus whatever you wrote.
+3. **The resumption point is just an `int state`**: That's literally all that's needed for the coroutine to know where to resume. The rest of the "coroutine frame" -- locals, persistent counters, anything that has to survive a yield -- is just regular member data on your struct. The compiler can't change this representation; it's an integer plus whatever you wrote.
 
 4. **`std::unreachable()` tells the compiler "control flow never reaches here"**: Without it, GCC and Clang would warn about a missing return.
 

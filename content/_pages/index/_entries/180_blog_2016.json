@@ -10,7 +10,7 @@
                 "coroutines"
             ],
             "expand": {
-                "Title": "lightweight macro-based coroutines for gamedev",
+                "Title": "stackless coroutines for gamedev in ~200 lines of C++",
                 "Text": "180_blog_2016_md/40_sfex_coroutines.md",
                 "Date": "01 may 2026"
             }
