@@ -80,7 +80,7 @@ Before we get to work, let's see what's wrong with `co_await` for game programmi
 
 [^inconsistently]: The optimization can also silently break from a compiler update to another, see [LLVM issue #64586](https://github.com/llvm/llvm-project/issues/64586) for an example.
 
-[^custom_alloc]: You *can* provide a custom allocator by overriding `promise_type::operator new`, but this adds more plumbing/complexity. It also doesn't solve the rest of the problems.
+[^custom_alloc]: You *can* provide a custom allocator by overriding `promise_type::operator new`, but this adds more plumbing/complexity. See [this post](https://a4z.noexcept.dev/blog/2026/04/13/pmr-generator.html) for an example. But that doesn't solve the rest of the problems...
 
 2. **Opaque handles and hidden state**: `std::coroutine_handle` is a pointer to compiler-managed state.
 
