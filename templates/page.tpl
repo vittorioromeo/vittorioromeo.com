@@ -1,9 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark"> <!-- Set dark theme default -->
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script>
+        // Apply theme before paint to avoid a flash of the wrong theme.
+        (function() {
+            var stored = null;
+            try { stored = localStorage.getItem('theme'); } catch (e) {}
+            var theme = stored || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
 
     <title>vittorio romeo's website</title>
     <meta name="description" content="{{PageDescription | default: 'Vittorio Romeo personal blog/website'}}">
@@ -24,10 +34,27 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link id="hljs-theme-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link id="hljs-theme-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" disabled>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
     <script>hljs.highlightAll();</script>
+
+    <script>
+        // Sync the highlight.js stylesheet with the current theme. Runs on load and
+        // whenever the theme toggle dispatches a 'themechange' event.
+        (function() {
+            function syncHljs() {
+                var theme = document.documentElement.getAttribute('data-theme') || 'dark';
+                var darkSheet = document.getElementById('hljs-theme-dark');
+                var lightSheet = document.getElementById('hljs-theme-light');
+                if (darkSheet) darkSheet.disabled = (theme !== 'dark');
+                if (lightSheet) lightSheet.disabled = (theme !== 'light');
+            }
+            syncHljs();
+            document.addEventListener('themechange', syncHljs);
+        })();
+    </script>
 
 </head>
 
@@ -35,6 +62,9 @@
 
     <!-- Header -->
     <header class="container page-header">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+        </button>
         <hgroup>
             <!-- Make title/subtitle configurable if needed -->
             <h1>Vittorio Romeo</h1>
@@ -98,6 +128,31 @@
 
     <!-- Pico JS (optional, for theme switcher, dropdowns, modals) -->
     <!-- <script src="{{ResourcesPath}}/js/pico.min.js"></script> -->
+
+    <script>
+        (function() {
+            var btn = document.getElementById('theme-toggle');
+            if (!btn) return;
+            var icon = btn.querySelector('i');
+
+            function updateIcon(theme) {
+                if (!icon) return;
+                icon.classList.remove('fa-moon', 'fa-sun');
+                icon.classList.add(theme === 'dark' ? 'fa-sun' : 'fa-moon');
+            }
+
+            updateIcon(document.documentElement.getAttribute('data-theme') || 'dark');
+
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                try { localStorage.setItem('theme', next); } catch (e) {}
+                updateIcon(next);
+                document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+            });
+        })();
+    </script>
 
 </body>
 </html>

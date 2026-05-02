@@ -29,7 +29,7 @@ Our goal is to implement coroutines that meet these criteria:
 
 [^member_caveat]: Both "allocation-free" and "trivially serializable" are claims about the *coroutine machinery*, not about whatever members you choose to put on the coroutine struct. If you stick a `std::string` or `std::vector` on it, those types have their own allocations and their own non-trivial serialization story -- the coroutine doesn't change that. The same caveat applies to pointers and references: they would need to be re-resolved on load, just like in any other game object.
 
-The full implementation is part of [my fork of SFML](https://vittorioromeo.com/index/blog/vrsfml.html), in [`SfexCoroutine.hpp`](https://github.com/vittorioromeo/VRSFML/blob/stateless_view_and_text_api_staging/examples/include/ExampleUtils/SfexCoroutine.hpp). Here are a few examples that showcase the feature, that you can directly play here in your browser[^vrsfml]!
+The full implementation is part of [my fork of SFML](https://vittorioromeo.com/index/blog/vrsfml.html), in [`SfexCoroutine.hpp`](https://github.com/vittorioromeo/VRSFML/blob/master/examples/include/ExampleUtils/SfexCoroutine.hpp). Here are a few examples that showcase the feature, that you can directly play here in your browser[^vrsfml]!
 
 [^vrsfml]: My [fork of SFML](https://github.com/vittorioromeo/VRSFML/) natively supports Emscripten as a target. The exact same code works both on desktop and the browser.
 

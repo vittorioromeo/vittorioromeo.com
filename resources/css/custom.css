@@ -1,23 +1,73 @@
 /* --- custom.css --- */
 
-/* Base Enhancements & Dark Mode Defaults */
-:root {
-    /* Adjust accent color if desired */
-    --pico-primary: #6f7684; /* Match secondary button color from target */
+/* Theme-aware custom variables. Defaults are the dark palette;
+   the [data-theme="light"] block below overrides them for light mode.
+   Pico CSS already handles its own variables (body bg, text, etc.) based on data-theme. */
+:root,
+[data-theme="dark"] {
+    --pico-primary: #6f7684;
+
+    --vr-link: #a9def9;
+    --vr-link-hover: #e3f3ff;
+    --vr-link-underline: #a9def9ba;
+
+    --vr-heading: #e1e7ef;
+
+    --vr-subdued: #a7aeb8;
+    --vr-meta: #8a919e;
+
+    --vr-surface: #181c25;
+    --vr-surface-hover: #202530;
+    --vr-surface-strong: #292f3b;
+    --vr-surface-stronger: #434a5a;
+
+    --vr-border: #292f3b;
+    --vr-border-strong: #434a5a;
+
+    --vr-code: #c2c7d0;
+    --vr-code-on-heading: #ffffff;
+    --vr-text-on-surface: #c2c7d0;
+    --vr-text-strong: #d4dae3;
+}
+
+[data-theme="light"] {
+    --pico-primary: #4a5160;
+
+    --vr-link: #1f6feb;
+    --vr-link-hover: #0a4cb8;
+    --vr-link-underline: #1f6feb88;
+
+    --vr-heading: #1c2128;
+
+    --vr-subdued: #5a6270;
+    --vr-meta: #6b7280;
+
+    --vr-surface: #f3f4f6;
+    --vr-surface-hover: #e9ebef;
+    --vr-surface-strong: #dde0e6;
+    --vr-surface-stronger: #c5c9d2;
+
+    --vr-border: #dde0e6;
+    --vr-border-strong: #c5c9d2;
+
+    --vr-code: #24292f;
+    --vr-code-on-heading: #1c2128;
+    --vr-text-on-surface: #24292f;
+    --vr-text-strong: #1c2128;
 }
 
 
 
 a {
-    color: #a9def9; /* Example link color */
+    color: var(--vr-link);
 }
 
 a:hover {
-    color: #e3f3ff;
+    color: var(--vr-link-hover);
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #e1e7ef; /* Lighter headings */
+    color: var(--vr-heading);
 }
 
 /* Header */
@@ -29,16 +79,50 @@ h1, h2, h3, h4, h5, h6 {
 }
 .page-header p {
     font-size: 1.1rem;
-    color: #a7aeb8; /* Subdued subtitle */
+    color: var(--vr-subdued);
+}
+
+/* Theme toggle button (top-right of header) */
+.page-header {
+    position: relative;
+}
+.theme-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--vr-border-strong);
+    background-color: var(--vr-surface);
+    color: var(--vr-subdued);
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.theme-toggle:hover {
+    background-color: var(--vr-surface-strong);
+    color: var(--vr-text-strong);
+    border-color: var(--vr-surface-stronger);
+}
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--vr-link);
+    outline-offset: 2px;
 }
 
 /* Main Navigation (Adapted from romeo.training) */
 .main-nav {
-    background-color: #181c25; /* Slightly lighter than body */
+    background-color: var(--vr-surface);
     padding-top: 0.5rem;
     margin-bottom: 2rem;
-    border-top: 1px solid #292f3b;
-    border-bottom: 1px solid #292f3b;
+    border-top: 1px solid var(--vr-border);
+    border-bottom: 1px solid var(--vr-border);
 }
 .main-nav nav {
     display: flex;
@@ -59,8 +143,8 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
     padding: 0.5rem 1.2rem;
     background-color: transparent;
-    color: var(--pico-secondary-color, #b1b8c5); /* Use Pico variable if available */
-    border: 1px solid var(--pico-secondary-border-color, #434a5a);
+    color: var(--pico-secondary-color, var(--vr-subdued));
+    border: 1px solid var(--pico-secondary-border-color, var(--vr-border-strong));
     border-radius: var(--pico-border-radius, 0.25rem);
     text-decoration: none;
     font-weight: bold;
@@ -68,9 +152,9 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.9rem;
 }
 .main-nav nav a:hover {
-    background-color: var(--pico-secondary-hover-background-color, #292f3b);
-    color: var(--pico-secondary-hover-color, #d4dae3);
-    border-color: var(--pico-secondary-hover-border-color, #555d70);
+    background-color: var(--pico-secondary-hover-background-color, var(--vr-surface-strong));
+    color: var(--pico-secondary-hover-color, var(--vr-text-strong));
+    border-color: var(--pico-secondary-hover-border-color, var(--vr-surface-stronger));
 }
 .main-nav nav a .fas { /* Font Awesome icon styling */
     margin-right: 8px;
@@ -83,20 +167,20 @@ h4 {
 
 p a {
     text-decoration-style: dotted;
-    text-decoration-color: #a9def9ba;
+    text-decoration-color: var(--vr-link-underline);
 }
 
 code {
     padding-top: .175rem;
     padding-bottom: .175rem;
-    color: #c2c7d0;
+    color: var(--vr-code);
     /* font-family: 'Iosevka Web',monospace !important; */
 }
 
 a code {
     padding-top: .175rem;
     padding-bottom: .175rem;
-    color: #a9def9;
+    color: var(--vr-link);
 }
 
 /* Main Content Area */
@@ -115,7 +199,7 @@ article.blog-entry header h2 a {
     color: inherit;
 }
 article.blog-entry header h2 a:hover {
-    color: #a9def9; /* Link hover color */
+    color: var(--vr-link);
 }
 
 .entry-meta {
@@ -123,7 +207,7 @@ article.blog-entry header h2 a:hover {
     justify-content: space-between;
     flex-wrap: wrap;
     font-size: 0.85em;
-    color: #8a919e; /* Subdued meta text */
+    color: var(--vr-meta);
 }
 .entry-meta .date {
     margin-right: 1em; /* Space between date and tags */
@@ -132,16 +216,16 @@ article.blog-entry header h2 a:hover {
 .entry-meta .tags a {
     margin-left: 6px;
     padding: 2px 6px;
-    background-color: #292f3b;
-    color: #a7aeb8;
+    background-color: var(--vr-surface-strong);
+    color: var(--vr-subdued);
     border-radius: 3px;
     text-decoration: none;
     font-size: 0.9em;
     transition: background-color 0.2s ease;
 }
 .entry-meta .tags a:hover {
-    background-color: #434a5a;
-    color: #c2c7d0;
+    background-color: var(--vr-surface-stronger);
+    color: var(--vr-text-on-surface);
 }
 
 .entry-content {
@@ -150,10 +234,10 @@ article.blog-entry header h2 a:hover {
 
 /* Accordion Styling (for potential future use, mimics romeo.training) */
 details {
-    border: 1px solid #292f3b;
+    border: 1px solid var(--vr-border);
     border-radius: 4px;
     margin-bottom: 1rem;
-    background-color: #181c25;
+    background-color: var(--vr-surface);
     transition: background-color 0.2s ease;
     position: relative; /* Needed for hover effect */
     overflow: hidden; /* Prevent content spill before expansion */
@@ -162,7 +246,7 @@ details summary {
     padding: 1rem;
     cursor: pointer;
     font-weight: bold;
-    color: #c2c7d0; /* Ensure summary text is visible */
+    color: var(--vr-text-on-surface);
     transition: background-color 0.2s ease;
     list-style: none; /* Remove default marker */
     position: relative; /* For custom marker */
@@ -188,18 +272,18 @@ details[open] summary::before {
 }
 
 details[open] summary {
-    background-color: #292f3b; /* Highlight when open */
+    background-color: var(--vr-surface-strong);
 }
 details:hover {
-     background-color: #202530; /* Slight hover effect */
+     background-color: var(--vr-surface-hover);
 }
 details .accordion-content {
     padding: 0 1rem 1rem 1rem; /* Padding for content inside */
-    border-top: 1px solid #292f3b;
+    border-top: 1px solid var(--vr-border);
 }
 
 h2 code {
-    color: white;
+    color: var(--vr-code-on-heading);
     padding: 0;
     font-size: 100%;
     font-style: italic;
@@ -222,14 +306,14 @@ h2 code {
 .pagination a {
     display: inline-block;
     padding: 0.4rem 0.9rem;
-    border: 1px solid #434a5a;
+    border: 1px solid var(--vr-border-strong);
     border-radius: 4px;
     text-decoration: none;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 .pagination a:hover {
-    background-color: #292f3b;
-    color: #d4dae3;
+    background-color: var(--vr-surface-strong);
+    color: var(--vr-text-strong);
 }
 /* Style for the current page if applicable (needs logic in generator) */
 /* .pagination li.current a { background-color: #434a5a; color: #fff; } */
@@ -239,10 +323,10 @@ h2 code {
 .page-footer {
     margin-top: 4rem;
     padding-top: 2rem;
-    border-top: 1px solid #292f3b;
+    border-top: 1px solid var(--vr-border);
     text-align: center;
     font-size: 0.9em;
-    color: #8a919e;
+    color: var(--vr-meta);
 }
 .footer-links {
     margin-top: 1rem;
@@ -250,13 +334,13 @@ h2 code {
 }
 .footer-links a {
     margin: 0 10px;
-    color: #a7aeb8;
+    color: var(--vr-subdued);
     text-decoration: none;
     font-size: 1.5rem; /* Icon size */
     transition: color 0.2s ease;
 }
 .footer-links a:hover {
-    color: #e3f3ff;
+    color: var(--vr-link-hover);
 }
 
 /* Responsive Adjustments */
@@ -281,6 +365,13 @@ h2 code {
     .entry-meta .tags a:first-child {
         margin-left: 0;
     }
+    .theme-toggle {
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 2.25rem;
+        height: 2.25rem;
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 576px) {
@@ -296,4 +387,73 @@ h2 code {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* =========================================================================
+   Light-mode-only overrides.
+   These rules apply only when [data-theme="light"] is set on <html>.
+   Higher specificity than the base rules guarantees they win the cascade
+   without affecting dark mode.
+   ========================================================================= */
+
+/* Headings: pure near-black for strong contrast on white */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+    color: #0d1117;
+}
+
+/* Links: a darker, more saturated blue */
+[data-theme="light"] a {
+    color: #0a4cb8;
+}
+[data-theme="light"] a:hover {
+    color: #062f73;
+}
+[data-theme="light"] p a {
+    text-decoration-color: #0a4cb8aa;
+}
+[data-theme="light"] a code {
+    color: #0a4cb8;
+}
+
+/* Inline code in body text: dark text on a clearly visible light background */
+[data-theme="light"] code {
+    color: #0d1117;
+    background-color: #eef0f3;
+}
+[data-theme="light"] h2 code {
+    color: #0d1117;
+    background-color: transparent;
+}
+
+/* Tags: light pill background with dark text */
+[data-theme="light"] .entry-meta .tags a {
+    background-color: #e5e7eb;
+    color: #1c2128;
+}
+[data-theme="light"] .entry-meta .tags a:hover {
+    background-color: #d1d5db;
+    color: #0d1117;
+}
+
+/* Details / summary: clearly light surface */
+[data-theme="light"] details {
+    background-color: #f3f4f6;
+    border-color: #d1d5db;
+}
+[data-theme="light"] details summary {
+    color: #0d1117;
+}
+[data-theme="light"] details[open] summary {
+    background-color: #e5e7eb;
+}
+[data-theme="light"] details:hover {
+    background-color: #eaecef;
+}
+[data-theme="light"] details .accordion-content {
+    border-top-color: #d1d5db;
 }
