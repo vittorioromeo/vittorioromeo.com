@@ -45,7 +45,7 @@ In this article I'll show how to implement the *pseudocode* in:
 
 * **C++11**: using [`std::void_t`](http://en.cppreference.com/w/cpp/types/void_t) and [`std::enable_if`](http://en.cppreference.com/w/cpp/types/enable_if).
 
-* **C++14**: using [`boost::hana::is_valid`](http://www.boost.org/doc/libs/1_62_0/libs/hana/doc/html/structboost_1_1hana_1_1type.html#a2d2e7e08e284f7e0bd1bd9c3ad0e0a2b) and [`vrm::core::static_if`](https://github.com/SuperV1234/vrm_core/blob/master/include/vrm/core/static_if/static_if.hpp).
+* **C++14**: using [`boost::hana::is_valid`](http://www.boost.org/doc/libs/1_62_0/libs/hana/doc/html/structboost_1_1hana_1_1type.html#a2d2e7e08e284f7e0bd1bd9c3ad0e0a2b) and [`vrm::core::static_if`](https://github.com/vittorioromeo/vrm_core/blob/master/include/vrm/core/static_if/static_if.hpp).
 
 * **C++17**: using [`if constexpr(...)`](http://en.cppreference.com/w/cpp/language/if#Constexpr_If), [`constexpr` lambdas](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4487.pdf), and [std::is_callable](http://en.cppreference.com/w/cpp/types/is_callable). This version will allow expression validity to be **checked in-place** *(i.e. directly in the `if constexpr` predicate)*. [Variadic preprocessor macros](http://en.cppreference.com/w/cpp/preprocessor/replace) will also be used to make the user code easier to read and maintain.
 
@@ -103,7 +103,7 @@ auto make_noise(const T& x)
 }
 ```
 
-That's it for C++11! [*You can find a complete example on GitHub.*](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/in_place_expr_validity/0_cpp11.cpp)
+That's it for C++11! [*You can find a complete example on GitHub.*](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/in_place_expr_validity/0_cpp11.cpp)
 
 *(Note: for more `void_t` goodness, check out [the detection idiom](http://en.cppreference.com/w/cpp/experimental/is_detected).)*
 
@@ -204,7 +204,7 @@ auto make_noise(const T& x)
 }
 ```
 
-[*You can find a complete example on GitHub.*](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/in_place_expr_validity/1_cpp14.cpp)
+[*You can find a complete example on GitHub.*](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/in_place_expr_validity/1_cpp14.cpp)
 
 Is this a better implementation compared to the C++11 version? That's debatable. There are, however, some objective advantages:
 
@@ -216,7 +216,7 @@ These advantages become more important when nesting multiple `static_if` blocks 
 
 *(Note: [`boost::hana:is_valid`](https://boostorg.github.io/hana/structboost_1_1hana_1_1type.html#a2d2e7e08e284f7e0bd1bd9c3ad0e0a2b) is a production-ready C++14 implementation of the above `is_valid` function.)*
 
-*(Note: you can find my `static_if` implementation in [`vrm::core::static_if`](https://github.com/SuperV1234/vrm_core/blob/master/include/vrm/core/static_if/static_if.hpp).)*
+*(Note: you can find my `static_if` implementation in [`vrm::core::static_if`](https://github.com/vittorioromeo/vrm_core/blob/master/include/vrm/core/static_if/static_if.hpp).)*
 
 
 
@@ -327,7 +327,7 @@ static_assert(
 );
 ```
 
-*Yikes.* This works and compiles, but it's verbose and full of noise/boilerplate. That's why a macro *\*shudders\** is needed here. Let's finally check out how `IS_VALID` is implemented. *(For simplicity, only the single-type version will be analyzed. A fully-variadic `IS_VALID` is simple to implement - [see the example on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/in_place_expr_validity/2_cpp17.cpp), which uses my [`vrm_pp` preprocessor metaprogramming](https://github.com/SuperV1234/vrm_pp) library.)*
+*Yikes.* This works and compiles, but it's verbose and full of noise/boilerplate. That's why a macro *\*shudders\** is needed here. Let's finally check out how `IS_VALID` is implemented. *(For simplicity, only the single-type version will be analyzed. A fully-variadic `IS_VALID` is simple to implement - [see the example on GitHub](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/in_place_expr_validity/2_cpp17.cpp), which uses my [`vrm_pp` preprocessor metaprogramming](https://github.com/vittorioromeo/vrm_pp) library.)*
 
 ```cpp
 template <typename T, typename TF>
@@ -380,9 +380,9 @@ some_validity_checker(type_c<int*>)
 
 Finally, `some_validity_checker(type_c<int*>)` is a *constant expression* that evaluates to either `true` or `false`.
 
-The [`std::tuple`](http://en.cppreference.com/w/cpp/utility/tuple) and the `operator|` overload are there just to make the `IS_VALID(types...)(expression)` syntax possible. Alternatively, the user would have had to specify the number of types as part of the macro name itself. Separating the expression from the types allows [variadic macro argument counting techniques](https://github.com/SuperV1234/vrm_pp/blob/master/include/vrm/pp/arg_count.hpp) to be easily applied.
+The [`std::tuple`](http://en.cppreference.com/w/cpp/utility/tuple) and the `operator|` overload are there just to make the `IS_VALID(types...)(expression)` syntax possible. Alternatively, the user would have had to specify the number of types as part of the macro name itself. Separating the expression from the types allows [variadic macro argument counting techniques](https://github.com/vittorioromeo/vrm_pp/blob/master/include/vrm/pp/arg_count.hpp) to be easily applied.
 
-That's it! [*You can find a complete example on GitHub.*](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/in_place_expr_validity/2_cpp17.cpp)
+That's it! [*You can find a complete example on GitHub.*](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/in_place_expr_validity/2_cpp17.cpp)
 
 I think this technique is very useful when combined with `if constexpr(...)` - it's a barebones *"in-place concept"* definition and check. Example:
 
@@ -419,7 +419,7 @@ auto some_generic_function(T0 a, T1 b)
 
 #### Major simplification
 
-When I woke up today I was extremely happy to see that [**Fabio**](https://disqus.com/by/fabio_a/) managed to simplify `IS_VALID`'s implementation significantly. He posted his work in the comments and [sent a PR](https://github.com/SuperV1234/vittorioromeo.com/pull/5) that I accepted. **Thanks - very appreciated!**
+When I woke up today I was extremely happy to see that [**Fabio**](https://disqus.com/by/fabio_a/) managed to simplify `IS_VALID`'s implementation significantly. He posted his work in the comments and [sent a PR](https://github.com/vittorioromeo/vittorioromeo.com/pull/5) that I accepted. **Thanks - very appreciated!**
 
 I decided to cover his improvements here. Readers interested in implementing `IS_VALID` should definitely use his simplified version.
 
@@ -449,7 +449,7 @@ I decided to cover his improvements here. Readers interested in implementing `IS
 
 
 
-* Generating variadic expansions of `IS_VALID` on the fly using my [`vrm_pp`](https://github.com/SuperV1234/vrm_pp) preprocessor metaprogramming library.
+* Generating variadic expansions of `IS_VALID` on the fly using my [`vrm_pp`](https://github.com/vittorioromeo/vrm_pp) preprocessor metaprogramming library.
 
     ```cpp
     #define IS_VALID_EXPANDER_BEGIN(count) \

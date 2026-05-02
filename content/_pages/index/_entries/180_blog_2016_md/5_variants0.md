@@ -23,7 +23,7 @@ In this article, we're gonna take a look at:
 
 Before looking at visitation techniques, I just wanted to mention that everything written in this article applies both to [`boost::variant`](http://www.boost.org/doc/libs/1_62_0/doc/html/variant.html) and [`std::variant`](http://en.cppreference.com/w/cpp/utility/variant).
 
-In fact, I've written a [very simple wrapper](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_variants/variant_aliases.hpp) for the upcoming examples that conditionally aliases `vr::variant<Ts...>` to `std::variant<Ts...>` if available, otherwise to `boost::variant<Ts...>`.
+In fact, I've written a [very simple wrapper](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/visiting_variants/variant_aliases.hpp) for the upcoming examples that conditionally aliases `vr::variant<Ts...>` to `std::variant<Ts...>` if available, otherwise to `boost::variant<Ts...>`.
 
 The `vr::visit(xs...)` function is similarly an alias for `std::visit(xs...)` if available, otherwise for `boost::apply_visitor(xs...)`.
 
@@ -81,7 +81,7 @@ vr::visit(vnum_printer{}, v0);
 
 This works, but requires us to define a new `vnum_printer` visitor type - this boilerplate can be avoided.
 
-*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_variants/0_traditional_visitation.cpp).)*
+*(You can find a similar example [on GitHub](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/visiting_variants/0_traditional_visitation.cpp).)*
 
 
 
@@ -155,7 +155,7 @@ Covering the implementation of `make_overload` is out of the scope of this artic
 
 1. Implement your own `make_overload(...)` function using online resources *(e.g. the [`std::overload` proposal](https://github.com/viboes/tags/blob/master/doc/proposals/overload/P0051R2.md))*.
 
-2. Copy-paste my [`vrm::core::make_overload(...)`](https://github.com/SuperV1234/vrm_core/blob/437a0afb35385250cd75c22babaeeecbfa4dcacc/include/vrm/core/overload/make_overload.hpp) implementation.
+2. Copy-paste my [`vrm::core::make_overload(...)`](https://github.com/vittorioromeo/vrm_core/blob/437a0afb35385250cd75c22babaeeecbfa4dcacc/include/vrm/core/overload/make_overload.hpp) implementation.
 
 3. Use [`boost::hana::overload`](http://www.boost.org/doc/libs/1_61_0/libs/hana/doc/html/overload_8hpp.html), a **well-tested production-ready** solution. This is the approach we're going to use for the article.
 
@@ -180,7 +180,7 @@ my_variant = 5.f;
 vr::visit(my_visitor, my_variant);
 ```
 
-*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_variants/2_lambda_visitation.cpp).)*
+*(You can find a similar example [on GitHub](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/visiting_variants/2_lambda_visitation.cpp).)*
 
 
 

@@ -24,7 +24,7 @@ Markdown is, in my opinion, an excellent language for slide creation: it has min
 
 1. **Adding new themes requires changing the source code.** This is a minor issue, as all I need to do is create a new `.css` file for the theme and add it to two files in Marp's source code.
 
-2. **No built-in presentation mode.** This was a very very annoying issue, as it required me to export my slides to `.pdf` before presenting. The result of the conversion can sometimes differ from what you see in the preview, especially with inline HTML and CSS *(e.g. using `position: fixed;`)*. Thankfully, [this fork by **long-long-float**](https://github.com/SuperV1234/marp/commits?author=long-long-float) added a presentation mode. I merged it into [my own fork of Marp](https://github.com/SuperV1234/marp), fixing some issues with margins and adding a keyboard shortcut for it.
+2. **No built-in presentation mode.** This was a very very annoying issue, as it required me to export my slides to `.pdf` before presenting. The result of the conversion can sometimes differ from what you see in the preview, especially with inline HTML and CSS *(e.g. using `position: fixed;`)*. Thankfully, [this fork by **long-long-float**](https://github.com/vittorioromeo/marp/commits?author=long-long-float) added a presentation mode. I merged it into [my own fork of Marp](https://github.com/vittorioromeo/marp), fixing some issues with margins and adding a keyboard shortcut for it.
 
 3. **No way of creating macros/replacements.** Writing slides in Markdown is the antithesis of [DRY *(don't repeat yourself)*](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself). Need to write a few `<div>`s for your section headers? You need to copy-paste. Made a change to the title of your presentation? You will have to find&replace afterwards. Want to create a few slides that incrementally show bullet points? Copy-paste.
 
@@ -34,7 +34,7 @@ Markdown is, in my opinion, an excellent language for slide creation: it has min
 
 ### implementing macros in marp
 
-Marp is open-source, written in CoffeeScript. While I really dislike dynamically-typed languages, I can live with that. I also dislike the fact that Electron is a resource hog, but in retrospect it made hacking Marp a lot easier *(e.g. all dependencies are easily obtainable with `npm`)*. I wanted to create a macro system for Marp, so I started [experimenting on my own fork](https://github.com/SuperV1234/marp).
+Marp is open-source, written in CoffeeScript. While I really dislike dynamically-typed languages, I can live with that. I also dislike the fact that Electron is a resource hog, but in retrospect it made hacking Marp a lot easier *(e.g. all dependencies are easily obtainable with `npm`)*. I wanted to create a macro system for Marp, so I started [experimenting on my own fork](https://github.com/vittorioromeo/marp).
 
 The first idea was creating some sort of syntax that allows simple token replacements *(a la C++ preprocessor)*. The original design was something along the lines of:
 
@@ -131,7 +131,7 @@ Hello @󠀠{󠀠{name󠀠}󠀠}!
 
 ### conclusion
 
-My fork of Marp can [be found here on GitHub](https://github.com/SuperV1234/marp). Note that the code was quickly hacked together by someone with minimal previous CoffeeScript experience - the quality is pretty bad. PRs are always welcome.
+My fork of Marp can [be found here on GitHub](https://github.com/vittorioromeo/marp). Note that the code was quickly hacked together by someone with minimal previous CoffeeScript experience - the quality is pretty bad. PRs are always welcome.
 
 Calling `eval` on the entire Markdown source with my custom `@@` and `@@{...}` syntax allows me to:
 

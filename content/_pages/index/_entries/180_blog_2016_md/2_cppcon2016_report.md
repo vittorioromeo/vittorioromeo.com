@@ -1,10 +1,10 @@
 
 
-[CppCon 2016](http://cppcon.org) ended yesterday - I had the pleasure of attending and presenting at this amazing conference again this year. 
+[CppCon 2016](http://cppcon.org) ended yesterday - I had the pleasure of attending and presenting at this amazing conference again this year.
 
 I'm really grateful to [Jon Kalb](https://twitter.com/_JonKalb), [Bryce Lelbach](https://twitter.com/blelbach), the conference staff, the speakers, [my company](https://www.techatbloomberg.com/events/cppcon/) and everyone else involved for making this possible.
 
-In the same vein as [my C++Now 2016 trip report](https://github.com/SuperV1234/cppnow2016/blob/master/trip_report.md), I wanted to share my thoughts regarding the talks I liked the most and regarding my sessions.
+In the same vein as [my C++Now 2016 trip report](https://github.com/vittorioromeo/cppnow2016/blob/master/trip_report.md), I wanted to share my thoughts regarding the talks I liked the most and regarding my sessions.
 
 -------
 
@@ -318,7 +318,7 @@ I was very lucky to be part of this panel moderated by [Jackie Kay](https://twit
 
 I think that the way C++ is being taught is a **huge** issue that needs to be effectively addressed by the community in order to prevent spreading misinformation about the language and to bring professors up-to-date with the newest standards and best practices. In way too many classes, mine included, C++ is introduced as an *old* and *outdated* language, still alive only for legacy reasons.
 
-In other classes, C++ is taught unidiomatically, excessively using dynamical memory allocations and Java-like idioms. 
+In other classes, C++ is taught unidiomatically, excessively using dynamical memory allocations and Java-like idioms.
 
 I really really would love to see all college professors in the world get up-to-date with the newest standards and with idiomatic C++ code: it's a shame that many students avoid the language or even despise it due to improper teaching and misconceptions. Making this a reality is a big problem that I do not know how to solve - interesting suggestions and possible solutions were discussed during the panel, but the only thing that I'm sure will help is **doing your small part**: tell your coworkers and classmates about modern C++, spread the word on how powerful and safe idiomatic C++ is, and make an effort to clear misconceptions away.
 

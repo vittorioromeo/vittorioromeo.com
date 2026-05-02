@@ -22,7 +22,7 @@ Anyway, let's begin!
 
 ### futures without type erasure
 
-I gave a talk at three major conferences about [`orizzonte`](https://github.com/SuperV1234/orizzonte), an experimental library which provides an implementation of futures that doesn't use type erasure or dynamic allocation.
+I gave a talk at three major conferences about [`orizzonte`](https://github.com/vittorioromeo/orizzonte), an experimental library which provides an implementation of futures that doesn't use type erasure or dynamic allocation.
 
 Basically, it encodes a graph of asynchronous computations in the type system and generates all the necessary buffers and synchronization primitives. Here's an example of its syntax:
 

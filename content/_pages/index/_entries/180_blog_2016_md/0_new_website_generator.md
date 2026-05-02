@@ -17,13 +17,13 @@ The previous one had several limitations that couldn't be easily fixed due to po
 
 The new generator fixes all the aforementioned issues and also adds some cool features, such as **post tagging** and **long post truncation**. In terms of implementation, the dependencies are *(currently)* unchanged:
 
-* My own [JSON library](https://github.com/SuperV1234/SSVUtils/tree/master/include/SSVUtils/Json) is being used to parse JSON metadata.
+* My own [JSON library](https://github.com/vittorioromeo/SSVUtils/tree/master/include/SSVUtils/Json) is being used to parse JSON metadata.
 
-* My own [templating system](https://github.com/SuperV1234/SSVUtils/tree/master/include/SSVUtils/TemplateSystem) is being used to expand HTML templates from JSON metadata and Markdown sources.
+* My own [templating system](https://github.com/vittorioromeo/SSVUtils/tree/master/include/SSVUtils/TemplateSystem) is being used to expand HTML templates from JSON metadata and Markdown sources.
 
-* My own [filesystem library](https://github.com/SuperV1234/SSVUtils/tree/master/include/SSVUtils/Core/FileSystem) is being used to "understand" the website's hierarchical structure and to load content data and metadata.
+* My own [filesystem library](https://github.com/vittorioromeo/SSVUtils/tree/master/include/SSVUtils/Core/FileSystem) is being used to "understand" the website's hierarchical structure and to load content data and metadata.
 
-The dependencies listed above are part of my [SSVUtils](https://github.com/SuperV1234/SSVUtils) general purpose C++14 library, which is quite old and not currently being worked on *(except for bugfixes and minor additions)*.
+The dependencies listed above are part of my [SSVUtils](https://github.com/vittorioromeo/SSVUtils) general purpose C++14 library, which is quite old and not currently being worked on *(except for bugfixes and minor additions)*.
 
 My future plans consist in replacing them with more modern and more widespread alternatives *(e.g. [boostache](https://github.com/cierelabs/boostache) and the [filesystem TS](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0218r0.html))*.
 
@@ -60,6 +60,6 @@ Table: Example table demonstration.
 
 <br>
 
-The generator is still experimental and not yet finished. The source code is [available here](https://github.com/SuperV1234/vittorioromeo.com) but currently is an **horribly hacked-together mess**. I will work on making it nicer in the future.
+The generator is still experimental and not yet finished. The source code is [available here](https://github.com/vittorioromeo/vittorioromeo.com) but currently is an **horribly hacked-together mess**. I will work on making it nicer in the future.
 
 I am planning to start writing and sharing small articles/tutorials on here, now that I can permalink stuff!

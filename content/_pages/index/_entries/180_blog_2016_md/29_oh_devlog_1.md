@@ -75,7 +75,7 @@ A few more well placed `window == nullptr` checks here and there to suppress pla
 > Final time: 6.249s
 > ```
 
-You can see all the code changes in the [v2.0.5 pull request](https://github.com/SuperV1234/SSVOpenHexagon/pull/330).
+You can see all the code changes in the [v2.0.5 pull request](https://github.com/vittorioromeo/SSVOpenHexagon/pull/330).
 
 
 
@@ -470,7 +470,7 @@ Encryption and decryption of packets works through a special packet class, `PEnc
 
 That's it for now!
 
-You can find all the code in the [v2.0.5 pull request](https://github.com/SuperV1234/SSVOpenHexagon/pull/330).
+You can find all the code in the [v2.0.5 pull request](https://github.com/vittorioromeo/SSVOpenHexagon/pull/330).
 
 The next steps will be:
 

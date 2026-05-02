@@ -63,7 +63,7 @@ auto then(std::experimental::future<T>& parent, std::launch policy, F&& f)
 }
 ```
 
-Hmm... `std::async`, type erasure... this means that there might be potential allocations! Let's attempt to roughly measure their overhead. I created [five `.cpp` files](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/) where I used `boost::async` and `boost::future` to create a chain of `.then` continuations, starting with zero continuations and ending with four. Example:
+Hmm... `std::async`, type erasure... this means that there might be potential allocations! Let's attempt to roughly measure their overhead. I created [five `.cpp` files](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/) where I used `boost::async` and `boost::future` to create a chain of `.then` continuations, starting with zero continuations and ending with four. Example:
 
 ```cpp
 // zero continuations
@@ -101,7 +101,7 @@ I then compiled every file with...
 g++ -std=c++1z -Ofast -DNDEBUG -S
 ```
 
-...and counted the lines of [stripped](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/stripasm) generated assembly. These are the results:
+...and counted the lines of [stripped](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/stripasm) generated assembly. These are the results:
 
 | Continuations |   0   |   1   |   2   |   3   |   4   |
 |--------------:|:-----:|:-----:|:-----:|:-----:|:-----:|
@@ -184,7 +184,7 @@ struct asynchronous_scheduler
 
 </div>
 
-[**891**](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/stack_2_continuations.cpp.s)!
+[**891**](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/stack_2_continuations.cpp.s)!
 
 > ...wait, is that a good result?
 
@@ -203,7 +203,7 @@ auto f = initiate([]{ return 1; })
 
 </div>
 
-...still produces [891 lines of assembly](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/stack_22_continuations.cpp.s). This happens because `decltype(f)` is a huge type containing all the types of the continuations - the compiler is able to inline everything.
+...still produces [891 lines of assembly](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/stack_22_continuations.cpp.s). This happens because `decltype(f)` is a huge type containing all the types of the continuations - the compiler is able to inline everything.
 
 
 
@@ -296,7 +296,7 @@ So short, yet so interesting:
 
 This is the end of the first part of "zero-allocation continuations". In the next one we'll take a look at a possible implementation of `when_all`, and experiment with thread pools.
 
-I began experimenting with these kind of continuations a few months ago - I was writing a library called [`orizzonte`](https://github.com/SuperV1234/orizzonte) that I abandoned to focus on other project *(and because I was frustrated by the lack of C++17 compiler compliance back then)*. I made it public on GitHub today and might continue/rewrite it in the future - regardless, you might find [this file](https://github.com/SuperV1234/orizzonte/blob/master/include/orizzonte/temp.hpp) interesting, where very generic *(but slightly broken)* versions of `.then` and `when_all` reside.
+I began experimenting with these kind of continuations a few months ago - I was writing a library called [`orizzonte`](https://github.com/vittorioromeo/orizzonte) that I abandoned to focus on other project *(and because I was frustrated by the lack of C++17 compiler compliance back then)*. I made it public on GitHub today and might continue/rewrite it in the future - regardless, you might find [this file](https://github.com/vittorioromeo/orizzonte/blob/master/include/orizzonte/temp.hpp) interesting, where very generic *(but slightly broken)* versions of `.then` and `when_all` reside.
 
 Thanks for reading!
 

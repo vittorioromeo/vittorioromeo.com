@@ -1,11 +1,11 @@
 
 
 
-I've recently released a script on my GitHub page that simplifies C++ compiler error messages: [**`camomilla`**](https://github.com/SuperV1234/camomilla).
+I've recently released a script on my GitHub page that simplifies C++ compiler error messages: [**`camomilla`**](https://github.com/vittorioromeo/camomilla).
 
 > What does it do?
 
-`camomilla` uses simple text transformations to make `gcc` and `clang` errors smaller and easier to read. During the development of [`ecst`](https://github.com/SuperV1234/ecst), a compile-time *Entity-Component-System* C++14 library developed for [my BCS thesis](https://github.com/SuperV1234/bcs_thesis), I encountered a lot of huge undeciphrable errors that sometimes completely filled my terminal buffer. Here's an example:
+`camomilla` uses simple text transformations to make `gcc` and `clang` errors smaller and easier to read. During the development of [`ecst`](https://github.com/vittorioromeo/ecst), a compile-time *Entity-Component-System* C++14 library developed for [my BCS thesis](https://github.com/vittorioromeo/bcs_thesis), I encountered a lot of huge undeciphrable errors that sometimes completely filled my terminal buffer. Here's an example:
 
 * Before:
 
@@ -94,7 +94,7 @@ camomilla -r -d3
 
 ### Solution or workaround?
 
-*(From [`camomilla/README.md`](https://github.com/SuperV1234/camomilla/blob/master/README.md).)*
+*(From [`camomilla/README.md`](https://github.com/vittorioromeo/camomilla/blob/master/README.md).)*
 
 `camomilla` is merely a workaround for the fact that compilers do not filter *(either automatically or through flags)* the depth of template typenames. Errors in projects making use of libraries such as `boost::hana` or `boost::fusion` therefore include a lot of *"typename boilerplate"* that can make the error harder to read.
 
@@ -106,7 +106,7 @@ I think this is something that should be addressed directly in the compilers - I
 
 ### Results
 
-I currently pipe everything I compile on my machine to `camomilla` - I find the reduced noise/boilerplate quite useful when constantly reading template-heavy errors *(...pretty much all of my code is template-heavy)*. This is a table that shows the size reduction of some errors generated from a real project, [ecst](http://github.com/SuperV1234/ecst), by simply mispelling a member field name in a template-heavy context:
+I currently pipe everything I compile on my machine to `camomilla` - I find the reduced noise/boilerplate quite useful when constantly reading template-heavy errors *(...pretty much all of my code is template-heavy)*. This is a table that shows the size reduction of some errors generated from a real project, [ecst](http://github.com/vittorioromeo/ecst), by simply mispelling a member field name in a template-heavy context:
 
 |               | Bytes (original) | Bytes (after camomilla) | Relative size change |
 |---------------|------------------|-------------------------|----------------------|
@@ -120,4 +120,4 @@ I currently pipe everything I compile on my machine to `camomilla` - I find the 
 
 ### Using/hacking `camomilla`
 
-You can get and install `camomilla` by cloning the [official GitHub repository](https://github.com/SuperV1234/camomilla) and using the `setup.py` script. Contributions are welcome - `camomilla` is written as a single Python 3 script file. *(I used Python instead of C++ because `camomilla` is the "evolution" of an older poorly designed script that attempted to simplify errors for `ecst`.)*
+You can get and install `camomilla` by cloning the [official GitHub repository](https://github.com/vittorioromeo/camomilla) and using the `setup.py` script. Contributions are welcome - `camomilla` is written as a single Python 3 script file. *(I used Python instead of C++ because `camomilla` is the "evolution" of an older poorly designed script that attempted to simplify errors for `ecst`.)*

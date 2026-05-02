@@ -63,7 +63,7 @@ assert(visit(evaluator, e) == 5);
 
 I then recently gave a talk called [**"Implementing variant visitation using lambdas"**](https://www.youtube.com/watch?v=mqei4JJRQ7s) at ACCU 2017, which showed how to implement the topics covered in the previously mentioned articles step-by-step.
 
-As a final step, I'm currently working on [**"scelta"**](https://github.com/SuperV1234/scelta), a small library that provides syntactic sugar for *variant* and *optional* types, independently from the chosen implementation.
+As a final step, I'm currently working on [**"scelta"**](https://github.com/vittorioromeo/scelta), a small library that provides syntactic sugar for *variant* and *optional* types, independently from the chosen implementation.
 
 
 
@@ -386,7 +386,7 @@ make_recursive_visitor<void>(
 
 The only way to prevent this is to **completely forget about** `is_base_case` and only check with `is_recursive_case` - lambdas that do not satisfy the check will be assumed to be unary.
 
-Even though I mentioned that this kind of behavior might be acceptable in real world scenarios, I didn't feel comfortable with this "solution". In the current version of [`scelta`](https://github.com/SuperV1234/scelta) I force the users to provide an unused `auto` parameter in base cases.
+Even though I mentioned that this kind of behavior might be acceptable in real world scenarios, I didn't feel comfortable with this "solution". In the current version of [`scelta`](https://github.com/vittorioromeo/scelta) I force the users to provide an unused `auto` parameter in base cases.
 
 
 

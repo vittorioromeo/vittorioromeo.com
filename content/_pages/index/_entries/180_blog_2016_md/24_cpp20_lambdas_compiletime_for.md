@@ -220,7 +220,7 @@ The implementation of `for_range` is a compelling example of how C++20 generic l
 
 ### enumeration of a list of types
 
-This construct is useful when you want to iterate over a list of types at compile-time, while also keeping track of the current iteration index as a *constant expression*. I used this in my experimental library [`orizzonte`](https://github.com/SuperV1234/orizzonte) to implement `when_all` and `when_any` abstractions for the composition of asynchronous future graphs.
+This construct is useful when you want to iterate over a list of types at compile-time, while also keeping track of the current iteration index as a *constant expression*. I used this in my experimental library [`orizzonte`](https://github.com/vittorioromeo/orizzonte) to implement `when_all` and `when_any` abstractions for the composition of asynchronous future graphs.
 
 Usage example:
 

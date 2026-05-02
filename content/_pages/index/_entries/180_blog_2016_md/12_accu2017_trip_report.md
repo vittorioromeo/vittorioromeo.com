@@ -20,7 +20,7 @@ match(v0)([](int x)   { cout << x << "i\n"; },
           [](double x){ cout << x << "d\n"; });
 ```
 
-I'm happy about the way the presentation went and I have received good feedback so far. The video is [**available here**](https://www.youtube.com/watch?v=mqei4JJRQ7s) and the slides are available on GitHub at [SuperV1234/accu2017](https://github.com/SuperV1234/accu2017).
+I'm happy about the way the presentation went and I have received good feedback so far. The video is [**available here**](https://www.youtube.com/watch?v=mqei4JJRQ7s) and the slides are available on GitHub at [vittorioromeo/accu2017](https://github.com/vittorioromeo/accu2017).
 
 
 I'll share thoughts and lessons learned from some of my favorite talks below.

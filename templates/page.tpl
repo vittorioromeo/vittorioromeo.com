@@ -76,7 +76,7 @@
              <!-- Add social links here -->
              <a href="mailto:vittorio.romeo@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
              <!-- <a href="http://www.facebook.com/vittorioromeovee" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a> -->
-             <a href="https://github.com/SuperV1234" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+             <a href="https://github.com/vittorioromeo" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
              <a href="http://www.youtube.com/user/SuperVictorius" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
              <a href="https://twitter.com/supahvee1234" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
              <a href="http://stackexchange.com/users/294676/vittorio-romeo" target="_blank" title="Stack Exchange"><i class="fab fa-stack-exchange"></i></a>
@@ -111,7 +111,7 @@
         <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
         <!-- <div class="g-plusone" data-href="http://vittorioromeo.com"></div> -->
 
-        <small>vittorio romeo © 2012 - 2025</small> <!-- Update year dynamically if possible -->
+        <small>vittorio romeo © 2012 - 2026</small> <!-- Update year dynamically if possible -->
     </footer>
     <!-- ./ Footer -->
 

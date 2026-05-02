@@ -1,6 +1,6 @@
 
 
-**Perfect forwarding** and **forwarding references** allow developers to write generic *template functions* that retain the *lvalueness*/*rvalueness* of passed arguments, in order to avoid unnecessary copies or support reference semantics without having to implement multiple overloads. 
+**Perfect forwarding** and **forwarding references** allow developers to write generic *template functions* that retain the *lvalueness*/*rvalueness* of passed arguments, in order to avoid unnecessary copies or support reference semantics without having to implement multiple overloads.
 *([This article](http://eli.thegreenplace.net/2014/perfect-forwarding-and-universal-references-in-c/) by **Eli Bendersky** explains them in depth. I will assume you're familiar with these concepts for the rest of the article.)*
 
 In this article, I'll show how to correctly capture *perfectly-forwarded* objects into lambdas:
@@ -41,7 +41,7 @@ foo(my_a)();
 
 ...**what is the value of `my_a._value`?**
 
-It should be obvious that, since `a` was passed by *lvalue reference* to `foo` and captured by reference from the inner lambda, the increment will be visible outside of the function call. Therefore, `my_a._value` is equal to `1`. 
+It should be obvious that, since `a` was passed by *lvalue reference* to `foo` and captured by reference from the inner lambda, the increment will be visible outside of the function call. Therefore, `my_a._value` is equal to `1`.
 
 [*(Complete example on **wandbox**.)*](http://melpon.org/wandbox/permlink/ZFGfMWyLHzR36l9Z)
 
@@ -49,7 +49,7 @@ Let's now generalize `foo` - it will take `a` by *forwarding reference*, and sho
 
 * When `a` is an *lvalue reference*, it should be **captured by reference** in the inner lambda, and any mutation on `a` should be visible outside of the function call *(i.e. what happened in the example above)*.
 
-* When `a` is an *rvalue reference*, it should be **moved** in the inner lambda. The returned lambda will therefore hold a new instance of `A` whose mutations will only be visible from the lambda itself. 
+* When `a` is an *rvalue reference*, it should be **moved** in the inner lambda. The returned lambda will therefore hold a new instance of `A` whose mutations will only be visible from the lambda itself.
 
 > Sounds like a job for *perfect forwarding*!
 
@@ -58,8 +58,8 @@ Let's try to use `auto&&`, [`std::forward`](http://en.cppreference.com/w/cpp/uti
 ```cpp
 auto foo = [](auto&& a)
 {
-    return [a = std::forward<decltype(a)>(a)]() mutable 
-    { 
+    return [a = std::forward<decltype(a)>(a)]() mutable
+    {
         ++a._value;
 
         // Print to see `a` being mutated when moved into
@@ -100,7 +100,7 @@ That was easy, wasn't it? Time to test our code.
 While it seems natural to use `std::forward` and *generalized lambda captures* in order to achieve the same semantics as a *template function* that takes *forwarding references*, if we stop and think for a moment our mistake **will become obvious**.
 
 
-Let's look at `foo` again: 
+Let's look at `foo` again:
 
 ```cpp
 auto foo = [](auto&& a)
@@ -127,7 +127,7 @@ struct inner_lambda
 
 As you can see, the type of the captured `a` is always a value! This is due to the fact that the *initializer* expression in a *generalized lambda capture* does not have effect on the deduced type of the capture. From [*cppreference/lambda/lambda_capture*](http://en.cppreference.com/w/cpp/language/lambda#Lambda_capture):
 
-> **A capture with an initializer acts as if it declares and explicitly captures a variable declared with type `auto`**, whose declarative region is the body of the lambda expression (that is, it is not in scope within its initializer), except that: 
+> **A capture with an initializer acts as if it declares and explicitly captures a variable declared with type `auto`**, whose declarative region is the body of the lambda expression (that is, it is not in scope within its initializer), except that:
 >
 > * if the capture is by-copy, the non-static data member of the closure object is another way to refer to that `auto` variable.
 >
@@ -145,7 +145,7 @@ int& a_ref = a;
 [b = a_ref]{ };
 
 // Captures `a` by reference.
-[&b = a_ref]{ }; 
+[&b = a_ref]{ };
 ```
 
 It should be clear now that our previous approach is **fundamentally flawed**. What we really want to do is:
@@ -195,7 +195,7 @@ private:
 
 public:
     template <typename TFwd>
-    by_value(TFwd&& x) : _x{std::forward<TFwd>(x)} 
+    by_value(TFwd&& x) : _x{std::forward<TFwd>(x)}
     {
     }
 
@@ -215,7 +215,7 @@ private:
     std::reference_wrapper<T> _x;
 
 public:
-    by_ref(T& x) : _x{x} 
+    by_ref(T& x) : _x{x}
     {
     }
 
@@ -240,8 +240,8 @@ Let's revisit our flawed implementation of `foo`:
 ```cpp
 auto foo = [](auto&& a)
 {
-    return [a = fwd_capture(std::forward<decltype(a)>(a))]() mutable 
-    { 
+    return [a = fwd_capture(std::forward<decltype(a)>(a))]() mutable
+    {
         ++a.get()._value;
         std::cout << a.get()._value << "\n";
     };
@@ -276,7 +276,7 @@ std::cout << my_a._value << "\n";
 
 ### Reducing noise
 
-Typing `fwd_capture(std::forward<decltype(a)>(a))`{.cpp} is very annoying, as it's mostly *noise*/*boilerplate*. We have to perfectly-forward `a` into the wrapper though, so avoiding the call to `std::forward` is out of the question. 
+Typing `fwd_capture(std::forward<decltype(a)>(a))`{.cpp} is very annoying, as it's mostly *noise*/*boilerplate*. We have to perfectly-forward `a` into the wrapper though, so avoiding the call to `std::forward` is out of the question.
 
 There's only one **evil** tool that can help here: *macros*.
 
@@ -286,15 +286,15 @@ Let's begin with `std::forward<decltype(a)>(a)`{.cpp}: `a` needs to be repeated 
 #define FWD(...) ::std::forward<decltype(__VA_ARGS__)>(__VA_ARGS__)
 ```
 
-*(See ["`vrm_core` issue #1"](https://github.com/SuperV1234/vrm_core/issues/1) for discussion regarding `__VA_ARGS__` in this context.)*
+*(See ["`vrm_core` issue #1"](https://github.com/vittorioromeo/vrm_core/issues/1) for discussion regarding `__VA_ARGS__` in this context.)*
 
 The `FWD` macro can be used as follows:
 
 ```cpp
-template <typename T> 
+template <typename T>
 void foo(T&&);
 
-template <typename T> 
+template <typename T>
 void bar(T&& x);
 {
     foo(FWD(x));
@@ -306,8 +306,8 @@ void bar(T&& x);
 Great! Now `fwd_capture(std::forward<decltype(a)>(a))`{.cpp} can be reduced to `fwd_capture(FWD(a))`{.cpp}:
 
 ```cpp
-return [a = fwd_capture(FWD(a))]() mutable 
-{ 
+return [a = fwd_capture(FWD(a))]() mutable
+{
     /* ... */
 };
 ```
@@ -316,14 +316,14 @@ There's still some unnecessary repetition: `fwd_capture` always expects the user
 
 ```cpp
 #define FWD_CAPTURE(...) impl::fwd_capture(FWD(__VA_ARGS__))
-``` 
+```
 
 All the noise is finally hidden away:
 
 
 ```cpp
-return [a = FWD_CAPTURE(a)]() mutable 
-{ 
+return [a = FWD_CAPTURE(a)]() mutable
+{
     /* ... */
 };
 ```
@@ -349,9 +349,9 @@ auto foo = [](auto&&... xs) { /* ... */ };
 ```cpp
 auto foo = [](auto&&... xs)
 {
-    return [xs = FWD_CAPTURE(xs)...]() mutable 
-    { 
-        
+    return [xs = FWD_CAPTURE(xs)...]() mutable
+    {
+
     };
 };
 ```
@@ -365,7 +365,7 @@ auto foo = [](auto&&... xs)
 template <typename... Ts>
 auto /*impl::*/fwd_capture_as_tuple(Ts&&... xs)
 {
-    return std::make_tuple(FWD_CAPTURE(xs)...);   
+    return std::make_tuple(FWD_CAPTURE(xs)...);
 }
 
 #define FWD_CAPTURE_PACK(...) impl::fwd_capture_as_tuple(FWD(__VA_ARGS__)...)
@@ -381,9 +381,9 @@ template <typename TF, typename TFwdCapture>
 decltype(auto) apply_fwd_capture_pack(TF&& f, TFwdCapture&& fc)
 {
     return std::experimental::apply(
-        [&f](auto&&... xs) -> decltype(auto) 
-        { 
-            return f(FWD(xs).get()...); 
+        [&f](auto&&... xs) -> decltype(auto)
+        {
+            return f(FWD(xs).get()...);
         }, FWD(fc));
 }
 
@@ -391,12 +391,12 @@ decltype(auto) apply_fwd_capture_pack(TF&& f, TFwdCapture&& fc)
 template <typename TF, typename TFwdCapture>
 void for_fwd_capture_tuple(TF&& f, TFwdCapture&& fc)
 {
-    apply_fwd_capture_pack( 
-        [&f](auto&&... xs){ (f(FWD(xs)), ...); }, 
+    apply_fwd_capture_pack(
+        [&f](auto&&... xs){ (f(FWD(xs)), ...); },
         FWD(fc)
     );
 }
-```  
+```
 
 Using `FWD_CAPTURE_PACK` and `apply_fwd_capture_pack` we can now generalize our `foo` example even further:
 
@@ -404,8 +404,8 @@ Using `FWD_CAPTURE_PACK` and `apply_fwd_capture_pack` we can now generalize our 
 auto foo = [](auto&&... xs)
 {
     // Perfectly-capture `xs...` as `xs_pack`.
-    return [xs_pack = FWD_CAPTURE_PACK(xs)]() mutable 
-    { 
+    return [xs_pack = FWD_CAPTURE_PACK(xs)]() mutable
+    {
         // Perfectly-iterate over elements of `xs_pack`.
         for_fwd_capture_tuple([](auto&& a)
         {
@@ -414,7 +414,7 @@ auto foo = [](auto&&... xs)
         }, xs_pack);
     };
 };
-``` 
+```
 
 As an example, the following code snippet...
 
@@ -447,7 +447,7 @@ std::cout << my_a._value << "\n";
 
 As shown by [*Nikos Athanasiou* on reddit](https://www.reddit.com/r/cpp/comments/5hset9), it's possible to solve this issue in a much simpler way. All we need is `std::tuple` and some knowledge of [*template argument deduction* rules](http://en.cppreference.com/w/cpp/language/template_argument_deduction).
 
-Let's think about what `fwd_capture_wrapper` is doing: 
+Let's think about what `fwd_capture_wrapper` is doing:
 
 * Given an *lvalue reference*, it stores an *lvalue reference*.
 
@@ -463,14 +463,14 @@ using capture_t = std::conditional_t
 <
     std::is_lvalue_reference<T>{},
 
-    std::add_lvalue_reference_t<T>, 
+    std::add_lvalue_reference_t<T>,
     std::remove_reference_t<T>
 >;
 
 template <typename... Ts>
 auto fwd_capture(Ts&&... xs)
 {
-    return std::tuple<capture_t<Ts>...>(FWD(xs)...); 
+    return std::tuple<capture_t<Ts>...>(FWD(xs)...);
 }
 ```
 
@@ -478,9 +478,9 @@ This **works**, and doesn't require all the *wrapper* boilerplate. [`std::get`](
 
 ```cpp
 template <typename T>
-decltype(auto) access(T&& x) 
-{ 
-    return std::get<0>(FWD(x)); 
+decltype(auto) access(T&& x)
+{
+    return std::get<0>(FWD(x));
 }
 ```
 
@@ -492,7 +492,7 @@ Guess what - it can be simplified *even further*. Turns out that **`capture_t` i
 template <typename... Ts>
 auto fwd_capture(Ts&&... xs)
 {
-    return std::tuple<Ts...>(FWD(xs)...); 
+    return std::tuple<Ts...>(FWD(xs)...);
 }
 ```
 
@@ -502,10 +502,10 @@ Given this example function...
 
 ```cpp
 template <typename T>
-void foo(T&&) 
-{ 
-    // What is `T` here? 
-    std::tuple<T>{}; 
+void foo(T&&)
+{
+    // What is `T` here?
+    std::tuple<T>{};
 }
 ```
 
@@ -553,7 +553,7 @@ Great! This means that...
 template <typename... Ts>
 auto fwd_capture(Ts&&... xs)
 {
-    return std::tuple<Ts...>(FWD(xs)...); 
+    return std::tuple<Ts...>(FWD(xs)...);
 }
 ```
 
@@ -571,11 +571,9 @@ Adapting this technique to variadic argument packs then becomes *trivial* - we j
 template <typename... Ts>
 auto fwd_capture_as_tuple(Ts&&... xs)
 {
-    return std::make_tuple(FWD_CAPTURE(xs)...);   
+    return std::make_tuple(FWD_CAPTURE(xs)...);
 }
 ```
 
 [*(Complete example on **wandbox**.)*](
 http://melpon.org/wandbox/permlink/MMsACfPcsFL8QgLy)
-
-

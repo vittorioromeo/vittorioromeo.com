@@ -138,7 +138,7 @@ This is very often what you want when you pass a function to another one.
 
 ### Benchmark - generated assembly
 
-I created a [small *horrible* Python script](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/passing_functions_to_functions/dobenchs.py) that compiles a small code snippet in multiple ways and counts the lines of generated x86-64 assembly *(after [stripping all the cruft](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/passing_functions_to_functions/stripasm))*. This is **not** an accurate benchmark that resembles the real world but **should give you an idea of how easy/hard it is for a compiler to optimize the techniques described above**.
+I created a [small *horrible* Python script](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/passing_functions_to_functions/dobenchs.py) that compiles a small code snippet in multiple ways and counts the lines of generated x86-64 assembly *(after [stripping all the cruft](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/passing_functions_to_functions/stripasm))*. This is **not** an accurate benchmark that resembles the real world but **should give you an idea of how easy/hard it is for a compiler to optimize the techniques described above**.
 
 #### Stateless callable objects
 
@@ -359,7 +359,7 @@ Unfortunately, the overhead from `std::function` seems to scale linearly with th
 
 Hopefully these benchmarks on the generated assembly should clarify how easy/hard it is for a compiler to optimize the analyzed techniques. If you're interested in **invocation run-time overhead** benchmarks, Dietmar Kühl created a [very interesting interactive graph](http://www.dietmar-kuehl.de/cputube/functions.html) *(which doesn't unfortunately include `function_view`)*.
 
-[*You can find all the code and scripts for the benchmarks on GitHub.*](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/passing_functions_to_functions)
+[*You can find all the code and scripts for the benchmarks on GitHub.*](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/passing_functions_to_functions)
 
 Let's end the article by looking at the implementation of `function_view`.
 
@@ -521,4 +521,4 @@ The last missing piece is the `operator()`, which is quite trivial:
 
 It's sufficient to invoke `_erased_fn` with the `_ptr` pointing to the *(assumed alive)* callable object and with the expanded `std::forward<TArgs>(xs)...` argument pack.
 
-That's it! [*You can find the complete implementation on GitHub.*](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/passing_functions_to_functions/function_view.hpp)
+That's it! [*You can find the complete implementation on GitHub.*](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/passing_functions_to_functions/function_view.hpp)

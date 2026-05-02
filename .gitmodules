@@ -1,12 +1,12 @@
 [submodule "extlibs/vrm_cmake"]
 	path = extlibs/vrm_cmake
-	url = https://github.com/SuperV1234/vrm_cmake.git
+	url = https://github.com/vittorioromeo/vrm_cmake.git
 [submodule "extlibs/vrm_core"]
 	path = extlibs/vrm_core
-	url = https://github.com/SuperV1234/vrm_core.git
+	url = https://github.com/vittorioromeo/vrm_core.git
 [submodule "extlibs/SSVUtils"]
 	path = extlibs/SSVUtils
-	url = https://github.com/SuperV1234/SSVUtils.git
+	url = https://github.com/vittorioromeo/SSVUtils.git
 [submodule "extlibs/vrm_pp"]
 	path = extlibs/vrm_pp
-	url = https://github.com/SuperV1234/vrm_pp.git
+	url = https://github.com/vittorioromeo/vrm_pp.git

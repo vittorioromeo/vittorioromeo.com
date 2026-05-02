@@ -32,7 +32,7 @@ v0 = 33.51;
 vr::visit(vnp, v0);
 ```
 
-*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_variants/2_lambda_visitation.cpp).)*
+*(You can find a similar example [on GitHub](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/visiting_variants/2_lambda_visitation.cpp).)*
 
 
 
@@ -164,7 +164,7 @@ v0 = varr{vnum{5}, varr{vnum{7}, vnum{8.0}, vnum{9.}}, vnum{4.f}};
 vr::visit(vnp, v0);
 ```
 
-*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_recursive_variants/0_traditional.cpp).)*
+*(You can find a similar example [on GitHub](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/visiting_recursive_variants/0_traditional.cpp).)*
 
 
 
@@ -193,7 +193,7 @@ Unfortunately, we are greeted with a *compiler error*:
 
 > error: variable 'my_visitor' declared with 'auto' type cannot appear in its own initializer
 
-*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_recursive_variants/2_lambda_notworking.cpp).)*
+*(You can find a similar example [on GitHub](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/visiting_recursive_variants/2_lambda_notworking.cpp).)*
 
 In short, the problem is that `my_visitor`'s type will be deduced from its own initialization... but `my_visitor` is also part of the initialization! If we had a way to explicitly specify the lambda's type in place of `auto`, the above code snippet could compile. [More details about this issue can be found here.](http://stackoverflow.com/questions/7861506/recursive-call-in-lambda-c11)
 
@@ -331,14 +331,14 @@ vr::visit(vnp, v0);
 
 Again, keep in mind that this technique does not work well if you require *stateful* visitors - use a `class`/`struct` in that situation.
 
-*(You can find a similar example [on GitHub](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/visiting_recursive_variants/1_lambda.cpp).)*
+*(You can find a similar example [on GitHub](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/visiting_recursive_variants/1_lambda.cpp).)*
 
 
 You're probably now asking...
 
 > Why go through all that trouble? Why not just use `std::function`?
 
-As I mentioned earlier, `std::function` is not a *zero-cost abstraction*. To prove it, [I've written a simple factorial lambda test](https://github.com/SuperV1234/Experiments/blob/master/recursive_lambda_asm/x.cpp) that can be conditionally compiled to either use `std::function` or `boost::hana::fix`. The [complete results are available in the addendum section](#stdfunction_vs_ycombinator). In short:
+As I mentioned earlier, `std::function` is not a *zero-cost abstraction*. To prove it, [I've written a simple factorial lambda test](https://github.com/vittorioromeo/Experiments/blob/master/recursive_lambda_asm/x.cpp) that can be conditionally compiled to either use `std::function` or `boost::hana::fix`. The [complete results are available in the addendum section](#stdfunction_vs_ycombinator). In short:
 
 * `g++ -O3` produces **4572** bytes of assembly for `std::function`. *(!)*
 
@@ -450,7 +450,7 @@ The tested compilers were:
 
 * `clang++ 3.8.1`
 
-The code and the assembly output [is available here](https://github.com/SuperV1234/Experiments/tree/master/recursive_lambda_asm).
+The code and the assembly output [is available here](https://github.com/vittorioromeo/Experiments/tree/master/recursive_lambda_asm).
 
 ##### `g++ -O1`
 

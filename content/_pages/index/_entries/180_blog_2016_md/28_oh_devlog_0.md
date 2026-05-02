@@ -34,7 +34,7 @@ Here's a short compilation of some very creative user-made levels:
 
 I've also had players thank me for getting them into the world of programming, which feels amazing.
 
-Despite being published on Steam, the game is also fully open-source [(on GitHub)](https://github.com/SuperV1234/SSVOpenHexagon/), and anyone can contribute to it or build it themselves for free. My intention is to have the source always freely available so that people can learn from it and/or improve the game.
+Despite being published on Steam, the game is also fully open-source [(on GitHub)](https://github.com/vittorioromeo/SSVOpenHexagon/), and anyone can contribute to it or build it themselves for free. My intention is to have the source always freely available so that people can learn from it and/or improve the game.
 
 
 

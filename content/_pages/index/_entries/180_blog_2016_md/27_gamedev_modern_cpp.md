@@ -20,7 +20,7 @@ Enjoy.
 
 ### background
 
-I am working on a virtual reality mod for Quake. Actually, calling it a "mod" is a bit diminishing: not only I have spent a considerable amount of time working on [my fork of the QuakeSpasm engine](https://github.com/SuperV1234/quakevr) to add VR support, but I've also changed pretty much every game mechanic to turn the classic into a first-class virtual reality experience:
+I am working on a virtual reality mod for Quake. Actually, calling it a "mod" is a bit diminishing: not only I have spent a considerable amount of time working on [my fork of the QuakeSpasm engine](https://github.com/vittorioromeo/quakevr) to add VR support, but I've also changed pretty much every game mechanic to turn the classic into a first-class virtual reality experience:
 
 <center>
 

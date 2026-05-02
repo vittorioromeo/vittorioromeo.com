@@ -157,7 +157,7 @@ decltype(auto) execute(Scheduler&& s) &
 }
 ```
 
-You can find a complete snippet [here **on wandbox.org**](https://wandbox.org/permlink/tIgt5wXqE2EV3qEu) or [here **on GitHub**](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/p1_0_propagate_parent.cpp).
+You can find a complete snippet [here **on wandbox.org**](https://wandbox.org/permlink/tIgt5wXqE2EV3qEu) or [here **on GitHub**](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/p1_0_propagate_parent.cpp).
 
 
 
@@ -321,7 +321,7 @@ auto f1 = initiate([]{ return 1; })
 f1.wait_and_get(world_s_best_thread_pool{});
 ```
 
-You can fine the complete snippet [here **on wandbox.org**](https://wandbox.org/permlink/fS6XzrloVExGyJ6c) or [here **on GitHub**](https://github.com/SuperV1234/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/p1_1_wait_and_get.cpp).
+You can fine the complete snippet [here **on wandbox.org**](https://wandbox.org/permlink/fS6XzrloVExGyJ6c) or [here **on GitHub**](https://github.com/vittorioromeo/vittorioromeo.com/blob/master/extra/zeroalloc_continuations/p1_1_wait_and_get.cpp).
 
 Oh, and [here's also a **godbolt.org** session](https://godbolt.org/g/9CPQTM) that proves that **the only overhead is caused by threading/synchronization**. If we revert to a synchronous single-threaded approach, **everything is completely inlined**.
 

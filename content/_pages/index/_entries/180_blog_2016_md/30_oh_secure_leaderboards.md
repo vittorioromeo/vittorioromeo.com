@@ -16,7 +16,7 @@ Deterministic gameplay is a prerequisite for a solid input-based *replay system*
 
 Therefore, rather than sending a player's final score to the leaderboard server (which can easily be spoofed), Open Hexagon will send the replay file. The server will then play back the received replay, and if everything seems valid it will accept the score and display it on the leaderboard. While it is technically possible to hand-craft a replay to cheat, it is much more difficult and time-consuming. There are also a few extra security measures to deter cheating that I will talk about later in this post.
 
-Implementing determinism in Open Hexagon wasn't too hard, but it was a bit tricky because the [game's codebase](https://github.com/SuperV1234/SSVOpenHexagon/) is quite old and wasn't designed with neither determinism nor replays in mind. There were a few challenges here:
+Implementing determinism in Open Hexagon wasn't too hard, but it was a bit tricky because the [game's codebase](https://github.com/vittorioromeo/SSVOpenHexagon/) is quite old and wasn't designed with neither determinism nor replays in mind. There were a few challenges here:
 
 1. Have a deterministic random number generator that, given a certain seed, produces the same sequence of numbers on both Windows (client) and Linux (server).
 
