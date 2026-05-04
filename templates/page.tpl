@@ -146,10 +146,19 @@
             btn.addEventListener('click', function() {
                 var current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
                 var next = current === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', next);
-                try { localStorage.setItem('theme', next); } catch (e) {}
-                updateIcon(next);
-                document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+
+                var apply = function() {
+                    document.documentElement.setAttribute('data-theme', next);
+                    try { localStorage.setItem('theme', next); } catch (e) {}
+                    updateIcon(next);
+                    document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+                };
+
+                if (document.startViewTransition) {
+                    document.startViewTransition(apply);
+                } else {
+                    apply();
+                }
             });
         })();
     </script>
