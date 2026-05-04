@@ -13,7 +13,7 @@
 <article class="blog-entry">
     <header>
         {{PermalinkBegin}}
-        <h2>{{Title}}</h2>
+        <h2 style="view-transition-name: post-{{Slug}}">{{Title}}</h2>
         {{PermalinkEnd}}
 
         <div class="entry-meta">

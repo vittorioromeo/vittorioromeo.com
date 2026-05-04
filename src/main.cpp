@@ -814,11 +814,13 @@ void process_page_entries(context& ctx, const Path& output_path,
                             auto link_name = e_contents["link_name"].as<Str>();
                             ae._link_name = link_name;
                             e_output_path += "/" + link_name + ".html";
+                            dic["Slug"] = link_name;
                         }
                         else
                         {
                             e_output_path +=
                                 "/" + std::to_string(eid) + ".html";
+                            dic["Slug"] = std::to_string(eid);
                         }
 
                         if(e_contents.has("tags"))

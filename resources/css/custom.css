@@ -1,5 +1,13 @@
 /* --- custom.css --- */
 
+/* Cross-document view transitions: smooth crossfade on same-origin nav.
+   Elements with matching `view-transition-name` morph between pages
+   (see <h2> in templates/entries/blog.tpl). Falls back to instant nav
+   in browsers that don't support it (e.g. Firefox). */
+@view-transition {
+    navigation: auto;
+}
+
 /* Theme-aware custom variables. Defaults are the dark palette;
    the [data-theme="light"] block below overrides them for light mode.
    Pico CSS already handles its own variables (body bg, text, etc.) based on data-theme. */
