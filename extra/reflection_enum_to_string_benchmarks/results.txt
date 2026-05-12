@@ -1,0 +1,193 @@
+# ==============================================================================
+# Setup
+# ==============================================================================
+#
+# Fedora 44 Docker container, gcc 16.1.1 20260501 (Red Hat 16.1.1-1, release
+# build, --enable-checking=release --with-build-config=bootstrap-lto).
+# 13th Gen Intel Core i9-13900K, 64GB DDR5, performance CPU governor.
+#
+# Container: docker run --cpuset-cpus="0-7" -v ...:/work fedora:44
+# Compiler pinned via: taskset -c 0
+# Hyperfine: --warmup 5 --min-runs 20
+#
+# Generate the source files with:
+#   ./gen.sh             # reflection variants (enum_use_N.cpp)
+#   ./gen_enchantum.sh   # enchantum variants (ench_use_N.cpp)
+#   ./gen_xmacro.sh      # X-macro string_view variants (xm_use_N.cpp)
+#   ./gen_xmacro_cc.sh   # X-macro const char* variants (xmcc_use_N.cpp)
+#   ./gen_importstd.sh   # explicit `import std;` variants (impstd_use_N.cpp)
+
+
+# ==============================================================================
+# Reflection (plain #include)
+# ==============================================================================
+
+# hyperfine "g++ -std=c++26 -freflection ./baseline.cpp"
+  Time (mean ± σ):      25.7 ms
+
+# hyperfine "g++ -std=c++26 -freflection ./include_only.cpp"
+  Time (mean ± σ):     180.8 ms
+
+# hyperfine "g++ -std=c++26 -freflection ./enum_use_4.cpp"
+  Time (mean ± σ):     186.7 ms
+
+# hyperfine "g++ -std=c++26 -freflection ./enum_use_16.cpp"
+  Time (mean ± σ):     187.7 ms
+
+# hyperfine "g++ -std=c++26 -freflection ./enum_use_64.cpp"
+  Time (mean ± σ):     191.1 ms
+
+# hyperfine "g++ -std=c++26 -freflection ./enum_use_256.cpp"
+  Time (mean ± σ):     215.0 ms
+
+# hyperfine "g++ -std=c++26 -freflection ./enum_use_1024.cpp"
+  Time (mean ± σ):     255.0 ms
+
+
+# ==============================================================================
+# enchantum
+# ==============================================================================
+
+# Clone enchantum first: git clone https://github.com/ZXShady/enchantum.git
+
+# hyperfine "g++ -std=c++26 -I enchantum/enchantum/include ./ench_include_only.cpp"
+  Time (mean ± σ):     147.1 ms
+
+# hyperfine "g++ -std=c++26 -I enchantum/enchantum/include ./ench_use_4.cpp"
+  Time (mean ± σ):     170.6 ms
+
+# hyperfine "g++ -std=c++26 -I enchantum/enchantum/include ./ench_use_16.cpp"
+  Time (mean ± σ):     170.9 ms
+
+# hyperfine "g++ -std=c++26 -I enchantum/enchantum/include ./ench_use_64.cpp"
+  Time (mean ± σ):     172.8 ms
+
+# hyperfine "g++ -std=c++26 -I enchantum/enchantum/include ./ench_use_256.cpp"
+  Time (mean ± σ):     184.1 ms
+
+# hyperfine "g++ -std=c++26 -DENCHANTUM_MAX_RANGE=1024 -I enchantum/enchantum/include ./ench_use_1024.cpp"
+  Time (mean ± σ):     272.0 ms
+
+
+# ==============================================================================
+# X-macro (string_view)
+# ==============================================================================
+
+# hyperfine "g++ -std=c++26 ./xm_include_only.cpp"
+  Time (mean ± σ):     136.0 ms
+
+# hyperfine "g++ -std=c++26 ./xm_use_4.cpp"
+  Time (mean ± σ):     137.6 ms
+
+# hyperfine "g++ -std=c++26 ./xm_use_16.cpp"
+  Time (mean ± σ):     138.1 ms
+
+# hyperfine "g++ -std=c++26 ./xm_use_64.cpp"
+  Time (mean ± σ):     141.2 ms
+
+# hyperfine "g++ -std=c++26 ./xm_use_256.cpp"
+  Time (mean ± σ):     153.0 ms
+
+# hyperfine "g++ -std=c++26 ./xm_use_1024.cpp"
+  Time (mean ± σ):     204.5 ms
+
+
+# ==============================================================================
+# X-macro (const char*, zero stdlib includes)
+# ==============================================================================
+
+# hyperfine "g++ -std=c++26 ./xmcc_include_only.cpp"
+  Time (mean ± σ):      25.7 ms
+
+# hyperfine "g++ -std=c++26 ./xmcc_use_4.cpp"
+  Time (mean ± σ):      26.6 ms
+
+# hyperfine "g++ -std=c++26 ./xmcc_use_16.cpp"
+  Time (mean ± σ):      26.9 ms
+
+# hyperfine "g++ -std=c++26 ./xmcc_use_64.cpp"
+  Time (mean ± σ):      28.0 ms
+
+# hyperfine "g++ -std=c++26 ./xmcc_use_256.cpp"
+  Time (mean ± σ):      32.5 ms
+
+# hyperfine "g++ -std=c++26 ./xmcc_use_1024.cpp"
+  Time (mean ± σ):      54.7 ms
+
+
+# ==============================================================================
+# Reflection + PCH
+# ==============================================================================
+#
+# Build the PCH once:
+#   g++ -std=c++26 -freflection -x c++-header pch_enum.hpp -o pch_enum.hpp.gch
+#
+# Then compile each TU with -include pch_enum.hpp:
+
+# hyperfine "g++ -std=c++26 -freflection -include pch_enum.hpp ./include_only.cpp"
+  Time (mean ± σ):      73.8 ms
+
+# hyperfine "g++ -std=c++26 -freflection -include pch_enum.hpp ./enum_use_4.cpp"
+  Time (mean ± σ):      80.6 ms
+
+# hyperfine "g++ -std=c++26 -freflection -include pch_enum.hpp ./enum_use_16.cpp"
+  Time (mean ± σ):      81.0 ms
+
+# hyperfine "g++ -std=c++26 -freflection -include pch_enum.hpp ./enum_use_64.cpp"
+  Time (mean ± σ):      84.4 ms
+
+# hyperfine "g++ -std=c++26 -freflection -include pch_enum.hpp ./enum_use_256.cpp"
+  Time (mean ± σ):      97.5 ms
+
+# hyperfine "g++ -std=c++26 -freflection -include pch_enum.hpp ./enum_use_1024.cpp"
+  Time (mean ± σ):     147.9 ms
+
+
+# ==============================================================================
+# Reflection + modules (GCC 16's --compile-std-module)
+# ==============================================================================
+#
+# Build the std module + std.compat module + <bits/stdc++.h> header unit once:
+#   g++ -std=c++26 -freflection -fmodules --compile-std-module
+#   # (This produces gcm.cache/ -- the linker error about missing main is benign,
+#   # the modules get built before linking is attempted.)
+#
+# Then compile each TU with -fmodules. With <bits/stdc++.h>.gcm cached, GCC 16
+# transparently translates each `#include <meta>` (and other importable stdlib
+# headers) into `import <bits/stdc++.h>`, so the source files are unchanged:
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules ./include_only.cpp"
+  Time (mean ± σ):     397.4 ms
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules ./enum_use_4.cpp"
+  Time (mean ± σ):     403.4 ms
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules ./enum_use_16.cpp"
+  Time (mean ± σ):     403.1 ms
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules ./enum_use_64.cpp"
+  Time (mean ± σ):     409.4 ms
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules ./enum_use_256.cpp"
+  Time (mean ± σ):     423.2 ms
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules ./enum_use_1024.cpp"
+  Time (mean ± σ):     482.5 ms
+
+
+# ==============================================================================
+# Reflection + explicit `import std;` (sanity check)
+# ==============================================================================
+#
+# Uses enum_to_string_importstd.hpp instead of enum_to_string.hpp. Same gcm.cache
+# from --compile-std-module. Verifies that GCC's std module is currently a thin
+# wrapper over <bits/stdc++.h> -- same artifact loaded, same compile time.
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules ./impstd_include_only.cpp"
+  Time (mean ± σ):     403.3 ms
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules ./impstd_use_4.cpp"
+  Time (mean ± σ):     410.9 ms
+
+# hyperfine "g++ -std=c++26 -freflection -fmodules ./impstd_use_1024.cpp"
+  Time (mean ± σ):     477.5 ms

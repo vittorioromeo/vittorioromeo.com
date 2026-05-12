@@ -3,6 +3,20 @@
     "elements": [
         {
             "template": "templates/entries/blog.tpl",
+            "link_name": "refl_enum_to_string",
+            "tags": [
+                "c++",
+                "c++26",
+                "reflection"
+            ],
+            "expand": {
+                "Title": "cost of enum-to-string: C++26 reflection vs the old ways",
+                "Text": "180_blog_2016_md/41_refl_enum_to_string.md",
+                "Date": "12 may 2026"
+            }
+        },
+        {
+            "template": "templates/entries/blog.tpl",
             "link_name": "sfex_coroutine",
             "tags": [
                 "c++",
